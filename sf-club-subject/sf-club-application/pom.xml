@@ -14,7 +14,7 @@
     <modules>
         <module>sf-club-application-controller</module>
         <module>sf-club-application-job</module>
-        <module>sf-club-application-com.jingdiansuifeng.subject.infra.mq</module>
+        <module>sf-club-application-mq</module>
     </modules>
 
 

@@ -11,5 +11,12 @@
 
     <artifactId>sf-club-domain</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.jingdiansuifeng</groupId>
+            <artifactId>sf-club-infra</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>
