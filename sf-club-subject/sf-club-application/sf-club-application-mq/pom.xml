@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sf-club-application-com.jingdiansuifeng.subject.infra.mq</artifactId>
+    <artifactId>sf-club-mq</artifactId>
 
 
 </project>

@@ -6,6 +6,22 @@ sf-club的刷题学习交流项目
 #### 软件架构
 软件架构说明
 
+###
+逻辑流程：
+infra  -->  domain  -->  application-controller
+javaBean  <--> BO  <--> DTO 
+
+xml(infra) -> Dao(infra) -> ServiceImpl(infra)  
+        |
+        V
+        Service(infra) -> ServiceImpl(domian) -> Service(domain)
+                                                    |
+                                                    V
+                                                    Controller(application-controller) -> end
+
+
+
+
 
 #### 安装教程
 
