@@ -8,7 +8,10 @@ import java.util.List;
 public interface SubjectCategoryDomainService {
 
 
-
+    /**
+     * 新增分类
+     * @param subjectCategoryBO
+     */
     void add(SubjectCategoryBO subjectCategoryBO);
 
     /**
@@ -16,4 +19,18 @@ public interface SubjectCategoryDomainService {
      * @return
      */
     List<SubjectCategoryBO> queryCategory(SubjectCategoryBO subjectCategoryBO);
+
+    /**
+     * 更新分类
+     * @param subjectCategoryBO
+     * @return
+     */
+    Boolean update(SubjectCategoryBO subjectCategoryBO);
+
+    /**
+     * 删除分类
+     * @param subjectCategoryBO
+     * @return
+     */
+    Boolean delete(SubjectCategoryBO subjectCategoryBO);
 }

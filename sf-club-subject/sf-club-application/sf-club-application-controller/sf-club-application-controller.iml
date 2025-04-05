@@ -78,6 +78,7 @@
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-jul:2.13.3" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.24" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:19.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.11" level="project" />
     <orderEntry type="module" module-name="sf-club-domain" />
   </component>
 </module>
