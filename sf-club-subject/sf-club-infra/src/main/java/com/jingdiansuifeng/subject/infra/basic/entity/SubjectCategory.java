@@ -1,4 +1,4 @@
-package com.jingdiansuifeng.subject.domain.entity;
+package com.jingdiansuifeng.subject.infra.basic.entity;
 
 import lombok.Data;
 

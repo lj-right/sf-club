@@ -1,9 +1,9 @@
-package com.jingdiansuifeng.subject.domain.service.impl;
+package com.jingdiansuifeng.subject.infra.basic.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.jingdiansuifeng.subject.domain.service.SubjectCategoryService;
-import com.jingdiansuifeng.subject.domain.entity.SubjectCategory;
-import com.jingdiansuifeng.subject.domain.mapper.SubjectCategoryDao;
+import com.jingdiansuifeng.subject.infra.basic.service.SubjectCategoryService;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectCategory;
+import com.jingdiansuifeng.subject.infra.basic.mapper.SubjectCategoryDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

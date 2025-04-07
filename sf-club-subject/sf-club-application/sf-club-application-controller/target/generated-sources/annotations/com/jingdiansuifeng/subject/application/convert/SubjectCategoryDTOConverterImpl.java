@@ -1,14 +1,14 @@
 package com.jingdiansuifeng.subject.application.convert;
 
 import com.jingdiansuifeng.subject.application.dto.SubjectCategoryDTO;
-import com.jingdiansuifeng.subject.domain.entity.SubjectCategoryBO;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectCategoryBO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-05T16:55:55+0800",
+    date = "2025-04-07T09:50:32+0800",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 1.8.0_144 (Oracle Corporation)"
 )
 public class SubjectCategoryDTOConverterImpl implements SubjectCategoryDTOConverter {

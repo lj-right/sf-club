@@ -1,6 +1,6 @@
-package com.jingdiansuifeng.subject.domain.service;
+package com.jingdiansuifeng.subject.infra.basic.service;
 
-import com.jingdiansuifeng.subject.domain.entity.SubjectCategory;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectCategory;
 
 import java.util.List;
 

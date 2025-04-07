@@ -1,7 +1,7 @@
 package com.jingdiansuifeng.subject.application.controller;
 
-import com.jingdiansuifeng.subject.domain.entity.SubjectCategory;
-import com.jingdiansuifeng.subject.domain.service.SubjectCategoryService;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectCategory;
+import com.jingdiansuifeng.subject.infra.basic.service.SubjectCategoryService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

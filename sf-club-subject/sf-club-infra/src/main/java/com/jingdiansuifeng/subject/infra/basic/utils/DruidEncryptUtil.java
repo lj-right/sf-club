@@ -1,4 +1,4 @@
-package com.jingdiansuifeng.subject.domain.utils;
+package com.jingdiansuifeng.subject.infra.basic.utils;
 
 
 import com.alibaba.druid.filter.config.ConfigTools;

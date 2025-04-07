@@ -1,14 +1,14 @@
-package com.jingdiansuifeng.subject.domain.convert;
+package com.jingdiansuifeng.subject.infra.basic.convert;
 
-import com.jingdiansuifeng.subject.domain.entity.SubjectCategory;
-import com.jingdiansuifeng.subject.domain.entity.SubjectCategoryBO;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectCategory;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectCategoryBO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-05T16:55:52+0800",
+    date = "2025-04-07T09:49:21+0800",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 1.8.0_144 (Oracle Corporation)"
 )
 public class SubjectCategoryConverterImpl implements SubjectCategoryConverter {

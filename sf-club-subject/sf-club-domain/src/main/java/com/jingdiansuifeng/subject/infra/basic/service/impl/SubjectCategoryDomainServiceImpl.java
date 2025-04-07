@@ -1,13 +1,12 @@
-package com.jingdiansuifeng.subject.domain.service.impl;
+package com.jingdiansuifeng.subject.infra.basic.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.jingdiansuifeng.subject.common.enums.CategoryTypeEnum;
 import com.jingdiansuifeng.subject.common.enums.IsDeletedFlagEnum;
-import com.jingdiansuifeng.subject.domain.convert.SubjectCategoryConverter;
-import com.jingdiansuifeng.subject.domain.entity.SubjectCategory;
-import com.jingdiansuifeng.subject.domain.entity.SubjectCategoryBO;
-import com.jingdiansuifeng.subject.domain.service.SubjectCategoryDomainService;
-import com.jingdiansuifeng.subject.domain.service.SubjectCategoryService;
+import com.jingdiansuifeng.subject.infra.basic.convert.SubjectCategoryConverter;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectCategory;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectCategoryBO;
+import com.jingdiansuifeng.subject.infra.basic.service.SubjectCategoryDomainService;
+import com.jingdiansuifeng.subject.infra.basic.service.SubjectCategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
