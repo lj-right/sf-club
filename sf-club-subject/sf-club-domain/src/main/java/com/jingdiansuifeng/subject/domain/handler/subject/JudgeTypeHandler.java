@@ -1,12 +1,14 @@
 package com.jingdiansuifeng.subject.domain.handler.subject;
 
 import com.google.common.base.Preconditions;
+import com.jingdiansuifeng.subject.common.enums.IsDeletedFlagEnum;
 import com.jingdiansuifeng.subject.common.enums.SubjectInfoTypeEnum;
 import com.jingdiansuifeng.subject.domain.convert.JudgeSubjectConverter;
 import com.jingdiansuifeng.subject.domain.convert.MultipleSubjectConverter;
 import com.jingdiansuifeng.subject.domain.entity.SubjectInfoBO;
 import com.jingdiansuifeng.subject.domain.entity.SubjectJudge;
 import com.jingdiansuifeng.subject.domain.entity.SubjectMultiple;
+import com.jingdiansuifeng.subject.domain.entity.SubjectOptionBO;
 import com.jingdiansuifeng.subject.domain.service.SubjectJudgeService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -40,8 +42,14 @@ public class JudgeTypeHandler implements SubjectTypeHandler{
         subjectInfoBO.getOptionList().forEach(option ->{
             SubjectJudge subjectJudge = JudgeSubjectConverter.INSTANCE.convertBoToJudgeEntity(option);
             subjectJudge.setSubjectId(subjectInfoBO.getId());
+            subjectJudge.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
             subjectJudgeList.add(subjectJudge);
         });
         subjectJudgeService.batchInsert(subjectJudgeList);
+    }
+
+    @Override
+    public SubjectOptionBO query(int subjectId) {
+        return null;
     }
 }

@@ -1,11 +1,13 @@
 package com.jingdiansuifeng.subject.domain.handler.subject;
 
 import com.google.common.base.Preconditions;
+import com.jingdiansuifeng.subject.common.enums.IsDeletedFlagEnum;
 import com.jingdiansuifeng.subject.common.enums.SubjectInfoTypeEnum;
 import com.jingdiansuifeng.subject.domain.convert.MultipleSubjectConverter;
 import com.jingdiansuifeng.subject.domain.convert.RadioSubjectConverter;
 import com.jingdiansuifeng.subject.domain.entity.SubjectInfoBO;
 import com.jingdiansuifeng.subject.domain.entity.SubjectMultiple;
+import com.jingdiansuifeng.subject.domain.entity.SubjectOptionBO;
 import com.jingdiansuifeng.subject.domain.entity.SubjectRadio;
 import com.jingdiansuifeng.subject.domain.service.SubjectMappingService;
 import com.jingdiansuifeng.subject.domain.service.SubjectMultipleService;
@@ -41,8 +43,14 @@ public class MultipleTypeHandler implements SubjectTypeHandler{
         subjectInfoBO.getOptionList().forEach(option ->{
             SubjectMultiple subjectMultiple = MultipleSubjectConverter.INSTANCE.convertBoToMultipleEntity(option);
             subjectMultiple.setSubjectId(subjectInfoBO.getId());
+            subjectMultiple.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
             subjectMultipleList.add(subjectMultiple);
         });
         subjectMultipleService.batchInsert(subjectMultipleList);
+    }
+
+    @Override
+    public SubjectOptionBO query(int subjectId) {
+        return null;
     }
 }

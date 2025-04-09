@@ -1,5 +1,6 @@
 package com.jingdiansuifeng.subject.domain.service;
 
+import com.jingdiansuifeng.subject.common.entity.PageResult;
 import com.jingdiansuifeng.subject.domain.entity.SubjectInfoBO;
 
 
@@ -15,4 +16,12 @@ public interface SubjectInfoDomainService {
      */
     void add(SubjectInfoBO subjectInfoBO);
 
+    /**
+     * 分页查询题目
+     * @param subjectInfoBO
+     * @return
+     */
+    PageResult<SubjectInfoBO> getSubjectPage(SubjectInfoBO subjectInfoBO);
+
+    SubjectInfoBO querySubjectInfo(SubjectInfoBO subjectInfoBO);
 }

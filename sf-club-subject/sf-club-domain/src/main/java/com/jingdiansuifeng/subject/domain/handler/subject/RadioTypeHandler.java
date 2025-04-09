@@ -1,9 +1,11 @@
 package com.jingdiansuifeng.subject.domain.handler.subject;
 
 import com.google.common.base.Preconditions;
+import com.jingdiansuifeng.subject.common.enums.IsDeletedFlagEnum;
 import com.jingdiansuifeng.subject.common.enums.SubjectInfoTypeEnum;
 import com.jingdiansuifeng.subject.domain.convert.RadioSubjectConverter;
 import com.jingdiansuifeng.subject.domain.entity.SubjectInfoBO;
+import com.jingdiansuifeng.subject.domain.entity.SubjectOptionBO;
 import com.jingdiansuifeng.subject.domain.entity.SubjectRadio;
 import com.jingdiansuifeng.subject.domain.service.SubjectRadioService;
 import org.apache.commons.lang3.StringUtils;
@@ -37,8 +39,14 @@ public class RadioTypeHandler implements SubjectTypeHandler{
         subjectInfoBO.getOptionList().forEach(option ->{
             SubjectRadio subjectRadio = RadioSubjectConverter.INSTANCE.convertBoToRadioEntity(option);
             subjectRadio.setSubjectId(subjectInfoBO.getId());
+            subjectRadio.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
             subjectRadioList.add(subjectRadio);
         });
         subjectRadioService.batchInsert(subjectRadioList);
+    }
+
+    @Override
+    public SubjectOptionBO query(int subjectId) {
+        return null;
     }
 }
