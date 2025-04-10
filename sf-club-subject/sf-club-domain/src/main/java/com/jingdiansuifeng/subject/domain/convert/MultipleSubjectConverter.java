@@ -6,6 +6,8 @@ import com.jingdiansuifeng.subject.domain.entity.SubjectRadio;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 
 @Mapper
 public interface MultipleSubjectConverter {
@@ -13,4 +15,5 @@ public interface MultipleSubjectConverter {
 
     SubjectMultiple convertBoToMultipleEntity(SubjectAnswerBO subjectAnswerBO);
 
+    List<SubjectAnswerBO> convertMultipleListToAnswerBo(List<SubjectMultiple> subjectMultipleList);
 }

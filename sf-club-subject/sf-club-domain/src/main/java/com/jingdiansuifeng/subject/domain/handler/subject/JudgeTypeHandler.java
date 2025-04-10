@@ -5,10 +5,7 @@ import com.jingdiansuifeng.subject.common.enums.IsDeletedFlagEnum;
 import com.jingdiansuifeng.subject.common.enums.SubjectInfoTypeEnum;
 import com.jingdiansuifeng.subject.domain.convert.JudgeSubjectConverter;
 import com.jingdiansuifeng.subject.domain.convert.MultipleSubjectConverter;
-import com.jingdiansuifeng.subject.domain.entity.SubjectInfoBO;
-import com.jingdiansuifeng.subject.domain.entity.SubjectJudge;
-import com.jingdiansuifeng.subject.domain.entity.SubjectMultiple;
-import com.jingdiansuifeng.subject.domain.entity.SubjectOptionBO;
+import com.jingdiansuifeng.subject.domain.entity.*;
 import com.jingdiansuifeng.subject.domain.service.SubjectJudgeService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -50,6 +47,12 @@ public class JudgeTypeHandler implements SubjectTypeHandler{
 
     @Override
     public SubjectOptionBO query(int subjectId) {
-        return null;
+        SubjectJudge subjectJudge = new SubjectJudge();
+        subjectJudge.setSubjectId(Long.valueOf(subjectId));
+        List<SubjectJudge> result = subjectJudgeService.queryByCondition(subjectJudge);
+        List<SubjectAnswerBO> subjectAnswerBOList = JudgeSubjectConverter.INSTANCE.convertJudgeListToAnswerBo(result);
+        SubjectOptionBO optionBO = new SubjectOptionBO();
+        optionBO.setOptionList(subjectAnswerBOList);
+        return optionBO;
     }
 }

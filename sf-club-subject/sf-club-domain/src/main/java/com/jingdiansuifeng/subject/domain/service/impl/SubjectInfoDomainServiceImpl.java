@@ -4,14 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.jingdiansuifeng.subject.common.entity.PageResult;
 import com.jingdiansuifeng.subject.common.enums.IsDeletedFlagEnum;
 import com.jingdiansuifeng.subject.domain.convert.SubjectInfoConverter;
-import com.jingdiansuifeng.subject.domain.entity.SubjectInfo;
-import com.jingdiansuifeng.subject.domain.entity.SubjectInfoBO;
-import com.jingdiansuifeng.subject.domain.entity.SubjectMapping;
-import com.jingdiansuifeng.subject.domain.entity.SubjectOptionBO;
+import com.jingdiansuifeng.subject.domain.entity.*;
 import com.jingdiansuifeng.subject.domain.handler.subject.SubjectTypeHandler;
 import com.jingdiansuifeng.subject.domain.handler.subject.SubjectTypeHandlerFactory;
 import com.jingdiansuifeng.subject.domain.service.SubjectInfoDomainService;
 import com.jingdiansuifeng.subject.domain.service.SubjectInfoService;
+import com.jingdiansuifeng.subject.domain.service.SubjectLabelService;
 import com.jingdiansuifeng.subject.domain.service.SubjectMappingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,6 +29,9 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
 
     @Resource
     private SubjectTypeHandlerFactory subjectTypeHandlerFactory;
+
+    @Resource
+    private SubjectLabelService subjectLabelService;
 
     @Resource
     private SubjectMappingService subjectMappingService;
@@ -99,7 +100,13 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
         SubjectOptionBO optionBO = handler.query(subjectInfoBO.getId().intValue());
         SubjectInfoBO bo = SubjectInfoConverter.INSTANCE
                 .convertOptionAndInfoToBo(optionBO,subjectInfo);
-        List<String> labelNames = subjectInfoBO.getLabelNames();
+        SubjectMapping subjectMapping = new SubjectMapping();
+        subjectMapping.setSubjectId(subjectInfo.getId());
+        subjectMapping.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        List<SubjectMapping> mappingList = subjectMappingService.queryLabelId(subjectMapping);
+        List<Long> labelIds = mappingList.stream().map(SubjectMapping::getLabelId).collect(Collectors.toList());
+        List<SubjectLabel> subjectLabels = subjectLabelService.batchQueryById(labelIds);
+        List<String> labelNames = subjectLabels.stream().map(SubjectLabel::getLabelName).collect(Collectors.toList());
         bo.setLabelNames(labelNames);
         return bo;
     }

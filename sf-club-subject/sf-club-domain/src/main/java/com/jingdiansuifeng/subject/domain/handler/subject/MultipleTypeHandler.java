@@ -3,12 +3,10 @@ package com.jingdiansuifeng.subject.domain.handler.subject;
 import com.google.common.base.Preconditions;
 import com.jingdiansuifeng.subject.common.enums.IsDeletedFlagEnum;
 import com.jingdiansuifeng.subject.common.enums.SubjectInfoTypeEnum;
+import com.jingdiansuifeng.subject.domain.convert.JudgeSubjectConverter;
 import com.jingdiansuifeng.subject.domain.convert.MultipleSubjectConverter;
 import com.jingdiansuifeng.subject.domain.convert.RadioSubjectConverter;
-import com.jingdiansuifeng.subject.domain.entity.SubjectInfoBO;
-import com.jingdiansuifeng.subject.domain.entity.SubjectMultiple;
-import com.jingdiansuifeng.subject.domain.entity.SubjectOptionBO;
-import com.jingdiansuifeng.subject.domain.entity.SubjectRadio;
+import com.jingdiansuifeng.subject.domain.entity.*;
 import com.jingdiansuifeng.subject.domain.service.SubjectMappingService;
 import com.jingdiansuifeng.subject.domain.service.SubjectMultipleService;
 import org.apache.commons.lang3.StringUtils;
@@ -51,6 +49,12 @@ public class MultipleTypeHandler implements SubjectTypeHandler{
 
     @Override
     public SubjectOptionBO query(int subjectId) {
-        return null;
+        SubjectMultiple subjectMultiple = new SubjectMultiple();
+        subjectMultiple.setSubjectId(Long.valueOf(subjectId));
+        List<SubjectMultiple> result = subjectMultipleService.queryByCondition(subjectMultiple);
+        List<SubjectAnswerBO> subjectAnswerBOList = MultipleSubjectConverter.INSTANCE.convertMultipleListToAnswerBo(result);
+        SubjectOptionBO optionBO = new SubjectOptionBO();
+        optionBO.setOptionList(subjectAnswerBOList);
+        return optionBO;
     }
 }
