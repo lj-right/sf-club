@@ -46,4 +46,6 @@ public interface SubjectBriefService {
     boolean deleteById(Long id);
 
     void batchInsert(List<SubjectBrief> subjectBriefList);
+
+    SubjectBrief queryByCondition(SubjectBrief subjectBrief);
 }

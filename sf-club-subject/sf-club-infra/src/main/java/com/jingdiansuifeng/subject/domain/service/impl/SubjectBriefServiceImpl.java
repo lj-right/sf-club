@@ -71,4 +71,9 @@ public class SubjectBriefServiceImpl implements SubjectBriefService {
     public void batchInsert(List<SubjectBrief> subjectBriefList) {
         this.subjectBriefDao.insertBatch(subjectBriefList);
     }
+
+    @Override
+    public SubjectBrief queryByCondition(SubjectBrief subjectBrief) {
+        return this.subjectBriefDao.queryAllByLimit(subjectBrief);
+    }
 }

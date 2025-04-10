@@ -21,7 +21,7 @@ import java.util.List;
  * 简答题的策略类
  */
 @Component
-public class BriefTypeHandler implements SubjectTypeHandler{
+public class BriefTypeHandler implements SubjectTypeHandler {
 
     @Resource
     private SubjectBriefService subjectBriefService;
@@ -37,18 +37,20 @@ public class BriefTypeHandler implements SubjectTypeHandler{
         //简答题的插入
         Preconditions.checkArgument(!StringUtils.isBlank(subjectInfoBO.getSubjectName()), "题目名称不能为空");
 
-            SubjectBrief subjectBrief = new SubjectBrief();
-            subjectBrief.setSubjectAnswer(subjectInfoBO.getSubjectAnswer());
-            subjectBrief.setSubjectId(subjectInfoBO.getId());
-            subjectBrief.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        SubjectBrief subjectBrief = new SubjectBrief();
+        subjectBrief.setSubjectAnswer(subjectInfoBO.getSubjectAnswer());
+        subjectBrief.setSubjectId(subjectInfoBO.getId());
+        subjectBrief.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
         subjectBriefService.insert(subjectBrief);
     }
 
     @Override
     public SubjectOptionBO query(int subjectId) {
-        SubjectBrief subjectBrief = subjectBriefService.queryById(Long.valueOf(subjectId));
+        SubjectBrief subjectBrief = new SubjectBrief();
+        subjectBrief.setSubjectId(Long.valueOf(subjectId));
+        SubjectBrief result = subjectBriefService.queryByCondition(subjectBrief);
         SubjectOptionBO subjectOptionBO = new SubjectOptionBO();
-        subjectOptionBO.setSubjectAnswer(subjectBrief.getSubjectAnswer());
+        subjectOptionBO.setSubjectAnswer(result.getSubjectAnswer());
         return subjectOptionBO;
     }
 }

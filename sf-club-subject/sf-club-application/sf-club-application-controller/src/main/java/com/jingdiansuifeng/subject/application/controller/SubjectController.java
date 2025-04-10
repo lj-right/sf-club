@@ -107,8 +107,6 @@ public class SubjectController {
                         , JSON.toJSONString(subjectInfoDTO));
             }
             Preconditions.checkNotNull(subjectInfoDTO.getId(), "题目id不能为空");
-            Preconditions.checkNotNull(subjectInfoDTO.getCategoryId(), "分类id不能为空");
-            Preconditions.checkNotNull(subjectInfoDTO.getLabelId(), "标签id不能为空");
 
 
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConverter.INSTANCE
