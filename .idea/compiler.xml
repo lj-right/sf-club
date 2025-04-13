@@ -14,6 +14,7 @@
         <module name="sf-club-starter" />
         <module name="sf-club-application-controller" />
         <module name="sf-club-application-job" />
+        <module name="sf-club-oss" />
         <module name="sf-club-infra" />
       </profile>
     </annotationProcessing>
@@ -25,6 +26,7 @@
       <module name="sf-club-common" target="1.8" />
       <module name="sf-club-domain" target="8" />
       <module name="sf-club-infra" target="6" />
+      <module name="sf-club-oss" target="8" />
       <module name="sf-club-starter" target="1.8" />
       <module name="sf-club-subject" target="1.5" />
       <module name="sf-club-subject-api" target="1.5" />
