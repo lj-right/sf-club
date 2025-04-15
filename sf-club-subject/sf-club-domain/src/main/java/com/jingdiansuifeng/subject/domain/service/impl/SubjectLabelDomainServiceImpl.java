@@ -1,10 +1,13 @@
 package com.jingdiansuifeng.subject.domain.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.jingdiansuifeng.subject.common.enums.CategoryTypeEnum;
 import com.jingdiansuifeng.subject.common.enums.IsDeletedFlagEnum;
 import com.jingdiansuifeng.subject.domain.convert.SubjectLabelConverter;
+import com.jingdiansuifeng.subject.domain.entity.SubjectCategory;
 import com.jingdiansuifeng.subject.domain.entity.SubjectLabelBO;
 import com.jingdiansuifeng.subject.domain.entity.SubjectMapping;
+import com.jingdiansuifeng.subject.domain.service.SubjectCategoryService;
 import com.jingdiansuifeng.subject.domain.service.SubjectMappingService;
 import com.jingdiansuifeng.subject.domain.entity.SubjectLabel;
 import com.jingdiansuifeng.subject.domain.service.SubjectLabelDomainService;
@@ -28,6 +31,9 @@ public class SubjectLabelDomainServiceImpl implements SubjectLabelDomainService 
 
     @Resource
     private SubjectMappingService subjectMappingService;
+
+    @Resource
+    private SubjectCategoryService subjectCategoryService;
 
 
     public Boolean add(SubjectLabelBO subjectLabelBO) {
@@ -66,6 +72,16 @@ public class SubjectLabelDomainServiceImpl implements SubjectLabelDomainService 
     }
 
     public List<SubjectLabelBO> queryLabelByCategoryId(SubjectLabelBO subjectLabelBO) {
+        //判断分类级别 1,2
+        SubjectCategory subjectCategory = subjectCategoryService.queryById(subjectLabelBO.getCategoryId());
+        if (CategoryTypeEnum.PRIMARY.getCode() == subjectCategory.getCategoryType()){
+            SubjectLabel subjectLabel = new SubjectLabel();
+            subjectLabel.setCategoryId(subjectLabelBO.getCategoryId());
+            subjectLabel.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+            List<SubjectLabel> labelList = subjectLabelService.queryByCondition(subjectLabel);
+            return SubjectLabelConverter.INSTANCE.convertLabelListToBoList(labelList);
+        }
+
         Long categoryId = subjectLabelBO.getCategoryId();
         SubjectMapping subjectMapping = new SubjectMapping();
         subjectMapping.setCategoryId(categoryId);

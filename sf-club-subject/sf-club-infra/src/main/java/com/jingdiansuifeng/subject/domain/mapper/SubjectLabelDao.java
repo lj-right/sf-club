@@ -20,6 +20,12 @@ public interface SubjectLabelDao {
      */
     SubjectLabel queryById(Long id);
 
+    /**
+     * 查询指定行数据
+     * @param subjectLabel
+     * @return
+     */
+    List<SubjectLabel> queryByCondition(SubjectLabel subjectLabel);
 
     /**
      * 统计总行数
@@ -71,5 +77,7 @@ public interface SubjectLabelDao {
     int deleteById(Long id);
 
     List<SubjectLabel> batchQueryById(@Param("list") List<Long> labelIdList);
+
+
 }
 

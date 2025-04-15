@@ -21,6 +21,12 @@ public class SubjectLabel implements Serializable {
      * 标签名称
      */
     private String labelName;
+
+    /**
+     *  标签分类id
+     */
+    private Long categoryId;
+
     /**
      * 排序
      */
