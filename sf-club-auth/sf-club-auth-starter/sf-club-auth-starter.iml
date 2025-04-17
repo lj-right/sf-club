@@ -72,9 +72,10 @@
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.24" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:19.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.11" level="project" />
-    <orderEntry type="module" module-name="sf-club-application-controller" />
-    <orderEntry type="module" module-name="sf-club-infra" />
-    <orderEntry type="module" module-name="sf-club-common" />
-    <orderEntry type="module" module-name="sf-club-domain" />
+    <orderEntry type="module" module-name="sf-club-auth-application-controller" />
+    <orderEntry type="library" name="Maven: cn.dev33:sa-token-spring-boot-starter:1.37.0" level="project" />
+    <orderEntry type="library" name="Maven: cn.dev33:sa-token-servlet:1.37.0" level="project" />
+    <orderEntry type="library" name="Maven: cn.dev33:sa-token-core:1.37.0" level="project" />
+    <orderEntry type="library" name="Maven: cn.dev33:sa-token-spring-boot-autoconfig:1.37.0" level="project" />
   </component>
 </module>

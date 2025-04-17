@@ -48,5 +48,9 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.3.3" level="project" />
+    <orderEntry type="library" name="Maven: cn.dev33:sa-token-spring-boot-starter:1.37.0" level="project" />
+    <orderEntry type="library" name="Maven: cn.dev33:sa-token-servlet:1.37.0" level="project" />
+    <orderEntry type="library" name="Maven: cn.dev33:sa-token-core:1.37.0" level="project" />
+    <orderEntry type="library" name="Maven: cn.dev33:sa-token-spring-boot-autoconfig:1.37.0" level="project" />
   </component>
 </module>
