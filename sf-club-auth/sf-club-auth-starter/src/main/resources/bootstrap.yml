@@ -1,8 +1,8 @@
 spring:
   application:
-    name: sf-club-oss
+    name: sf-club-auth
   profiles:
-      active: dev
+    active: dev
   cloud:
     nacos:
       config:

@@ -5,7 +5,7 @@ spring:
     gateway:
       routes:
         - id: oss
-          uri: lb://sf-club-oss-dev
+          uri: lb://sf-club-oss
           predicates:
             - Path=/oss/**
           filters:
