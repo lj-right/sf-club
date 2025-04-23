@@ -21,9 +21,7 @@
         <module name="sf-club-auth-starter" />
         <module name="sf-club-auth-common" />
         <module name="sf-club-starter" />
-        <module name="sf-club-auth-application-mq" />
         <module name="sf-club-application-job" />
-        <module name="sf-club-auth-application-job" />
         <module name="sf-club-infra" />
       </profile>
     </annotationProcessing>
