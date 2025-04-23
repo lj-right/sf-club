@@ -1,6 +1,6 @@
-package com.jingdianjichi.auth.application.interceptor;
+package com.jingdiansuifeng.auth.application.interceptor;
 
-import com.jingdianjichi.auth.context.LoginContextHolder;
+import com.jingdiansuifeng.auth.application.context.LoginContextHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;

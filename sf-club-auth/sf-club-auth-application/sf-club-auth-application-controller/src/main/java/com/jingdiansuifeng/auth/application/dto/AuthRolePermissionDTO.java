@@ -1,16 +1,12 @@
-package com.jingdianjichi.auth.application.dto;
+package com.jingdiansuifeng.auth.application.dto;
 
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
  * (AuthRolePermission)实体类
- *
- * @author makejava
- * @since 2023-11-04 22:16:00
  */
 @Data
 public class AuthRolePermissionDTO implements Serializable {

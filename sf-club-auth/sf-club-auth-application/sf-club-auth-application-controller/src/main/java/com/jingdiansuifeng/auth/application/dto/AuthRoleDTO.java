@@ -1,9 +1,8 @@
-package com.jingdianjichi.auth.application.dto;
+package com.jingdiansuifeng.auth.application.dto;
 
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 角色dto

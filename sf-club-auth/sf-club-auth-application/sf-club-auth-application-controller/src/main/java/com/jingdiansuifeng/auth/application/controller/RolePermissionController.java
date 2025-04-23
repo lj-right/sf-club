@@ -1,12 +1,12 @@
-package com.jingdianjichi.auth.application.controller;
+package com.jingdiansuifeng.auth.application.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
-import com.jingdianjichi.auth.application.convert.AuthRolePermissionDTOConverter;
-import com.jingdianjichi.auth.application.dto.AuthRolePermissionDTO;
-import com.jingdianjichi.auth.domain.entity.AuthRolePermissionBO;
-import com.jingdianjichi.auth.domain.service.AuthRolePermissionDomainService;
-import com.jingdianjichi.auth.entity.Result;
+import com.jingdiansuifeng.auth.application.convert.AuthRolePermissionDTOConverter;
+import com.jingdiansuifeng.auth.application.dto.AuthRolePermissionDTO;
+import com.jingdiansuifeng.auth.domain.entity.AuthRolePermissionBO;
+import com.jingdiansuifeng.auth.domain.service.AuthRolePermissionDomainService;
+import com.jingdiansuifeng.auth.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;

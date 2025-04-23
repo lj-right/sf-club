@@ -16,8 +16,8 @@
         <result property="extJson" column="ext_json" jdbcType="VARCHAR"/>
         <result property="createdBy" column="created_by" jdbcType="VARCHAR"/>
         <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
-        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedBy" column="updated_by" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
         <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
     </resultMap>
 
@@ -36,8 +36,8 @@
                ext_json,
                created_by,
                created_time,
-               update_by,
-               update_time,
+               updated_by,
+               updated_time,
                is_deleted
         from auth_user
         where id = #{id}
@@ -47,7 +47,7 @@
     <select id="queryAllByLimit" resultMap="AuthUserMap">
         select
         id, user_name, nick_name, email, phone, password, sex, avatar, status, introduce, ext_json, created_by,
-        created_time, update_by, update_time, is_deleted
+        created_time, updated_by, updated_time, is_deleted
         from auth_user
         <where>
             <if test="id != null">
@@ -89,11 +89,11 @@
             <if test="createdTime != null">
                 and created_time = #{createdTime}
             </if>
-            <if test="updateBy != null and updateBy != ''">
-                and update_by = #{updateBy}
+            <if test="updatedBy != null and updatedBy != ''">
+                updated_by = #{updatedBy},
             </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime},
             </if>
             <if test="isDeleted != null">
                 and is_deleted = #{isDeleted}
@@ -145,11 +145,11 @@
             <if test="createdTime != null">
                 and created_time = #{createdTime}
             </if>
-            <if test="updateBy != null and updateBy != ''">
-                and update_by = #{updateBy}
+            <if test="updatedBy != null and updatedBy != ''">
+                updated_by = #{updatedBy},
             </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime},
             </if>
             <if test="isDeleted != null">
                 and is_deleted = #{isDeleted}
@@ -159,7 +159,7 @@
     <select id="listUserInfoByIds" resultType="com.suifeng.auth.infra.basic.entity.AuthUser">
         select
         id, user_name, nick_name, email, phone, password, sex, avatar, status, introduce, ext_json, created_by,
-        created_time, update_by, update_time, is_deleted
+        created_time, updated_by, updated_time, is_deleted
         from auth_user
         where user_name in
         <foreach collection="userNameList" index="index" item="item" open="(" separator="," close=")">
@@ -173,30 +173,30 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into auth_user(user_name, nick_name, email, phone, password, sex, avatar, status, introduce, ext_json,
-        created_by, created_time, update_by, update_time, is_deleted)
+        created_by, created_time, updated_by, updated_time, is_deleted)
         values (#{userName}, #{nickName}, #{email}, #{phone}, #{password}, #{sex}, #{avatar}, #{status}, #{introduce},
-        #{extJson}, #{createdBy}, #{createdTime}, #{updateBy}, #{updateTime}, #{isDeleted})
+        #{extJson}, #{createdBy}, #{createdTime}, #{updatedBy}, #{updatedTime}, #{isDeleted})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
         insert into auth_user(user_name, nick_name, email, phone, password, sex, avatar, status, introduce, ext_json,
-        created_by, created_time, update_by, update_time, is_deleted)
+        created_by, created_time, updated_by, updated_time, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.userName}, #{entity.nickName}, #{entity.email}, #{entity.phone}, #{entity.password},
             #{entity.sex}, #{entity.avatar}, #{entity.status}, #{entity.introduce}, #{entity.extJson},
-            #{entity.createdBy}, #{entity.createdTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
+            #{entity.createdBy}, #{entity.createdTime}, #{entity.updatedBy}, #{entity.updatedTime}, #{entity.isDeleted})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
         insert into auth_user(user_name, nick_name, email, phone, password, sex, avatar, status, introduce, ext_json,
-        created_by, created_time, update_by, update_time, is_deleted)
+        created_by, created_time, updated_by, updated_time, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.userName}, #{entity.nickName}, #{entity.email}, #{entity.phone}, #{entity.password},
             #{entity.sex}, #{entity.avatar}, #{entity.status}, #{entity.introduce}, #{entity.extJson},
-            #{entity.createdBy}, #{entity.createdTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
+            #{entity.createdBy}, #{entity.createdTime}, #{entity.updatedBy}, #{entity.updatedTime}, #{entity.isDeleted})
         </foreach>
         on duplicate key update
         user_name = values(user_name),
@@ -211,8 +211,8 @@
         ext_json = values(ext_json),
         created_by = values(created_by),
         created_time = values(created_time),
-        update_by = values(update_by),
-        update_time = values(update_time),
+        updated_by = values(updated_by),
+        updated_time = values(updated_time),
         is_deleted = values(is_deleted)
     </insert>
 
@@ -256,11 +256,11 @@
             <if test="createdTime != null">
                 created_time = #{createdTime},
             </if>
-            <if test="updateBy != null and updateBy != ''">
-                update_by = #{updateBy},
+            <if test="updatedBy != null and updatedBy != ''">
+                updated_by = #{updatedBy},
             </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime},
             </if>
             <if test="isDeleted != null">
                 is_deleted = #{isDeleted},
@@ -305,11 +305,11 @@
             <if test="createdTime != null">
                 created_time = #{createdTime},
             </if>
-            <if test="updateBy != null and updateBy != ''">
-                update_by = #{updateBy},
+            <if test="updatedBy != null and updatedBy != ''">
+                updated_by = #{updatedBy},
             </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime},
             </if>
             <if test="isDeleted != null">
                 is_deleted = #{isDeleted},

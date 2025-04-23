@@ -1,7 +1,6 @@
-package com.jingdianjichi.auth.application.convert;
+package com.jingdiansuifeng.auth.application.convert;
 
-import com.jingdianjichi.auth.application.dto.AuthRoleDTO;
-import com.jingdianjichi.auth.domain.entity.AuthRoleBO;
+import com.jingdiansuifeng.auth.application.dto.AuthRoleDTO;
 import com.jingdiansuifeng.auth.domain.entity.AuthRoleBO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

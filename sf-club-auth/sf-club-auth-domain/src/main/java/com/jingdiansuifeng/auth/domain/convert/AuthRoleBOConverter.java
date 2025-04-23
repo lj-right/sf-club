@@ -1,8 +1,6 @@
 package com.jingdiansuifeng.auth.domain.convert;
 
 import com.jingdiansuifeng.auth.domain.entity.AuthRoleBO;
-import com.jingdianjichi.auth.infra.basic.entity.AuthRole;
-import com.jingdianjichi.auth.infra.basic.entity.AuthUser;
 import com.suifeng.auth.infra.basic.entity.AuthRole;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

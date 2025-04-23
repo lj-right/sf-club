@@ -1,7 +1,5 @@
-package com.jingdianjichi.auth.application.convert;
+package com.jingdiansuifeng.auth.application.convert;
 
-import com.jingdianjichi.auth.domain.entity.AuthUserBO;
-import com.jingdianjichi.auth.entity.AuthUserDTO;
 import com.jingdiansuifeng.auth.domain.entity.AuthUserBO;
 import com.jingdiansuifeng.auth.entity.AuthUserDTO;
 import org.mapstruct.Mapper;

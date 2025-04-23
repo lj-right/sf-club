@@ -1,4 +1,4 @@
-package com.jingdianjichi.auth.application.dto;
+package com.jingdiansuifeng.auth.application.dto;
 
 import lombok.Data;
 
