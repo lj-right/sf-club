@@ -4,8 +4,8 @@ import com.jingdiansuifeng.auth.common.enums.IsDeletedFlagEnum;
 import com.jingdiansuifeng.auth.domain.convert.AuthRoleBOConverter;
 import com.jingdiansuifeng.auth.domain.entity.AuthRoleBO;
 import com.jingdiansuifeng.auth.domain.service.AuthRoleDomainService;
-import com.suifeng.auth.infra.basic.entity.AuthRole;
-import com.suifeng.auth.infra.basic.service.AuthRoleService;
+import com.jingdiansuifeng.auth.infra.basic.entity.AuthRole;
+import com.jingdiansuifeng.auth.infra.basic.service.AuthRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

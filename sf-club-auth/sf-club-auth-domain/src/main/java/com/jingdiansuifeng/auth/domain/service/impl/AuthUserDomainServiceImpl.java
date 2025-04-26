@@ -11,8 +11,8 @@ import com.jingdiansuifeng.auth.domain.convert.AuthUserBOConverter;
 import com.jingdiansuifeng.auth.domain.entity.AuthUserBO;
 import com.jingdiansuifeng.auth.domain.redis.RedisUtil;
 import com.jingdiansuifeng.auth.domain.service.AuthUserDomainService;
-import com.suifeng.auth.infra.basic.entity.*;
-import com.suifeng.auth.infra.basic.service.*;
+import com.jingdiansuifeng.auth.infra.basic.entity.*;
+import com.jingdiansuifeng.auth.infra.basic.service.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -75,7 +75,7 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
             authUser.setAvatar("http://117.72.10.84:9000/user/icon/微信图片_20231203153718(1).png");
         }
         if (StringUtils.isBlank(authUser.getNickName())) {
-            authUser.setNickName("鸡翅粉丝");
+            authUser.setNickName("minisuifeng");
         }
         authUser.setStatus(AuthUserStatusEnum.OPEN.getCode());
         authUser.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.suifeng.auth.infra.basic.mapper.AuthUserRoleDao">
+<mapper namespace="com.jingdiansuifeng.auth.infra.basic.mapper.AuthUserRoleDao">
 
-    <resultMap type="com.suifeng.auth.infra.basic.entity.AuthUserRole" id="AuthUserRoleMap">
+    <resultMap type="com.jingdiansuifeng.auth.infra.basic.entity.AuthUserRole" id="AuthUserRoleMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="roleId" column="role_id" jdbcType="INTEGER"/>

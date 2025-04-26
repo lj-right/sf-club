@@ -3,8 +3,8 @@ package com.jingdiansuifeng.auth.domain.service.impl;
 import com.jingdiansuifeng.auth.common.enums.IsDeletedFlagEnum;
 import com.jingdiansuifeng.auth.domain.entity.AuthRolePermissionBO;
 import com.jingdiansuifeng.auth.domain.service.AuthRolePermissionDomainService;
-import com.suifeng.auth.infra.basic.entity.AuthRolePermission;
-import com.suifeng.auth.infra.basic.service.AuthRolePermissionService;
+import com.jingdiansuifeng.auth.infra.basic.entity.AuthRolePermission;
+import com.jingdiansuifeng.auth.infra.basic.service.AuthRolePermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

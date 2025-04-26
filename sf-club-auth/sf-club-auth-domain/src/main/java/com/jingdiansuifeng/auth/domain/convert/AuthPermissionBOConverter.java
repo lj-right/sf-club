@@ -1,7 +1,7 @@
 package com.jingdiansuifeng.auth.domain.convert;
 
 import com.jingdiansuifeng.auth.domain.entity.AuthPermissionBO;
-import com.suifeng.auth.infra.basic.entity.AuthPermission;
+import com.jingdiansuifeng.auth.infra.basic.entity.AuthPermission;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
