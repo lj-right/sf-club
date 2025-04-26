@@ -36,5 +36,7 @@ public class AuthUserDTO implements Serializable {
 
     private String extJson;
 
+    private Integer isDeleted;
+
 }
 

@@ -125,7 +125,7 @@ public class UserController {
                 log.info("UserController.delete.dto:{}", JSON.toJSONString(authUserDTO));
             }
             AuthUserBO authUserBO = AuthUserDTOConverter.INSTANCE.convertDTOToBO(authUserDTO);
-            return Result.ok(authUserDomainService.update(authUserBO));
+            return Result.ok(authUserDomainService.delete(authUserBO));
         } catch (Exception e) {
             log.error("UserController.update.error:{}", e.getMessage(), e);
             return Result.fail("删除用户信息失败");
