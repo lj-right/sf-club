@@ -5,8 +5,6 @@ import com.jingdiansuifeng.auth.infra.basic.entity.AuthUserRole;
 /**
  * (AuthUserRole)表服务接口
  *
- * @author makejava
- * @since 2023-11-03 00:18:09
  */
 public interface AuthUserRoleService {
 

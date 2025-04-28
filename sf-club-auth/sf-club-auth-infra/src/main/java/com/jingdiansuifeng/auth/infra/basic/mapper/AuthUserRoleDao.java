@@ -7,8 +7,6 @@ import java.util.List;
 /**
  * (AuthUserRole)表数据库访问层
  *
- * @author makejava
- * @since 2023-11-03 00:18:09
  */
 public interface AuthUserRoleDao {
 

@@ -3,8 +3,6 @@ package com.jingdiansuifeng.auth.domain.constants;
 /**
  * auth服务常量
  *
- * @author: ChickenWing
- * @date: 2023/11/3
  */
 public class AuthConstant {
 

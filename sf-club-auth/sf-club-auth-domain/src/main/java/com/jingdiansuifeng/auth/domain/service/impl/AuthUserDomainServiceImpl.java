@@ -22,6 +22,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,7 +46,7 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
     @Resource
     private AuthRoleService authRoleService;
 
-    private String salt = "chicken";
+    private String salt = "suifeng";
 
     @Resource
     private RedisUtil redisUtil;
@@ -116,7 +117,7 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
     @Override
     public Boolean update(AuthUserBO authUserBO) {
         AuthUser authUser = AuthUserBOConverter.INSTANCE.convertBOToEntity(authUserBO);
-        Integer count = authUserService.updateByUserName(authUser);
+        Integer count = authUserService.update(authUser);
         return count > 0;
     }
 
