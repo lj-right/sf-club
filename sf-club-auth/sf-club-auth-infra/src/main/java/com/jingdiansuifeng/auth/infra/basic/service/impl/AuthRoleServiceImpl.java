@@ -14,6 +14,7 @@ import java.util.List;
  */
 @Service("authRoleService")
 public class AuthRoleServiceImpl implements AuthRoleService {
+
     @Resource
     private AuthRoleDao authRoleDao;
 
