@@ -17,5 +17,6 @@ public class AuthRoleBO implements Serializable {
     
     private String roleKey;
 
+
 }
 

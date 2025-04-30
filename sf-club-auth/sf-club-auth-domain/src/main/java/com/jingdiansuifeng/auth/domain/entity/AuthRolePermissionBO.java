@@ -20,5 +20,6 @@ public class AuthRolePermissionBO implements Serializable {
     private Long permissionId;
 
     private List<Long> permissionIdList;
+
 }
 

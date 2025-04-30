@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 @Data
 public class AuthPermission implements Serializable {
+
     private static final long serialVersionUID = -56518358607843924L;
     
     private Long id;
@@ -45,7 +46,7 @@ public class AuthPermission implements Serializable {
      * 更新时间
      */
     private Date updatedTime;
-    
+
     private Integer isDeleted;
 
 

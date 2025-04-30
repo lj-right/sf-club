@@ -1,5 +1,6 @@
 package com.jingdiansuifeng.auth.application.controller;
 
+
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
 import com.jingdiansuifeng.auth.application.convert.AuthPermissionDTOConverter;
@@ -9,6 +10,7 @@ import com.jingdiansuifeng.auth.domain.service.AuthPermissionDomainService;
 import com.jingdiansuifeng.auth.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +31,7 @@ public class PermissionController {
     /**
      * 新增权限
      */
-    @RequestMapping("add")
+    @PostMapping("add")
     public Result<Boolean> add(@RequestBody AuthPermissionDTO authPermissionDTO) {
         try {
             if (log.isInfoEnabled()) {
@@ -48,7 +50,7 @@ public class PermissionController {
     /**
      * 修改权限
      */
-    @RequestMapping("update")
+    @PostMapping("update")
     public Result<Boolean> update(@RequestBody AuthPermissionDTO authPermissionDTO) {
         try {
             if (log.isInfoEnabled()) {
@@ -66,7 +68,7 @@ public class PermissionController {
     /**
      * 删除权限
      */
-    @RequestMapping("delete")
+    @PostMapping("delete")
     public Result<Boolean> delete(@RequestBody AuthPermissionDTO authPermissionDTO) {
         try {
             if (log.isInfoEnabled()) {
@@ -84,7 +86,7 @@ public class PermissionController {
     /**
      * 查询用户权限
      */
-    @RequestMapping("getPermission")
+    @PostMapping("getPermission")
     public Result<Boolean> getPermission(String userName) {
         try {
             log.info("PermissionController.getPermission.userName:{}",userName);

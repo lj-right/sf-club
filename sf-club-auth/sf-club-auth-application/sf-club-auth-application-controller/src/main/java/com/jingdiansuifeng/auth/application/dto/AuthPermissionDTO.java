@@ -3,7 +3,6 @@ package com.jingdiansuifeng.auth.application.dto;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 权限dto
@@ -28,5 +27,6 @@ public class AuthPermissionDTO implements Serializable {
     private String icon;
     
     private String permissionKey;
+
 }
 

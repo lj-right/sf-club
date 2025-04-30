@@ -14,6 +14,7 @@ import java.util.List;
  */
 @Service("authPermissionService")
 public class AuthPermissionServiceImpl implements AuthPermissionService {
+
     @Resource
     private AuthPermissionDao authPermissionDao;
 

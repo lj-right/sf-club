@@ -22,7 +22,6 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,28 +87,29 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
         AuthRole roleResult = authRoleService.queryByCondition(authRole);
         Long roleId = roleResult.getId();
         Long userId = authUser.getId();
+
         AuthUserRole authUserRole = new AuthUserRole();
         authUserRole.setUserId(userId);
         authUserRole.setRoleId(roleId);
         authUserRole.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
         authUserRoleService.insert(authUserRole);
 
-        String roleKey = redisUtil.buildKey(authRolePrefix, authUser.getUserName());
-        List<AuthRole> roleList = new LinkedList<>();
-        roleList.add(authRole);
-        redisUtil.set(roleKey, new Gson().toJson(roleList));
-
-        AuthRolePermission authRolePermission = new AuthRolePermission();
-        authRolePermission.setRoleId(roleId);
-        List<AuthRolePermission> rolePermissionList = authRolePermissionService.
-                queryByCondition(authRolePermission);
-
-        List<Long> permissionIdList = rolePermissionList.stream()
-                .map(AuthRolePermission::getPermissionId).collect(Collectors.toList());
-        //根据roleId查权限
-        List<AuthPermission> permissionList = authPermissionService.queryByRoleList(permissionIdList);
-        String permissionKey = redisUtil.buildKey(authPermissionPrefix, authUser.getUserName());
-        redisUtil.set(permissionKey, new Gson().toJson(permissionList));
+//        String roleKey = redisUtil.buildKey(authRolePrefix, authUser.getUserName());
+//        List<AuthRole> roleList = new LinkedList<>();
+//        roleList.add(authRole);
+//        redisUtil.set(roleKey, new Gson().toJson(roleList));
+//
+//        AuthRolePermission authRolePermission = new AuthRolePermission();
+//        authRolePermission.setRoleId(roleId);
+//        List<AuthRolePermission> rolePermissionList = authRolePermissionService.
+//                queryByCondition(authRolePermission);
+//
+//        List<Long> permissionIdList = rolePermissionList.stream()
+//                .map(AuthRolePermission::getPermissionId).collect(Collectors.toList());
+//        //根据roleId查权限
+//        List<AuthPermission> permissionList = authPermissionService.queryByRoleList(permissionIdList);
+//        String permissionKey = redisUtil.buildKey(authPermissionPrefix, authUser.getUserName());
+//        redisUtil.set(permissionKey, new Gson().toJson(permissionList));
 
         return count > 0;
     }

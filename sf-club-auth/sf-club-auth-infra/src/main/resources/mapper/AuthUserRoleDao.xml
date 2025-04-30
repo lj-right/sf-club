@@ -43,10 +43,10 @@
                 and created_time = #{createdTime}
             </if>
             <if test="updatedBy != null and updatedBy != ''">
-                updated_by = #{updatedBy},
+                updated_by = #{updatedBy}
             </if>
             <if test="updatedTime != null">
-                updated_time = #{updatedTime},
+                updated_time = #{updatedTime}
             </if>
             <if test="isDeleted != null">
                 and is_deleted = #{isDeleted}

@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 @Data
 public class AuthUser implements Serializable {
+
     private static final long serialVersionUID = -50435275569670090L;
     
     private Long id;
