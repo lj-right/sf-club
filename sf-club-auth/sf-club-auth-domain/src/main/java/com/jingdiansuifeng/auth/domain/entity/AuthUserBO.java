@@ -33,7 +33,6 @@ public class AuthUserBO implements Serializable {
 
     private String extJson;
 
-    private Integer isDeleted;
 
 }
 

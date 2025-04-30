@@ -9,6 +9,7 @@ import com.jingdiansuifeng.auth.domain.service.AuthRolePermissionDomainService;
 import com.jingdiansuifeng.auth.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,7 @@ public class RolePermissionController {
     /**
      * 新增角色权限关联关系
      */
-    @RequestMapping("add")
+    @PostMapping("add")
     public Result<Boolean> add(@RequestBody AuthRolePermissionDTO authRolePermissionDTO) {
         try {
             if (log.isInfoEnabled()) {
@@ -40,7 +41,7 @@ public class RolePermissionController {
             AuthRolePermissionBO rolePermissionBO = AuthRolePermissionDTOConverter.INSTANCE.convertDTOToBO(authRolePermissionDTO);
             return Result.ok(authRolePermissionDomainService.add(rolePermissionBO));
         } catch (Exception e) {
-            log.error("PermissionController.add.error:{}", e.getMessage(), e);
+            log.error("RolePermissionController.add.error:{}", e.getMessage(), e);
             return Result.fail("新增角色权限失败");
         }
     }

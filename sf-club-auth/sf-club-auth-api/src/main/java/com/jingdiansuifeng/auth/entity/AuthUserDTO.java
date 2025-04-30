@@ -3,7 +3,6 @@ package com.jingdiansuifeng.auth.entity;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 用戶信息dto
@@ -33,7 +32,6 @@ public class AuthUserDTO implements Serializable {
 
     private String extJson;
 
-    private Integer isDeleted;
 
 }
 
