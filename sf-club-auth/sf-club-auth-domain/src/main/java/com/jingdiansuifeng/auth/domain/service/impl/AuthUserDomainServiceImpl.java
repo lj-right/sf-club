@@ -30,6 +30,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AuthUserDomainServiceImpl implements AuthUserDomainService {
 
+    private String salt = "suifeng";
+
+    private String authPermissionPrefix = "auth.permission";
+
+    private String authRolePrefix = "auth.role";
+
+    private static final String LOGIN_PREFIX = "loginCode";
+
     @Resource
     private AuthUserService authUserService;
 
@@ -45,16 +53,10 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
     @Resource
     private AuthRoleService authRoleService;
 
-    private String salt = "suifeng";
-
     @Resource
     private RedisUtil redisUtil;
 
-    private String authPermissionPrefix = "auth.permission";
 
-    private String authRolePrefix = "auth.role";
-
-    private static final String LOGIN_PREFIX = "loginCode";
 
     @Override
     @SneakyThrows

@@ -15,6 +15,8 @@ public class ReceiveTextMsgHandler implements WxChatMsgHandler {
 
     private static final String KEY_WORD = "验证码";
 
+    private static final String LOGIN_PREFIX = "loginCode";
+
     @Resource
     private RedisUtil redisUtil;
 
@@ -35,8 +37,8 @@ public class ReceiveTextMsgHandler implements WxChatMsgHandler {
         Random random = new Random();
         int verificationCode = random.nextInt(900000)+100000;
 
-        String codeKey = redisUtil.buildKey(fromUserName, String.valueOf(verificationCode));
-        redisUtil.setNx(codeKey, "1", 5L, TimeUnit.MINUTES);
+        String codeKey = redisUtil.buildKey(LOGIN_PREFIX, String.valueOf(verificationCode));
+        redisUtil.setNx(codeKey, fromUserName, 5L, TimeUnit.MINUTES);
 
         String CodeContent = "【随风Club】您的注册验证码为：" + verificationCode + "该验证码5分钟内有效，请及时验证。";
         String replyContent = "<xml>\n" +
