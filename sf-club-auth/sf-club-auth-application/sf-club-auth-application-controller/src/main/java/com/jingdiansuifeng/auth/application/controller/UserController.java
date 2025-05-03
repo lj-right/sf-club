@@ -2,6 +2,7 @@ package com.jingdiansuifeng.auth.application.controller;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaResult;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
 import com.jingdiansuifeng.auth.application.convert.AuthUserDTOConverter;
@@ -154,15 +155,27 @@ public class UserController {
         }
     }
 
+//    @RequestMapping("doLogin")
+//    public Result<SaTokenInfo> doLogin(@RequestParam("validCode") String validCode) {
+//        try {
+//            Preconditions.checkArgument(!StringUtils.isBlank(validCode), "验证码不能为空!");
+//            return Result.ok(authUserDomainService.doLogin(validCode));
+//        } catch (Exception e) {
+//            log.error("UserController.doLogin.error:{}", e.getMessage(), e);
+//            return Result.fail("用户登录失败");
+//        }
+//    }
+
+    // 测试登录  ---- http://localhost:8081/acc/doLogin?name=zhang&pwd=123456
     @RequestMapping("doLogin")
-    public Result<SaTokenInfo> doLogin(@RequestParam("validCode") String validCode) {
-        try {
-            Preconditions.checkArgument(!StringUtils.isBlank(validCode), "验证码不能为空!");
-            return Result.ok(authUserDomainService.doLogin(validCode));
-        } catch (Exception e) {
-            log.error("UserController.doLogin.error:{}", e.getMessage(), e);
-            return Result.fail("用户登录失败");
+    public SaResult doLogin(String name, String pwd) {
+        // 此处仅作模拟示例，真实项目需要从数据库中查询数据进行比对
+        if("zhang".equals(name) && "123456".equals(pwd)) {
+            StpUtil.login("suifeng");
+            SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+            return SaResult.data(tokenInfo);
         }
+        return SaResult.error("登录失败");
     }
 
     // 查询登录状态，浏览器访问： http://localhost:8081/user/isLogin

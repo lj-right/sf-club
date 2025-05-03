@@ -94,22 +94,23 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
         authUserRole.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
         authUserRoleService.insert(authUserRole);
 
-//        String roleKey = redisUtil.buildKey(authRolePrefix, authUser.getUserName());
-//        List<AuthRole> roleList = new LinkedList<>();
-//        roleList.add(authRole);
-//        redisUtil.set(roleKey, new Gson().toJson(roleList));
-//
-//        AuthRolePermission authRolePermission = new AuthRolePermission();
-//        authRolePermission.setRoleId(roleId);
-//        List<AuthRolePermission> rolePermissionList = authRolePermissionService.
-//                queryByCondition(authRolePermission);
-//
-//        List<Long> permissionIdList = rolePermissionList.stream()
-//                .map(AuthRolePermission::getPermissionId).collect(Collectors.toList());
-//        //根据roleId查权限
-//        List<AuthPermission> permissionList = authPermissionService.queryByRoleList(permissionIdList);
-//        String permissionKey = redisUtil.buildKey(authPermissionPrefix, authUser.getUserName());
-//        redisUtil.set(permissionKey, new Gson().toJson(permissionList));
+        //缓存角色信息
+        String roleKey = redisUtil.buildKey(authRolePrefix, authUser.getUserName());
+        List<AuthRole> roleList = new LinkedList<>();
+        roleList.add(authRole);
+        redisUtil.set(roleKey, new Gson().toJson(roleList));
+
+        AuthRolePermission authRolePermission = new AuthRolePermission();
+        authRolePermission.setRoleId(roleId);
+        List<AuthRolePermission> rolePermissionList = authRolePermissionService.
+                queryByCondition(authRolePermission);
+
+        List<Long> permissionIdList = rolePermissionList.stream()
+                .map(AuthRolePermission::getPermissionId).collect(Collectors.toList());
+        //根据roleId查权限
+        List<AuthPermission> permissionList = authPermissionService.queryByRoleList(permissionIdList);
+        String permissionKey = redisUtil.buildKey(authPermissionPrefix, authUser.getUserName());
+        redisUtil.set(permissionKey, new Gson().toJson(permissionList));
 
         return count > 0;
     }

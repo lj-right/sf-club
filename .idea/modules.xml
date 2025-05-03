@@ -25,6 +25,7 @@
       <module fileurl="file://$PROJECT_DIR$/sf-club-subject/sf-club-starter/sf-club-starter.iml" filepath="$PROJECT_DIR$/sf-club-subject/sf-club-starter/sf-club-starter.iml" />
       <module fileurl="file://$PROJECT_DIR$/sf-club-subject/sf-club-subject.iml" filepath="$PROJECT_DIR$/sf-club-subject/sf-club-subject.iml" />
       <module fileurl="file://$PROJECT_DIR$/sf-club-subject/sf-club-subject-api/sf-club-subject-api.iml" filepath="$PROJECT_DIR$/sf-club-subject/sf-club-subject-api/sf-club-subject-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sf-club-wx/sf-club-wx.iml" filepath="$PROJECT_DIR$/sf-club-wx/sf-club-wx.iml" />
     </modules>
   </component>
 </project>
