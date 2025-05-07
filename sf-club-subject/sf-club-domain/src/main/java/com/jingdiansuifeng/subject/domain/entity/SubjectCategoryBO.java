@@ -3,6 +3,7 @@ package com.jingdiansuifeng.subject.domain.entity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 题目分类表(SubjectCategory)实体类
@@ -39,6 +40,15 @@ public class SubjectCategoryBO implements Serializable {
      */
     private Long parentId;
 
+    /**
+     * 数量
+     */
+    private Integer count;
+
+    /**
+     * 标签bo数量
+     */
+    private List<SubjectLabelBO> subjectLabelBOList;
 
 
 }

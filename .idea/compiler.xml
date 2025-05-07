@@ -28,7 +28,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="sf-club-application" target="1.5" />
-      <module name="sf-club-application-controller" target="1.5" />
+      <module name="sf-club-application-controller" target="8" />
       <module name="sf-club-application-job" target="1.5" />
       <module name="sf-club-application-mq" target="1.5" />
       <module name="sf-club-auth" target="8" />

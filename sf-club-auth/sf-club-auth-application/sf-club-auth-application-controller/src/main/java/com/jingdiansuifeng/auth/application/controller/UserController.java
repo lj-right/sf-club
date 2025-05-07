@@ -155,17 +155,6 @@ public class UserController {
         }
     }
 
-//    @RequestMapping("doLogin")
-//    public Result<SaTokenInfo> doLogin(@RequestParam("validCode") String validCode) {
-//        try {
-//            Preconditions.checkArgument(!StringUtils.isBlank(validCode), "验证码不能为空!");
-//            return Result.ok(authUserDomainService.doLogin(validCode));
-//        } catch (Exception e) {
-//            log.error("UserController.doLogin.error:{}", e.getMessage(), e);
-//            return Result.fail("用户登录失败");
-//        }
-//    }
-
     // 测试登录  ---- http://localhost:8081/acc/doLogin?name=zhang&pwd=123456
     @RequestMapping("doLogin")
     public Result<SaResult> doLogin(@RequestParam("validCode") String validCode) {

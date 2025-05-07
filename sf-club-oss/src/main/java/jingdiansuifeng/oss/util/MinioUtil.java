@@ -1,6 +1,7 @@
 package jingdiansuifeng.oss.util;
 
 import io.minio.*;
+import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
 import jingdiansuifeng.oss.entity.FileInfo;
@@ -99,5 +100,15 @@ public class MinioUtil {
     public void deleteObject(String bucket, String objectName) throws Exception {
         minioClient.removeObject(RemoveObjectArgs.builder().bucket(bucket).object(objectName).build()
         );
+    }
+
+    /**
+     * 获取文件url
+     */
+    public String getPreviewFileUrl(String bucketName, String objectName) throws Exception{
+        GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
+                .method(Method.GET)
+                .bucket(bucketName).object(objectName).build();
+        return minioClient.getPresignedObjectUrl(args);
     }
 }
