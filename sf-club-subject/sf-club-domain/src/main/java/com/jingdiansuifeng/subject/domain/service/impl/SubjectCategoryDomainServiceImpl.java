@@ -2,8 +2,6 @@ package com.jingdiansuifeng.subject.domain.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.jingdiansuifeng.subject.common.enums.IsDeletedFlagEnum;
-import com.jingdiansuifeng.subject.domain.config.ThreadPoolConfig;
-import com.jingdiansuifeng.subject.domain.convert.SubjectLabelConverter;
 import com.jingdiansuifeng.subject.domain.entity.*;
 import com.jingdiansuifeng.subject.domain.service.SubjectCategoryDomainService;
 import com.jingdiansuifeng.subject.domain.convert.SubjectCategoryConverter;
@@ -20,10 +18,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -39,7 +37,7 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
     private SubjectLabelService subjectLabelService;
 
     @Resource
-    private ThreadPoolExecutor localThreadPool;
+    private ThreadPoolExecutor labelThreadPool;
 
 
     public void add(SubjectCategoryBO subjectCategoryBO) {
@@ -99,24 +97,40 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
         }
         List<SubjectCategoryBO> subjectCategoryBOList = SubjectCategoryConverter
                 .INSTANCE.convertCategoryListToBoList(subjectCategoryList);
-        //一次性获取标签信息
-        List<FutureTask<Map<Long,List<SubjectLabelBO>>>> futureTaskList = new LinkedList<>();
-        //线程池并发调用
-        Map<Long,List<SubjectLabelBO>> map = new HashMap<>();
-        subjectCategoryBOList.forEach(categoryBO -> {
-            FutureTask<Map<Long, List<SubjectLabelBO>>> futureTask =
-                    new FutureTask<>(() -> getLabelBOList(categoryBO));
-            futureTaskList.add(futureTask);
-            localThreadPool.submit(futureTask);
 
-        });
-        for (FutureTask<Map<Long, List<SubjectLabelBO>>> futureTask : futureTaskList) {
-                Map<Long, List<SubjectLabelBO>> resultMap = futureTask.get();
-                if (CollectionUtils.isEmpty(resultMap)){
-                    continue;
-                }
+        Map<Long,List<SubjectLabelBO>> map = new HashMap<>();
+        List<CompletableFuture<Map<Long, List<SubjectLabelBO>>>> completableFutureList = subjectCategoryBOList.stream().map(categoryBO ->
+                CompletableFuture.supplyAsync(() -> getLabelBOList(categoryBO), labelThreadPool)
+        ).collect(Collectors.toList());
+        completableFutureList.forEach(future -> {
+            try  {
+                Map<Long, List<SubjectLabelBO>> resultMap = future.get();
                 map.putAll(resultMap);
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+
+//        //一次性获取标签信息
+//        List<FutureTask<Map<Long,List<SubjectLabelBO>>>> futureTaskList = new LinkedList<>();
+//        //线程池并发调用
+//        Map<Long,List<SubjectLabelBO>> map = new HashMap<>();
+//        subjectCategoryBOList.forEach(categoryBO -> {
+//            FutureTask<Map<Long, List<SubjectLabelBO>>> futureTask =
+//                    new FutureTask<>(() -> getLabelBOList(categoryBO));
+//            futureTaskList.add(futureTask);
+//            labelThreadPool.submit(futureTask);
+//
+//        });
+//        for (FutureTask<Map<Long, List<SubjectLabelBO>>> futureTask : futureTaskList) {
+//                Map<Long, List<SubjectLabelBO>> resultMap = futureTask.get();
+//                if (CollectionUtils.isEmpty(resultMap)){
+//                    continue;
+//                }
+//                map.putAll(resultMap);
+//        }
+
         subjectCategoryBOList.forEach(categoryBO -> {
             categoryBO.setSubjectLabelBOList(map.get(categoryBO.getId()));
         });
