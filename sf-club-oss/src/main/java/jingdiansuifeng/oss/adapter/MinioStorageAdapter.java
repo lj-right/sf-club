@@ -4,9 +4,11 @@ import jingdiansuifeng.oss.entity.FileInfo;
 import jingdiansuifeng.oss.adapter.StorageAdapter;
 import jingdiansuifeng.oss.util.MinioUtil;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.List;
 
@@ -14,6 +16,12 @@ public class MinioStorageAdapter implements StorageAdapter {
 
     @Resource
     private MinioUtil minioUtil;
+
+    /**
+     * minioUrl
+     */
+    @Value("${minio.url}")
+    private String url;
 
     @Override
     @SneakyThrows
@@ -24,11 +32,15 @@ public class MinioStorageAdapter implements StorageAdapter {
     @Override
     @SneakyThrows
     public void uploadFile(MultipartFile uploadFile, String bucket, String objectName) {
-        minioUtil.createBucket(bucket);
-        if (objectName != null) {
-            minioUtil.uploadFile(uploadFile.getInputStream(), bucket, objectName + "/" + uploadFile.getName());
-        } else {
-            minioUtil.uploadFile(uploadFile.getInputStream(), bucket, uploadFile.getName());
+        try {
+            minioUtil.createBucket(bucket);
+            if (objectName != null) {
+                minioUtil.uploadFile(new BufferedInputStream(uploadFile.getInputStream()), bucket, objectName + "/" + uploadFile.getOriginalFilename());
+            } else {
+                minioUtil.uploadFile(new BufferedInputStream(uploadFile.getInputStream()), bucket, uploadFile.getOriginalFilename());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -65,7 +77,7 @@ public class MinioStorageAdapter implements StorageAdapter {
     @Override
     @SneakyThrows
     public String getUrl(String bucketName, String objectName) {
-        return minioUtil.getPreviewFileUrl(bucketName, objectName);
+        return url + "/" +bucketName + "/" + objectName;
     }
 
 

@@ -69,4 +69,4 @@ sa-token:
   # 是否输出操作日志
   is-log: true
   # 指定 token 提交时的前缀
-  token-prefix: suifeng
+#  token-prefix: suifeng

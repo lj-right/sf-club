@@ -2,6 +2,7 @@ package jingdiansuifeng.oss.config;
 
 
 import io.minio.MinioClient;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * minio配置管理
  */
 @Configuration
+@Data
 public class MinioConfig {
     /**
      * minioUrl
