@@ -64,7 +64,7 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
             log.info("SubjectCategoryController.queryCategory.boList:{}"
                     , JSON.toJSONString(boList));
         }
-        boList.forEach(bo ->{
+        boList.forEach(bo -> {
             Integer subjectCount = subjectCategoryService.querySubjectCount(bo.getId());
             bo.setCount(subjectCount);
         });
@@ -98,12 +98,12 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
         List<SubjectCategoryBO> subjectCategoryBOList = SubjectCategoryConverter
                 .INSTANCE.convertCategoryListToBoList(subjectCategoryList);
 
-        Map<Long,List<SubjectLabelBO>> map = new HashMap<>();
+        Map<Long, List<SubjectLabelBO>> map = new HashMap<>();
         List<CompletableFuture<Map<Long, List<SubjectLabelBO>>>> completableFutureList = subjectCategoryBOList.stream().map(categoryBO ->
                 CompletableFuture.supplyAsync(() -> getLabelBOList(categoryBO), labelThreadPool)
         ).collect(Collectors.toList());
         completableFutureList.forEach(future -> {
-            try  {
+            try {
                 Map<Long, List<SubjectLabelBO>> resultMap = future.get();
                 map.putAll(resultMap);
             } catch (Exception e) {
@@ -137,8 +137,11 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
         return subjectCategoryBOList;
     }
 
-    private Map<Long,List<SubjectLabelBO>> getLabelBOList(SubjectCategoryBO categoryBO) {
-        Map<Long,List<SubjectLabelBO>> labelMap = new HashMap<>();
+    private Map<Long, List<SubjectLabelBO>> getLabelBOList(SubjectCategoryBO categoryBO) {
+        if (log.isInfoEnabled()) {
+            log.info("getLabelBOList:{}", JSON.toJSONString(categoryBO));
+        }
+        Map<Long, List<SubjectLabelBO>> labelMap = new HashMap<>();
         SubjectMapping subjectMapping = new SubjectMapping();
         subjectMapping.setCategoryId(categoryBO.getId());
         List<SubjectMapping> mappingList = subjectMappingService.queryLabelId(subjectMapping);
@@ -157,7 +160,7 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
             labelBO.setSortNum(label.getSortNum());
             labelBOList.add(labelBO);
         });
-        labelMap.put(categoryBO.getId(),labelBOList);
+        labelMap.put(categoryBO.getId(), labelBOList);
         return labelMap;
     }
 }
