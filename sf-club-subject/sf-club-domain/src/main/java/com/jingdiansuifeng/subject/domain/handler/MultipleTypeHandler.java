@@ -1,13 +1,10 @@
-package com.jingdiansuifeng.subject.domain.handler.subject;
+package com.jingdiansuifeng.subject.domain.handler;
 
 import com.google.common.base.Preconditions;
 import com.jingdiansuifeng.subject.common.enums.IsDeletedFlagEnum;
 import com.jingdiansuifeng.subject.common.enums.SubjectInfoTypeEnum;
-import com.jingdiansuifeng.subject.domain.convert.JudgeSubjectConverter;
 import com.jingdiansuifeng.subject.domain.convert.MultipleSubjectConverter;
-import com.jingdiansuifeng.subject.domain.convert.RadioSubjectConverter;
 import com.jingdiansuifeng.subject.domain.entity.*;
-import com.jingdiansuifeng.subject.domain.service.SubjectMappingService;
 import com.jingdiansuifeng.subject.domain.service.SubjectMultipleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;

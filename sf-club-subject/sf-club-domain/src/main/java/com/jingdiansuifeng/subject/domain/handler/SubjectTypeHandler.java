@@ -1,4 +1,4 @@
-package com.jingdiansuifeng.subject.domain.handler.subject;
+package com.jingdiansuifeng.subject.domain.handler;
 
 import com.jingdiansuifeng.subject.common.enums.SubjectInfoTypeEnum;
 import com.jingdiansuifeng.subject.domain.entity.SubjectInfoBO;
