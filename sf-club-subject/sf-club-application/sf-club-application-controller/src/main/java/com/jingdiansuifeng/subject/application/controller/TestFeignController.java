@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/subject/category")
 @Slf4j
-public class testFeignController {
+public class TestFeignController {
 
     @Resource
     private UserRpc userRpc;
