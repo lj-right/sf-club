@@ -13,7 +13,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 登录拦截器
+ * 登录过滤器类，实现GlobalFilter接口，用于在请求处理前进行全局过滤和处理
  */
 @Component
 @Slf4j
