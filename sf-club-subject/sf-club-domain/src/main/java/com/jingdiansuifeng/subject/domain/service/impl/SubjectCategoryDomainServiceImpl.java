@@ -1,6 +1,8 @@
 package com.jingdiansuifeng.subject.domain.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.jingdiansuifeng.subject.common.enums.IsDeletedFlagEnum;
 import com.jingdiansuifeng.subject.domain.entity.*;
 import com.jingdiansuifeng.subject.domain.service.SubjectCategoryDomainService;
@@ -8,19 +10,20 @@ import com.jingdiansuifeng.subject.domain.convert.SubjectCategoryConverter;
 import com.jingdiansuifeng.subject.domain.service.SubjectCategoryService;
 import com.jingdiansuifeng.subject.domain.service.SubjectLabelService;
 import com.jingdiansuifeng.subject.domain.service.SubjectMappingService;
+import com.jingdiansuifeng.subject.domain.service.util.CacheUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.FutureTask;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +41,9 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
 
     @Resource
     private ThreadPoolExecutor labelThreadPool;
+
+    @Resource
+    private CacheUtil cacheUtil;
 
 
     public void add(SubjectCategoryBO subjectCategoryBO) {
@@ -87,8 +93,16 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
     @SneakyThrows
     @Override
     public List<SubjectCategoryBO> queryCategoryAndLabel(SubjectCategoryBO subjectCategoryBO) {
+        String cacheKey = "categoryAndLabel."+subjectCategoryBO.getId();
+        List<SubjectCategoryBO> SubjectCategoryBOS = cacheUtil.getResult(cacheKey,
+                SubjectCategoryBO.class,
+                (result) -> getSubjectCategoryBOS(subjectCategoryBO.getId()));
+        return SubjectCategoryBOS;
+    }
+
+    private List<SubjectCategoryBO> getSubjectCategoryBOS(Long categoryId) {
         SubjectCategory subjectCategory = new SubjectCategory();
-        subjectCategory.setId(subjectCategoryBO.getId());
+        subjectCategory.setId(categoryId);
         subjectCategory.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
         List<SubjectCategory> subjectCategoryList = subjectCategoryService.queryCategory(subjectCategory);
         if (log.isInfoEnabled()) {
@@ -110,26 +124,6 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
                 e.printStackTrace();
             }
         });
-
-
-//        //一次性获取标签信息
-//        List<FutureTask<Map<Long,List<SubjectLabelBO>>>> futureTaskList = new LinkedList<>();
-//        //线程池并发调用
-//        Map<Long,List<SubjectLabelBO>> map = new HashMap<>();
-//        subjectCategoryBOList.forEach(categoryBO -> {
-//            FutureTask<Map<Long, List<SubjectLabelBO>>> futureTask =
-//                    new FutureTask<>(() -> getLabelBOList(categoryBO));
-//            futureTaskList.add(futureTask);
-//            labelThreadPool.submit(futureTask);
-//
-//        });
-//        for (FutureTask<Map<Long, List<SubjectLabelBO>>> futureTask : futureTaskList) {
-//                Map<Long, List<SubjectLabelBO>> resultMap = futureTask.get();
-//                if (CollectionUtils.isEmpty(resultMap)){
-//                    continue;
-//                }
-//                map.putAll(resultMap);
-//        }
 
         subjectCategoryBOList.forEach(categoryBO -> {
             categoryBO.setSubjectLabelBOList(map.get(categoryBO.getId()));
