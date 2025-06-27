@@ -1,5 +1,6 @@
 package com.jingdiansuifeng.subject.application.controller;
 
+import com.jingdiansuifeng.subject.infra.basic.service.SubjectEsService;
 import com.jingdiansuifeng.subject.infra.entity.UserInfo;
 import com.jingdiansuifeng.subject.infra.rpc.UserRpc;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +18,30 @@ public class TestFeignController {
     @Resource
     private UserRpc userRpc;
 
+    @Resource
+    private SubjectEsService subjectEsService;
+
     @GetMapping("/testFeign")
     public void testFeign() {
         UserInfo userInfo = userRpc.getUserInfo("admin");
         log.info("testFeign.userInfo:{}",userInfo);
+    }
+
+    @GetMapping("/testCreateIndex")
+    public void testCreateIndex() {
+        subjectEsService.createIndex();
+    }
+
+    @GetMapping("/addDocs")
+    public void addDocs() {
+        subjectEsService.addDocs();
+    }
+    @GetMapping("/find")
+    public void find() {
+        subjectEsService.find();
+    }
+    @GetMapping("/search")
+    public void search() {
+        subjectEsService.search();
     }
 }

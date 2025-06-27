@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     username: root
-    password: SCZOTUo/gq6vVCjYUeRBaiuyPnEQNS7UG9AX6cVCbX1L9SGm1EhpQTkfKBAQ8hmkVw0le7ksC38d4b1mbfB7sQ==
+    password: asd1625414624
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://27.106.112.214:3306/sf-club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
     type: com.alibaba.druid.pool.DruidDataSource
@@ -27,10 +27,12 @@ spring:
           enabled: true
         config:
           enabled: true
-
-publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJPPaeB3f7uSvCwFWPJwfBjQv8B+V2/6yKUd8hh6iNR1v3aBaMQYA3cItN09QaC3be6Y9jZDO0R8wmt9iTYYQqECAwEAAQ==
+  elasticsearch:
+    rest:
+      uris: http://27.106.112.214:9200
 logging:
   config: classpath:log4j2-spring.xml
+
 #mybatis-plus:
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

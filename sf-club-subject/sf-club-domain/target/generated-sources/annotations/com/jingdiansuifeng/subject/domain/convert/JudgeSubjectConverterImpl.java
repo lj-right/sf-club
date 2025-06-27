@@ -1,14 +1,14 @@
 package com.jingdiansuifeng.subject.domain.convert;
 
-import com.jingdiansuifeng.subject.domain.entity.SubjectAnswerBO;
-import com.jingdiansuifeng.subject.domain.entity.SubjectJudge;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectAnswerBO;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectJudge;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-09T15:44:52+0800",
+    date = "2025-06-27T09:27:40+0800",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 1.8.0_144 (Oracle Corporation)"
 )
 public class JudgeSubjectConverterImpl implements JudgeSubjectConverter {

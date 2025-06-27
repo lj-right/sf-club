@@ -1,6 +1,6 @@
 package com.jingdiansuifeng.subject.domain.convert;
 
-import com.jingdiansuifeng.subject.domain.entity.*;
+import com.jingdiansuifeng.subject.infra.basic.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
