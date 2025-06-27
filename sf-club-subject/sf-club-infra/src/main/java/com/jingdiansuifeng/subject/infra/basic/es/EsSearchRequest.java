@@ -1,6 +1,7 @@
 package com.jingdiansuifeng.subject.infra.basic.es;
 
 
+import lombok.Data;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.SortOrder;
@@ -8,6 +9,7 @@ import org.elasticsearch.search.sort.SortOrder;
 /**
  * 请求类
  */
+@Data
 public class EsSearchRequest {
 
     /**
