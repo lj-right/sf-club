@@ -7,15 +7,13 @@ import com.jingdiansuifeng.subject.domain.convert.SubjectInfoConverter;
 import com.jingdiansuifeng.subject.infra.basic.entity.*;
 import com.jingdiansuifeng.subject.domain.handler.SubjectTypeHandler;
 import com.jingdiansuifeng.subject.domain.handler.SubjectTypeHandlerFactory;
-import com.jingdiansuifeng.subject.infra.basic.service.SubjectInfoDomainService;
-import com.jingdiansuifeng.subject.infra.basic.service.SubjectInfoService;
-import com.jingdiansuifeng.subject.infra.basic.service.SubjectLabelService;
-import com.jingdiansuifeng.subject.infra.basic.service.SubjectMappingService;
+import com.jingdiansuifeng.subject.infra.basic.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +33,9 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
 
     @Resource
     private SubjectMappingService subjectMappingService;
+
+    @Resource
+    private SubjectEsService subjectEsService;
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -69,6 +70,17 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
             });
         });
         subjectMappingService.batchInsert(mappingList);
+        //同步es
+        SubjectInfoEs subjectInfoEs = new SubjectInfoEs();
+        subjectInfoEs.setDocId(new IdWorkerUtil(1).nextId());
+        subjectInfoEs.setSubjectId(subjectInfo.getId());
+        subjectInfoEs.setSubjectAnswer(subjectInfoBO.getSubjectAnswer());
+        subjectInfoEs.setCreateTime(new Date().getTime());
+        subjectInfoEs.setCreateUser("suifeng");
+        subjectInfoEs.setSubjectName(subjectInfo.getSubjectName());
+        subjectInfoEs.setSubjectType(subjectInfo.getSubjectType());
+        subjectEsService.insert(subjectInfoEs);
+
     }
 
     @Override
