@@ -1,6 +1,7 @@
-package com.jingdiansuifeng.subject.application.util;
+package com.jingdiansuifeng.subject.common.util;
 
-import com.jingdiansuifeng.subject.application.context.LoginContextHolder;
+
+import com.jingdiansuifeng.subject.common.context.LoginContextHolder;
 
 /**
  * 用户登录util
