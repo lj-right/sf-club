@@ -37,7 +37,7 @@ public class MybatisInterceptor implements Interceptor {
             replaceEntityProperty(parameter, loginId, sqlCommandType);
         }
 
-        return null;
+        return invocation.proceed();
     }
 
     private void replaceEntityProperty(Object parameter, String loginId, SqlCommandType sqlCommandType) {
