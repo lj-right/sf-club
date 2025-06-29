@@ -4,6 +4,8 @@ import com.jingdiansuifeng.subject.common.entity.PageResult;
 import com.jingdiansuifeng.subject.infra.basic.entity.SubjectInfoBO;
 import com.jingdiansuifeng.subject.infra.basic.entity.SubjectInfoEs;
 
+import java.util.List;
+
 
 /**
  * 题目领域服务
@@ -37,4 +39,6 @@ public interface SubjectInfoDomainService {
      * @return
      */
     PageResult<SubjectInfoEs> getSubjectPageBySearch(SubjectInfoBO subjectInfoBO);
+
+    List<SubjectInfoBO> getContributeList();
 }

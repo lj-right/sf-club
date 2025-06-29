@@ -7,6 +7,7 @@ import com.jingdiansuifeng.subject.application.convert.SubjectInfoDTOConverter;
 import com.jingdiansuifeng.subject.application.dto.SubjectInfoDTO;
 import com.jingdiansuifeng.subject.common.entity.PageResult;
 import com.jingdiansuifeng.subject.common.entity.Result;
+import com.jingdiansuifeng.subject.domain.convert.SubjectInfoConverter;
 import com.jingdiansuifeng.subject.infra.basic.entity.SubjectAnswerBO;
 import com.jingdiansuifeng.subject.infra.basic.entity.SubjectInfoBO;
 import com.jingdiansuifeng.subject.infra.basic.entity.SubjectInfoEs;
@@ -88,7 +89,9 @@ public class SubjectController {
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConverter.INSTANCE
                     .convertDtoToInfoBo(subjectInfoDTO);
             PageResult<SubjectInfoBO> boPageResult = subjectInfoDomainService.getSubjectPage(subjectInfoBO);
-            return Result.ok(boPageResult);
+
+            PageResult<SubjectInfoDTO> dtoPageResult = SubjectInfoDTOConverter.INSTANCE.convertBoPageToInfoDTOPage(boPageResult);
+            return Result.ok(dtoPageResult);
         } catch (Exception e) {
             log.error("SubjectController.getSubjectPage.error:{}", e.getMessage(), e);
             return Result.fail("查询题目列表失败");
@@ -145,6 +148,22 @@ public class SubjectController {
         } catch (Exception e) {
             log.error("SubjectController.getSubjectPageBySearch.error:{}", e.getMessage(), e);
             return Result.fail("全文检索失败");
+        }
+    }
+
+    /**
+     * 获取题目的贡献榜
+     */
+    @PostMapping("/getContributeList")
+    public Result<List<SubjectInfoDTO>> getContributeList() {
+        try {
+            List<SubjectInfoBO> boList =subjectInfoDomainService.getContributeList();
+            List<SubjectInfoDTO> dtoList = SubjectInfoDTOConverter
+                    .INSTANCE.convertBoListToInfoDTOList(boList);
+            return Result.ok(dtoList);
+        } catch (Exception e) {
+            log.error("SubjectController.getContributeList.error:{}", e.getMessage(), e);
+            return Result.fail("获取题目的贡献榜失败");
         }
     }
 

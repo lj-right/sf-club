@@ -8,11 +8,15 @@ import com.jingdiansuifeng.subject.infra.basic.entity.*;
 import com.jingdiansuifeng.subject.domain.handler.SubjectTypeHandler;
 import com.jingdiansuifeng.subject.domain.handler.SubjectTypeHandlerFactory;
 import com.jingdiansuifeng.subject.infra.basic.service.*;
+import com.jingdiansuifeng.subject.infra.entity.UserInfo;
+import com.jingdiansuifeng.subject.infra.rpc.UserRpc;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,6 +40,9 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
 
     @Resource
     private SubjectEsService subjectEsService;
+
+    @Resource
+    private UserRpc userRpc;
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -133,5 +140,22 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
 
     }
 
+    @Override
+    public List<SubjectInfoBO> getContributeList() {
+        List<SubjectInfo> subjectInfoList = subjectInfoService.getContributeCount();
+        if (CollectionUtils.isEmpty(subjectInfoList)) {
+            return Collections.emptyList();
+        }
+        List<SubjectInfoBO> boList = new LinkedList<>();
+        for (SubjectInfo subjectInfo : subjectInfoList) {
+            SubjectInfoBO subjectInfoBO = new SubjectInfoBO();
+            subjectInfoBO.setSubjectCount(subjectInfo.getSubjectCount());
+            UserInfo userInfo = userRpc.getUserInfo(subjectInfo.getCreatedBy());
+            subjectInfoBO.setCreateUser(userInfo.getNickName());
+            subjectInfoBO.setCreateUserAvatar(userInfo.getAvatar());
+            boList.add(subjectInfoBO);
+        }
+        return boList;
 
+    }
 }
