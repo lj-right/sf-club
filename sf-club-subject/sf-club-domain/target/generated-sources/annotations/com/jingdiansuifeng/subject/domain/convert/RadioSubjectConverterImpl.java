@@ -1,7 +1,7 @@
 package com.jingdiansuifeng.subject.domain.convert;
 
-import com.jingdiansuifeng.subject.infra.basic.entity.SubjectAnswerBO;
-import com.jingdiansuifeng.subject.infra.basic.entity.SubjectRadio;
+import com.jingdiansuifeng.subject.domain.entity.SubjectAnswerBO;
+import com.jingdiansuifeng.subject.domain.entity.SubjectRadio;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;

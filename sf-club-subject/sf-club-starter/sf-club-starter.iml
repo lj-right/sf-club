@@ -44,6 +44,21 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.3.3" level="project" />
     <orderEntry type="module" module-name="sf-club-application-controller" />
     <orderEntry type="module" module-name="sf-club-domain" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-data-redis:2.4.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-redis:2.4.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-keyvalue:2.4.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:2.4.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-oxm:5.3.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context-support:5.3.3" level="project" />
+    <orderEntry type="library" name="Maven: io.lettuce:lettuce-core:6.0.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-pool2:2.9.0" level="project" />
     <orderEntry type="module" module-name="sf-club-infra" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:2.4.2" level="project" />
     <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:3.4.5" level="project" />
@@ -90,20 +105,6 @@
     <orderEntry type="module" module-name="sf-club-auth-common" />
     <orderEntry type="library" name="Maven: cn.dev33:sa-token-redis-jackson:1.37.0" level="project" />
     <orderEntry type="library" name="Maven: cn.dev33:sa-token-core:1.37.0" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-data-redis:2.4.2" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-redis:2.4.3" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-keyvalue:2.4.3" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:2.4.3" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-oxm:5.3.3" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-context-support:5.3.3" level="project" />
-    <orderEntry type="library" name="Maven: io.lettuce:lettuce-core:6.0.2.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-pool2:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch.client:elasticsearch-rest-client:7.9.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.13" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.14" level="project" />
@@ -154,7 +155,6 @@
     <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-common:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.2" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-api:1.4.1" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.4" level="project" />
     <orderEntry type="library" name="Maven: io.prometheus:simpleclient:0.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-commons:3.0.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-crypto:5.4.2" level="project" />

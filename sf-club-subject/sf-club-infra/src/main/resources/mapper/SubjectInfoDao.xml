@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jingdiansuifeng.subject.infra.basic.mapper.SubjectInfoDao">
+<mapper namespace="com.jingdiansuifeng.subject.domain.mapper.SubjectInfoDao">
 
-    <resultMap type="com.jingdiansuifeng.subject.infra.basic.entity.SubjectInfo" id="SubjectInfoMap">
+    <resultMap type="com.jingdiansuifeng.subject.domain.entity.SubjectInfo" id="SubjectInfoMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="subjectName" column="subject_name" jdbcType="VARCHAR"/>
         <result property="subjectDifficult" column="subject_difficult" jdbcType="INTEGER"/>
@@ -174,7 +174,7 @@
         limit #{start},#{pageSize}
     </select>
 
-    <select id="getContributeCount" resultType="com.jingdiansuifeng.subject.infra.basic.entity.SubjectInfo">
+    <select id="getContributeCount" resultType="com.jingdiansuifeng.subject.domain.entity.SubjectInfo">
             select count(1) as subjectCount,
                    created_by as createdBy
             from subject_info
