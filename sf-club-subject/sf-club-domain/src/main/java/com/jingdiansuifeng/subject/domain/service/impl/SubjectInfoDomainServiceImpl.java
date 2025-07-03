@@ -42,6 +42,9 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
     private SubjectEsService subjectEsService;
 
     @Resource
+    private SubjectLikedDomainService subjectLikedDomainService;
+
+    @Resource
     private UserRpc userRpc;
 
     @Resource
@@ -134,6 +137,10 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
         List<SubjectLabel> subjectLabels = subjectLabelService.batchQueryById(labelIds);
         List<String> labelNames = subjectLabels.stream().map(SubjectLabel::getLabelName).collect(Collectors.toList());
         bo.setLabelNames(labelNames);
+        bo.setLiked(subjectLikedDomainService.isLiked(subjectInfo.getId().toString(), LoginUtil.getLoginId()));
+        bo.setLikedCount(subjectLikedDomainService.getLikedCount(subjectInfo.getId().toString()));
+
+
         return bo;
     }
 

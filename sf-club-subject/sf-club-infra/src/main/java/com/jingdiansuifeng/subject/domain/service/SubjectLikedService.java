@@ -56,6 +56,10 @@ public interface SubjectLikedService {
 
     List<SubjectLiked> queryPage(SubjectLiked subjectLiked, int start, Integer pageSize);
 
+    /**
+     * 将缓存的点赞信息同步到数据库
+     * @param subjectLikedList
+     */
     void batchInsertOrUpdate(List<SubjectLiked> subjectLikedList);
 
 }
