@@ -139,9 +139,22 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
         bo.setLabelNames(labelNames);
         bo.setLiked(subjectLikedDomainService.isLiked(subjectInfo.getId().toString(), LoginUtil.getLoginId()));
         bo.setLikedCount(subjectLikedDomainService.getLikedCount(subjectInfo.getId().toString()));
-
+        assembleSubjectCursor(subjectInfoBO,bo);
 
         return bo;
+    }
+
+    private void assembleSubjectCursor(SubjectInfoBO subjectInfoBO,SubjectInfoBO bo) {
+        Long categoryId = subjectInfoBO.getCategoryId();
+        Long labelId = subjectInfoBO.getLabelId();
+        Long subjectId = subjectInfoBO.getId();
+        if (Objects.isNull(categoryId) || Objects.isNull(labelId)) {
+            return;
+        }
+        Long nextSubjectId = subjectInfoService.querySubjectIdCursor(categoryId, labelId, subjectId, 1);
+        subjectInfoBO.setNextSubjectId(nextSubjectId);
+        Long lastSubjectId = subjectInfoService.querySubjectIdCursor(categoryId, labelId, subjectId, 0);
+        subjectInfoBO.setNextSubjectId(lastSubjectId);
     }
 
     @Override

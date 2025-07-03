@@ -81,4 +81,10 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
             return this.subjectInfoDao.getContributeCount();
 
     }
+
+    @Override
+    public Long querySubjectIdCursor(Long categoryId, Long labelId, Long subjectId, int cursor) {
+
+        return this.subjectInfoDao.querySubjectIdCursor(categoryId, labelId, subjectId, cursor);
+    }
 }

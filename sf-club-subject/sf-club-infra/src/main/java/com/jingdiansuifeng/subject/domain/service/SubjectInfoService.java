@@ -58,4 +58,6 @@ public interface SubjectInfoService {
     List<SubjectInfo> queryPage(SubjectInfo subjectInfo, Long categoryId, Long labelId, int start, Integer pageSize);
 
     List<SubjectInfo> getContributeCount();
+
+    Long querySubjectIdCursor(Long categoryId, Long labelId, Long subjectId, int cursor);
 }
