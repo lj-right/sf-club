@@ -22,6 +22,9 @@
       <module fileurl="file://$PROJECT_DIR$/sf-club-gateway/sf-club-gateway.iml" filepath="$PROJECT_DIR$/sf-club-gateway/sf-club-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/sf-club-subject/sf-club-infra/sf-club-infra.iml" filepath="$PROJECT_DIR$/sf-club-subject/sf-club-infra/sf-club-infra.iml" />
       <module fileurl="file://$PROJECT_DIR$/sf-club-oss/sf-club-oss.iml" filepath="$PROJECT_DIR$/sf-club-oss/sf-club-oss.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sf-club-practice/sf-club-practice.iml" filepath="$PROJECT_DIR$/sf-club-practice/sf-club-practice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sf-club-practice/sf-club-practice-api/sf-club-practice-api.iml" filepath="$PROJECT_DIR$/sf-club-practice/sf-club-practice-api/sf-club-practice-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sf-club-practice/sf-club-practice-server/sf-club-practice-server.iml" filepath="$PROJECT_DIR$/sf-club-practice/sf-club-practice-server/sf-club-practice-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/sf-club-subject/sf-club-starter/sf-club-starter.iml" filepath="$PROJECT_DIR$/sf-club-subject/sf-club-starter/sf-club-starter.iml" />
       <module fileurl="file://$PROJECT_DIR$/sf-club-subject/sf-club-subject.iml" filepath="$PROJECT_DIR$/sf-club-subject/sf-club-subject.iml" />
       <module fileurl="file://$PROJECT_DIR$/sf-club-subject/sf-club-subject-api/sf-club-subject-api.iml" filepath="$PROJECT_DIR$/sf-club-subject/sf-club-subject-api/sf-club-subject-api.iml" />

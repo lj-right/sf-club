@@ -20,10 +20,12 @@
         <module name="sf-club-auth-api" />
         <module name="sf-club-auth-starter" />
         <module name="sf-club-wx" />
+        <module name="sf-club-practice-api" />
         <module name="sf-club-auth-common" />
         <module name="sf-club-starter" />
         <module name="sf-club-application-job" />
         <module name="sf-club-infra" />
+        <module name="sf-club-practice-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -47,6 +49,9 @@
       <module name="sf-club-gen" target="8" />
       <module name="sf-club-infra" target="8" />
       <module name="sf-club-oss" target="8" />
+      <module name="sf-club-practice" target="8" />
+      <module name="sf-club-practice-api" target="8" />
+      <module name="sf-club-practice-server" target="8" />
       <module name="sf-club-starter" target="8" />
       <module name="sf-club-subject" target="1.5" />
       <module name="sf-club-subject-api" target="1.5" />
