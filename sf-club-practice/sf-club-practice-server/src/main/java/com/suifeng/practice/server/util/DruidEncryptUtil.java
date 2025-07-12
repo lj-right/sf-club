@@ -42,8 +42,7 @@ public class DruidEncryptUtil {
     }
 
     public static void main(String[] args) throws Exception {
-        String encrypt = encrypt("123456");
-        System.out.println("encrypt:" + encrypt);
+        String encrypt = encrypt("asd1625414624.");
     }
 
 }

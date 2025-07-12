@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     username: root
-    password: SCZOTUo/gq6vVCjYUeRBaiuyPnEQNS7UG9AX6cVCbX1L9SGm1EhpQTkfKBAQ8hmkVw0le7ksC38d4b1mbfB7sQ==
+    password: OR/zYmlbZQcyHfTeBgDSWjUy/o7hD8TB+7lXkYoe/i8km4DwX4PgWCIelqSTflVGyqRmbqBJlDYYHleyKJNPdg==
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://27.106.112.214:3306/sf-club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
     type: com.alibaba.druid.pool.DruidDataSource
@@ -49,6 +49,6 @@ spring:
         max-idle: 10
         # 连接池中的最小空闲连接
         min-idle: 0
-publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJPPaeB3f7uSvCwFWPJwfBjQv8B+V2/6yKUd8hh6iNR1v3aBaMQYA3cItN09QaC3be6Y9jZDO0R8wmt9iTYYQqECAwEAAQ==
+publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIU0/QL7nBX9N75yYjjQnTHOEJYf6JmnosB5Zp0fCVB/Ngf2Nx6R8Tzo7L21UIFqUwWAe2lGBNn/T9g5mfSMxKsCAwEAAQ==
 logging:
   config: classpath:log4j2-spring.xml
