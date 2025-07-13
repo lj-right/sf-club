@@ -8,8 +8,6 @@ import java.io.Serializable;
 /**
  * 简答题信息表(SubjectBrief)实体类
  *
- * @author makejava
- * @since 2025-04-07 10:33:47
  */
 @Data
 public class SubjectBrief implements Serializable {

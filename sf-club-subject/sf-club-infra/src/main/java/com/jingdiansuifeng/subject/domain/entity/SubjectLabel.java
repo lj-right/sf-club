@@ -7,8 +7,6 @@ import java.io.Serializable;
 /**
  * 题目标签表(SubjectLabel)实体类
  *
- * @author makejava
- * @since 2025-04-06 09:32:16
  */
 @Data
 public class SubjectLabel implements Serializable {

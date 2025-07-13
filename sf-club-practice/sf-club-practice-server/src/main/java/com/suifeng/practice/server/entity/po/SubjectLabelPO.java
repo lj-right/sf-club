@@ -1,33 +1,35 @@
-package com.jingdiansuifeng.subject.domain.entity;
+package com.suifeng.practice.server.entity.po;
 
 import lombok.Data;
 
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
- * 题目分类关系表(SubjectMapping)实体类
+ * 题目标签表(SubjectLabel)实体类
  *
  */
 @Data
-public class SubjectMapping implements Serializable {
-    private static final long serialVersionUID = 481095346433229088L;
+public class SubjectLabelPO implements Serializable {
+    private static final long serialVersionUID = -92612181683405663L;
     /**
      * 主键
      */
     private Long id;
     /**
-     * 题目id
+     * 标签名称
      */
-    private Long subjectId;
+    private String labelName;
+
     /**
-     * 分类id
+     *  标签分类id
      */
     private Long categoryId;
+
     /**
-     * 标签id
+     * 排序
      */
-    private Long labelId;
+    private Integer sortNum;
     /**
      * 创建人
      */

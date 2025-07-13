@@ -8,8 +8,6 @@ import java.io.Serializable;
 /**
  * 单选题信息表(SubjectRadio)实体类
  *
- * @author makejava
- * @since 2025-04-07 10:36:27
  */
 @Data
 public class SubjectRadio implements Serializable {

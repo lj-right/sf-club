@@ -8,8 +8,6 @@ import java.io.Serializable;
 /**
  * 判断题信息表(SubjectJudge)实体类
  *
- * @author makejava
- * @since 2025-04-07 10:34:30
  */
 @Data
 public class SubjectJudge implements Serializable {
