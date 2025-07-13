@@ -1,6 +1,6 @@
 package com.jingdiansuifeng.subject.application.controller;
 
-import com.jingdiansuifeng.subject.infra.entity.UserInfo;
+import com.jingdiansuifeng.subject.infra.basic.entity.UserInfo;
 import com.jingdiansuifeng.subject.infra.rpc.UserRpc;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

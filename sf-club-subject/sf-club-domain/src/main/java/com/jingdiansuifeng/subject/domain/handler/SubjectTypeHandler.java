@@ -1,8 +1,8 @@
 package com.jingdiansuifeng.subject.domain.handler;
 
 import com.jingdiansuifeng.subject.common.enums.SubjectInfoTypeEnum;
-import com.jingdiansuifeng.subject.domain.entity.SubjectInfoBO;
-import com.jingdiansuifeng.subject.domain.entity.SubjectOptionBO;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectInfoBO;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectOptionBO;
 
 public interface SubjectTypeHandler {
 

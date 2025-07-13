@@ -1,5 +1,5 @@
 server:
-  port: 3000
+  port: 3010
 spring:
   datasource:
     username: root
@@ -56,13 +56,14 @@ logging:
 es:
   cluster:
     esConfigs[0]:
-      name: b4a3cd3300b0
-      nodes: http://8.148.214.12:9200
+      name: 5ad1a12387b1
+      nodes: 8.148.214.12:9200
 xxl:
   job:
     admin:
-      address: http://8.148.214.12:8088/xxl-job-admin
-    accessToken: default_token
+      addresses: http://8.148.214.12:8088/xxl-job-admin
+      accessToken: default_token
+      timeout: 3
     executor:
       appname: sf-club-subject
       address:
@@ -70,6 +71,10 @@ xxl:
       port: 9999
       logpath: /data/applogs/xxl-job/jobhandler
       logretentiondays: 30
+#rocketmq:
+#  name-server: 117.72.10.84:9876
+#  producer:
+#    group: test-group
 #mybatis-plus:
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

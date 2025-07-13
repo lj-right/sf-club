@@ -4,11 +4,11 @@ import com.google.common.base.Preconditions;
 import com.jingdiansuifeng.subject.common.enums.IsDeletedFlagEnum;
 import com.jingdiansuifeng.subject.common.enums.SubjectInfoTypeEnum;
 import com.jingdiansuifeng.subject.domain.convert.JudgeSubjectConverter;
-import com.jingdiansuifeng.subject.domain.entity.SubjectAnswerBO;
-import com.jingdiansuifeng.subject.domain.entity.SubjectInfoBO;
-import com.jingdiansuifeng.subject.domain.entity.SubjectJudge;
-import com.jingdiansuifeng.subject.domain.entity.SubjectOptionBO;
-import com.jingdiansuifeng.subject.domain.service.SubjectJudgeService;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectAnswerBO;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectInfoBO;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectJudge;
+import com.jingdiansuifeng.subject.infra.basic.entity.SubjectOptionBO;
+import com.jingdiansuifeng.subject.infra.basic.service.SubjectJudgeService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
