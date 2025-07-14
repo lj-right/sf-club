@@ -3,7 +3,7 @@ package com.jingdiansuifeng.subject.infra.config;
 import com.jingdiansuifeng.subject.common.util.LoginUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.javassist.bytecode.analysis.Executor;
+import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.plugin.*;

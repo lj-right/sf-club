@@ -21,17 +21,13 @@ public class CallBackController {
     @Resource
     private WxChatMsgFactory wxChatMsgFactory;
 
-    @RequestMapping("/test")
-    public String callBack() {
-        return "hello wx";
-    }
 
 //    /**
 //     * 微信回调
 //     *
 //     * @return
 //     */
-//    @GetMapping("/callback")
+//    @GetMapping("/callback2")
 //    public String callBack(
 //            @RequestParam("signature") String signature,
 //            @RequestParam("timestamp") String timestamp,
@@ -44,6 +40,29 @@ public class CallBackController {
 //            return echostr;
 //        }
 //        return "unknown ikun";
+//    }
+
+    // 1. 处理微信服务器验证(GET请求)
+//    @GetMapping("/callback")
+//    public String verifyServer(
+//            @RequestParam("signature") String signature,
+//            @RequestParam("timestamp") String timestamp,
+//            @RequestParam("nonce") String nonce,
+//            @RequestParam("echostr") String echostr){
+//
+//        log.info("微信验证请求: signature={}, timestamp={}, nonce={}",
+//                signature, timestamp, nonce);
+//
+//        // 验证签名
+//        String shaStr = SHA1.getSHA1(TOKEN, timestamp, nonce, "");
+//        if (shaStr != null && shaStr.equals(signature)) {
+//            return echostr; // 验证成功返回echostr
+//        }
+//
+//        log.error("签名验证失败: 本地生成={}, 微信传入={}", shaStr, signature);
+//        return "signature verification failed";
+//
+//
 //    }
 
     @PostMapping(value = "/callback", produces = "application/xml;charset=UTF-8")
@@ -60,20 +79,20 @@ public class CallBackController {
         Map<String, String> msgMap = MessageUtil.parseXml(requestBody);
         String msgType = msgMap.get("MsgType");
         String event = msgMap.get("Event") == null ? "" : msgMap.get("Event");
-        log.info("msgType：{},event:{},", msgType,event);
+        log.info("msgType：{},event:{},", msgType, event);
 
         StringBuilder sb = new StringBuilder();
         sb.append(msgType);
-        if (!StringUtils.isEmpty(event)){
+        if (!StringUtils.isEmpty(event)) {
             sb.append(".").append(event);
         }
         String msgTypeKey = sb.toString();
         WxChatMsgHandler wxChatMsgHandler = wxChatMsgFactory.getHandlerByMsgType(msgTypeKey);
-        if (Objects.isNull(wxChatMsgHandler)){
+        if (Objects.isNull(wxChatMsgHandler)) {
             return "Unknown";
         }
         String replyContent = wxChatMsgHandler.dealMsg(msgMap);
-        log.info("回复内容：{}",replyContent);
+        log.info("回复内容：{}", replyContent);
 
         return replyContent;
     }

@@ -221,7 +221,7 @@ public class EsRestClient {
             String[] fields = esSearchRequest.getFields();
             int from = esSearchRequest.getFrom();
             int size = esSearchRequest.getSize();
-            Long minustes = esSearchRequest.getMinustes();
+            Long minustes = esSearchRequest.getMinutes();
             Boolean needScroll = esSearchRequest.getNeedScroll();
             String sortName = esSearchRequest.getSortName();
             SortOrder sortOrder = esSearchRequest.getSortOrder();

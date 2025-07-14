@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan("com.jingdiansuifeng")
-@MapperScan("com/jingdiansuifeng/subject/infra/basic/mapper")
+@MapperScan("com.jingdiansuifeng.**.mapper")
 @EnableFeignClients(basePackages = "com.jingdiansuifeng")
 public class SubjectApplication {
     public static void main(String[] args) {

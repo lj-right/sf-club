@@ -11,8 +11,6 @@ import java.util.List;
 /**
  * 题目信息表(SubjectInfo)表服务实现类
  *
- * @author makejava
- * @since 2025-04-07 10:32:53
  */
 @Service("subjectInfoService")
 public class SubjectInfoServiceImpl implements SubjectInfoService {

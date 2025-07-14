@@ -40,7 +40,7 @@ public class EsSearchRequest {
     /**
      * 快照缓存时间
      */
-    private Long minustes;
+    private Long minutes;
 
     /**
      * 排序字段

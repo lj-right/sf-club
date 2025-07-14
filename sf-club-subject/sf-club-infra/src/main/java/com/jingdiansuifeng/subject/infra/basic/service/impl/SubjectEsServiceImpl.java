@@ -158,7 +158,7 @@ public class SubjectEsServiceImpl implements SubjectEsService {
 
     private EsIndexInfo getEsIndexInfo() {
         EsIndexInfo esIndexInfo = new EsIndexInfo();
-        esIndexInfo.setClusterName("b4a3cd3300b0");
+        esIndexInfo.setClusterName("5ad1a12387b1");
         esIndexInfo.setIndexName("subject_info");
         return esIndexInfo;
     }
