@@ -11,6 +11,7 @@
         where a.subject_id = b.id
         and a.is_deleted = 0
         and b.is_deleted = 0
+        and a.category_id = #{categoryId}
         and b.subject_type in
         <foreach item="item" collection="subjectTypeList" separator="," open="(" close=")" index="">
             #{item}

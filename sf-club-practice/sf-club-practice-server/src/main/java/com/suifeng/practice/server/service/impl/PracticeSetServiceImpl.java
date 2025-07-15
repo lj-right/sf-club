@@ -1,8 +1,10 @@
 package com.suifeng.practice.server.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.suifeng.practice.api.enums.SubjectInfoTypeEnum;
-import com.suifeng.practice.api.vo.SpecialPractiveCategoryVO;
 import com.suifeng.practice.api.vo.SpecialPracticeLabelVO;
+import com.suifeng.practice.api.vo.SpecialPractiveCategoryVO;
 import com.suifeng.practice.api.vo.SpecialPractiveVO;
 import com.suifeng.practice.server.dao.SubjectCategoryDao;
 import com.suifeng.practice.server.dao.SubjectLabelDao;
@@ -14,13 +16,15 @@ import com.suifeng.practice.server.entity.po.PrimaryCategoryPO;
 import com.suifeng.practice.server.entity.po.SubjectLabelPO;
 import com.suifeng.practice.server.service.PracticeSetService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -46,45 +50,54 @@ public class PracticeSetServiceImpl implements PracticeSetService {
         categoryDTO.setSubjectTypeList(subjectTypeList);
 
         List<PrimaryCategoryPO> poList = subjectCategoryDao.getPrimaryCategory(categoryDTO);
+        //上面有效的只有parentId
         if (CollectionUtils.isEmpty(poList)) {
             return specialPractiveVOList;
         }
         poList.forEach(primaryCategoryPO -> {
             SpecialPractiveVO specialPractiveVO = new SpecialPractiveVO();
-            specialPractiveVO.setPrimaryCategoryId(primaryCategoryPO.getId());
-            CategoryPO categoryPO = subjectCategoryDao.selectById(primaryCategoryPO.getParentId());
-            specialPractiveVO.setPrimaryCategoryName(categoryPO.getCategoryName());
-            CategoryDTO categoryDTOTemp = new CategoryDTO();
-            categoryDTOTemp.setCategoryType(2);
-            categoryDTOTemp.setParentId(primaryCategoryPO.getId());
-            List<CategoryPO> smallPoList = subjectCategoryDao.selectList(categoryDTOTemp);
-            if (!CollectionUtils.isEmpty(smallPoList)) {
-                return;
-            }
 
-            List<SpecialPractiveCategoryVO> categoryVOList = new LinkedList<>();
-            smallPoList.forEach(smallPo -> {
-                List<SpecialPracticeLabelVO> labelVOList = getLabelVOList(smallPo.getId(), subjectTypeList);
-                if (CollectionUtils.isEmpty(labelVOList)) {
+            //拿到大类集合
+            List<PrimaryCategoryPO> categoryPOList = subjectCategoryDao.selectByParentId(primaryCategoryPO.getParentId());
+
+            categoryPOList.forEach(categoryPO -> {
+                specialPractiveVO.setPrimaryCategoryId(categoryPO.getId());
+                specialPractiveVO.setPrimaryCategoryName(categoryPO.getCategoryName());
+                CategoryDTO categoryDTOTemp = new CategoryDTO();
+                categoryDTOTemp.setCategoryType(2);
+                categoryDTOTemp.setParentId(primaryCategoryPO.getParentId()+1);
+                //拿到子分类
+                List<CategoryPO> smallPoList = subjectCategoryDao.selectList(categoryDTOTemp);
+                if (CollectionUtils.isEmpty(smallPoList)) {
                     return;
                 }
-                SpecialPractiveCategoryVO specialPractiveCategoryVO = new SpecialPractiveCategoryVO();
-                specialPractiveCategoryVO.setCategoryId(smallPo.getId());
-                specialPractiveCategoryVO.setCategoryName(smallPo.getCategoryName());
 
-                List<SpecialPracticeLabelVO> labelList = new LinkedList<>();
-                labelVOList.forEach(labelVO -> {
-//                    labelList.add(labelVO);
-                    SpecialPracticeLabelVO specialPracticeLabelVO = new SpecialPracticeLabelVO();
-                    specialPracticeLabelVO.setId(labelVO.getId());
-                    specialPracticeLabelVO.setAssembleId(labelVO.getAssembleId());
-                    specialPracticeLabelVO.setLabelName(labelVO.getLabelName());
-                    labelList.add(specialPracticeLabelVO);
+                List<SpecialPractiveCategoryVO> categoryVOList = new LinkedList<>();
+                smallPoList.forEach(smallPo -> {
+                    List<SpecialPracticeLabelVO> labelVOList = getLabelVOList(smallPo.getId(), subjectTypeList);
+                    //同理上面也只能拿到labelId
+                    if (CollectionUtils.isEmpty(labelVOList)) {
+                        return;
+                    }
+                    SpecialPractiveCategoryVO specialPractiveCategoryVO = new SpecialPractiveCategoryVO();
+                    specialPractiveCategoryVO.setCategoryId(smallPo.getId());
+                    specialPractiveCategoryVO.setCategoryName(smallPo.getCategoryName());
+
+                    List<SpecialPracticeLabelVO> labelList = new LinkedList<>();
+                    labelVOList.forEach(labelVO -> {
+                        SpecialPracticeLabelVO specialPracticeLabelVO = new SpecialPracticeLabelVO();
+                        specialPracticeLabelVO.setId(labelVO.getId());
+                        specialPracticeLabelVO.setAssembleId(labelVO.getAssembleId());
+                        specialPracticeLabelVO.setLabelName(labelVO.getLabelName());
+                        labelList.add(specialPracticeLabelVO);
+                    });
+                    specialPractiveCategoryVO.setLabelList(labelList);
+                    categoryVOList.add(specialPractiveCategoryVO);
                 });
-                specialPractiveCategoryVO.setLabelList(labelList);
-                categoryVOList.add(specialPractiveCategoryVO);
+                specialPractiveVO.setCategoryList(categoryVOList);
+
             });
-            specialPractiveVO.setCategoryList(categoryVOList);
+
             specialPractiveVOList.add(specialPractiveVO);
         });
         return specialPractiveVOList;

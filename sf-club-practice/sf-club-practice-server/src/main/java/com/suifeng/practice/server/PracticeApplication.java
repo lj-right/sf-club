@@ -11,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
  */
 
 @SpringBootApplication
-@ComponentScan("com.suifeng.practice")
-@MapperScan("com.suifeng.**.mapper")
+@ComponentScan("com.suifeng")
+@MapperScan("com.suifeng.**.dao")
 public class PracticeApplication {
     public static void main(String[] args) {
         SpringApplication.run(PracticeApplication.class);

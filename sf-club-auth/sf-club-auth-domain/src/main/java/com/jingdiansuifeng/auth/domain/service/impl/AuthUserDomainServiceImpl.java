@@ -86,6 +86,7 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
         //建立一个初步的角色的关联
         AuthRole authRole = new AuthRole();
         authRole.setRoleKey(AuthConstant.NORMAL_USER);
+//        authRole.setRoleKey(AuthConstant.SUPER_USER);
         AuthRole roleResult = authRoleService.queryByCondition(authRole);
         Long roleId = roleResult.getId();
         Long userId = authUser.getId();
