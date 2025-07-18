@@ -1,6 +1,6 @@
 spring:
   application:
-    name: sf-club-practice-dev
+    name: sf-club-practice
   profiles:
     active: dev
   cloud:

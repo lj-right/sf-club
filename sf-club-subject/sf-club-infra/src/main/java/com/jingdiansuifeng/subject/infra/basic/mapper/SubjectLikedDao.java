@@ -1,7 +1,7 @@
 package com.jingdiansuifeng.subject.infra.basic.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.jingdiansuifeng.subject.infra.basic.entity.SubjectLiked;
+import com.jingdiansuifeng.subject.domain.entity.SubjectLiked;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

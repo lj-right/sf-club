@@ -42,5 +42,15 @@
         and category_type = #{categoryType}
     </select>
 
+    <select id="selectById" resultType="com.suifeng.practice.server.entity.po.CategoryPO">
+        select id,
+        category_name as categoryName,
+        category_type as categoryType,
+        parent_id as parentId
+        from subject_category
+        where is_deleted = 0
+        and id = #{id}
+    </select>
+
 </mapper>
 

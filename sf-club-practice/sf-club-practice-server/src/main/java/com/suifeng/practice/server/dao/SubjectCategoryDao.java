@@ -19,5 +19,8 @@ public interface SubjectCategoryDao {
     List<PrimaryCategoryPO> selectByParentId(Long id);
 
     List<CategoryPO> selectList(CategoryDTO categoryDTOTemp);
+
+
+    CategoryPO selectById(Long categoryId);
 }
 

@@ -20,12 +20,12 @@ public class SaTokenConfigure {
                 // 拦截地址
                 .addInclude("/**")    /* 拦截全部path */
                 // 开放地址
-//            .addExclude("/favicon.ico")
+            .addExclude("/favicon.ico")
                 // 鉴权方法：每次访问进入
                 .setAuth(obj -> {
                     System.out.println("---------- 前端访问path:" + SaHolder.getRequest().getRequestPath());
                     // 登录校验 -- 拦截所有路由，并排除/user/doLogin 用于开放登录
-//                    SaRouter.match("/auth/**", "/auth/user/doLogin", r -> StpUtil.checkRole("suifeng"));
+                    SaRouter.match("/auth/**", "/auth/user/doLogin", r -> StpUtil.checkLogin());
                     SaRouter.match("/oss/**", r -> StpUtil.checkLogin());
                     SaRouter.match("/subject/subject/add", r -> StpUtil.checkPermission("subject:add"));
                     SaRouter.match("/subject/subject/label/delete", r -> StpUtil.checkPermission("label:delete"));

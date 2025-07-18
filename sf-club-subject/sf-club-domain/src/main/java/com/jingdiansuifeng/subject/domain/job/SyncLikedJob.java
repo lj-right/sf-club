@@ -1,6 +1,6 @@
 package com.jingdiansuifeng.subject.domain.job;
 
-import com.jingdiansuifeng.subject.infra.basic.service.SubjectLikedDomainService;
+import com.jingdiansuifeng.subject.domain.service.SubjectLikedDomainService;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;

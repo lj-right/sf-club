@@ -1,9 +1,9 @@
 package com.jingdiansuifeng.subject.domain.convert;
 
-import com.jingdiansuifeng.subject.infra.basic.entity.SubjectAnswerBO;
-import com.jingdiansuifeng.subject.infra.basic.entity.SubjectInfo;
-import com.jingdiansuifeng.subject.infra.basic.entity.SubjectInfoBO;
-import com.jingdiansuifeng.subject.infra.basic.entity.SubjectOptionBO;
+import com.jingdiansuifeng.subject.domain.entity.SubjectAnswerBO;
+import com.jingdiansuifeng.subject.domain.entity.SubjectInfo;
+import com.jingdiansuifeng.subject.domain.entity.SubjectInfoBO;
+import com.jingdiansuifeng.subject.domain.entity.SubjectOptionBO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;

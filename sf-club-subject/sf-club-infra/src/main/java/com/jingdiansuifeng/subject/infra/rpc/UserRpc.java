@@ -3,7 +3,7 @@ package com.jingdiansuifeng.subject.infra.rpc;
 import com.jingdiansuifeng.auth.api.UserFeignService;
 import com.jingdiansuifeng.auth.entity.AuthUserDTO;
 import com.jingdiansuifeng.auth.entity.Result;
-import com.jingdiansuifeng.subject.infra.basic.entity.UserInfo;
+import com.jingdiansuifeng.subject.domain.entity.UserInfo;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

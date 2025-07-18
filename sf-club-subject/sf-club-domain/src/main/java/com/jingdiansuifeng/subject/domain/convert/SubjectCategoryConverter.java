@@ -1,7 +1,7 @@
 package com.jingdiansuifeng.subject.domain.convert;
 
-import com.jingdiansuifeng.subject.infra.basic.entity.SubjectCategory;
-import com.jingdiansuifeng.subject.infra.basic.entity.SubjectCategoryBO;
+import com.jingdiansuifeng.subject.domain.entity.SubjectCategory;
+import com.jingdiansuifeng.subject.domain.entity.SubjectCategoryBO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

@@ -42,7 +42,7 @@ public class CallBackController {
 //        return "unknown ikun";
 //    }
 
-    // 1. 处理微信服务器验证(GET请求)
+//     1. 处理微信服务器验证(GET请求)
 //    @GetMapping("/callback")
 //    public String verifyServer(
 //            @RequestParam("signature") String signature,
@@ -61,8 +61,6 @@ public class CallBackController {
 //
 //        log.error("签名验证失败: 本地生成={}, 微信传入={}", shaStr, signature);
 //        return "signature verification failed";
-//
-//
 //    }
 
     @PostMapping(value = "/callback", produces = "application/xml;charset=UTF-8")

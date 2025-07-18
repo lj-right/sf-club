@@ -22,6 +22,18 @@ spring:
             - Path=/subject/**
           filters:
             - StripPrefix=1
+        - id: wx
+          uri: lb://sf-club-wx
+          predicates:
+            - Path=/wx/**
+          filters:
+            - StripPrefix=1
+        - id: practice
+          uri: lb://sf-club-practice
+          predicates:
+            - Path=/practice/**
+          filters:
+            - StripPrefix=1
   # redis配置
   redis:
     # Redis数据库索引（默认为0）

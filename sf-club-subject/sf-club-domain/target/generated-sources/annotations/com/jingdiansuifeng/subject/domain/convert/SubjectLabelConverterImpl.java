@@ -1,7 +1,7 @@
 package com.jingdiansuifeng.subject.domain.convert;
 
-import com.jingdiansuifeng.subject.infra.basic.entity.SubjectLabel;
-import com.jingdiansuifeng.subject.infra.basic.entity.SubjectLabelBO;
+import com.jingdiansuifeng.subject.domain.entity.SubjectLabel;
+import com.jingdiansuifeng.subject.domain.entity.SubjectLabelBO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;

@@ -2,12 +2,13 @@ package com.suifeng.practice.server.dao;
 
 
 import com.suifeng.practice.server.entity.po.SubjectLabelPO;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 /**
  * 题目标签表(SubjectLabel)表数据库访问层
  *
- * @author makejava
- * @since 2025-04-06 09:32:15
  */
 public interface SubjectLabelDao {
 
@@ -18,6 +19,11 @@ public interface SubjectLabelDao {
      * @return 实例对象
      */
     SubjectLabelPO queryById(Long id);
+
+    /**
+     * 批量查询当前题目的标签名称
+     */
+    List<String> getLabelNameByIds(@Param("labelIds") List<Long> labelIds);
 
 }
 

@@ -1,6 +1,6 @@
 package com.jingdiansuifeng.subject.infra.basic.mapper;
 
-import com.jingdiansuifeng.subject.infra.basic.entity.SubjectInfo;
+import com.jingdiansuifeng.subject.domain.entity.SubjectInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
