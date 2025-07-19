@@ -16,6 +16,7 @@ import com.jingdiansuifeng.subject.domain.service.SubjectLikedDomainService;
 import com.jingdiansuifeng.subject.domain.service.SubjectLikedService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,8 +42,8 @@ public class SubjectLikedDomainServiceImpl implements SubjectLikedDomainService 
     @Resource
     private RedisUtil redisUtil;
 
-//    @Resource
-//    private RocketMQTemplate rocketMQTemplate;
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
 
     private static final String SUBJECT_LIKED_KEY = "subject.liked";
 
@@ -62,7 +63,7 @@ public class SubjectLikedDomainServiceImpl implements SubjectLikedDomainService 
         subjectLikedMessage.setSubjectId(subjectId);
         subjectLikedMessage.setLikeUserId(likeUserId);
         subjectLikedMessage.setStatus(status);
-//        rocketMQTemplate.convertAndSend("subject-liked", JSON.toJSONString(subjectLikedMessage));
+        rocketMQTemplate.convertAndSend("subject-liked", JSON.toJSONString(subjectLikedMessage));
 
 
 

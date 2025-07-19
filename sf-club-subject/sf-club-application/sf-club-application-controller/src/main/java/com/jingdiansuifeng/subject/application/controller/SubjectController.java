@@ -13,6 +13,8 @@ import com.jingdiansuifeng.subject.domain.entity.SubjectInfoEs;
 import com.jingdiansuifeng.subject.domain.service.SubjectInfoDomainService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +33,8 @@ public class SubjectController {
     @Resource
     private SubjectInfoDomainService subjectInfoDomainService;
 
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
 
     /**
      * 新增题目
@@ -165,6 +169,21 @@ public class SubjectController {
             return Result.fail("获取题目的贡献榜失败");
         }
     }
+
+    /**
+     * 测试mq发送
+     */
+    @PostMapping("/pushMessage")
+    public Result<Boolean> pushMessage(@Param("id") int id) {
+        try {
+            rocketMQTemplate.convertAndSend("first-topic","随风向您问好！");
+            return Result.ok(true);
+        } catch (Exception e) {
+            log.error("SubjectController.pushMessage.error:{}", e.getMessage(), e);
+            return Result.fail("mq推送消息失败");
+        }
+    }
+
 
 
 }
