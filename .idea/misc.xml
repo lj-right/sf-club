@@ -11,6 +11,10 @@
         <option value="$PROJECT_DIR$/sf-club-wx/pom.xml" />
         <option value="$PROJECT_DIR$/jc-club-gen/pom.xml" />
         <option value="$PROJECT_DIR$/sf-club-practice/pom.xml" />
+        <option value="$PROJECT_DIR$/asyncTool/pom.xml" />
+        <option value="$PROJECT_DIR$/sf-club-circle/pom.xml" />
+        <option value="$PROJECT_DIR$/sf-club-circle/sf-club-circle-api/pom.xml" />
+        <option value="$PROJECT_DIR$/sf-club-circle/sf-club-circle-server/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

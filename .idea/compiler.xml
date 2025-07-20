@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="sf-club-auth-application-controller" />
         <module name="sf-club-domain" />
+        <module name="asyncTool" />
         <module name="sf-club-subject-api" />
         <module name="sf-club-auth-infra" />
         <module name="sf-club-common" />
@@ -16,9 +17,11 @@
         <module name="sf-club-application-controller" />
         <module name="sf-club-oss" />
         <module name="sf-club-auth-domain" />
+        <module name="sf-club-circle-api" />
         <module name="sf-club-gateway" />
         <module name="sf-club-auth-api" />
         <module name="sf-club-auth-starter" />
+        <module name="sf-club-circle-server" />
         <module name="sf-club-wx" />
         <module name="sf-club-practice-api" />
         <module name="sf-club-auth-common" />
@@ -29,6 +32,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="asyncTool" target="1.8" />
       <module name="sf-club-application" target="1.5" />
       <module name="sf-club-application-controller" target="8" />
       <module name="sf-club-application-job" target="1.5" />
@@ -43,6 +47,9 @@
       <module name="sf-club-auth-domain" target="8" />
       <module name="sf-club-auth-infra" target="8" />
       <module name="sf-club-auth-starter" target="8" />
+      <module name="sf-club-circle" target="8" />
+      <module name="sf-club-circle-api" target="8" />
+      <module name="sf-club-circle-server" target="8" />
       <module name="sf-club-common" target="1.8" />
       <module name="sf-club-domain" target="8" />
       <module name="sf-club-gateway" target="8" />
@@ -51,7 +58,9 @@
       <module name="sf-club-oss" target="8" />
       <module name="sf-club-practice" target="8" />
       <module name="sf-club-practice-api" target="8" />
+      <module name="sf-club-practice-api (1)" target="8" />
       <module name="sf-club-practice-server" target="8" />
+      <module name="sf-club-practice-server (1)" target="8" />
       <module name="sf-club-starter" target="8" />
       <module name="sf-club-subject" target="1.5" />
       <module name="sf-club-subject-api" target="1.5" />
