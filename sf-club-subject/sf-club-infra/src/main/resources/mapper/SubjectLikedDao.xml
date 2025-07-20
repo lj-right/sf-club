@@ -5,7 +5,7 @@
     <resultMap type="com.jingdiansuifeng.subject.domain.entity.SubjectLiked" id="SubjectLikedMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="subjectId" column="subject_id" jdbcType="INTEGER"/>
-        <result property="likeUserId" column="like_user_id" jdbcType="INTEGER"/>
+        <result property="likeUserId" column="like_user_id" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="createdBy" column="created_by" jdbcType="VARCHAR"/>
         <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
@@ -90,7 +90,7 @@
         </foreach>
     </insert>
 
-    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+    <insert id="batchInsertOrUpdate" keyProperty="id" useGeneratedKeys="true">
         insert into subject_liked(subject_id, like_user_id, status, created_by, created_time, update_by, update_time, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
