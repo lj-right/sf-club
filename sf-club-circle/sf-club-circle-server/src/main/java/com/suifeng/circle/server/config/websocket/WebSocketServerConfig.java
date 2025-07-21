@@ -1,8 +1,8 @@
 package com.suifeng.circle.server.config.websocket;
 
-import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.suifeng.circle.server.util.LoginUtil;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.websocket.HandshakeResponse;
 import javax.websocket.server.HandshakeRequest;
@@ -25,6 +25,7 @@ public class WebSocketServerConfig extends ServerEndpointConfig.Configurator {
         if(!CollectionUtils.isEmpty(erpList)){
             sec.getUserProperties().put("erp", erpList.get(0));
         }
+//        sec.getUserProperties().put("erp", LoginUtil.getLoginId());
     }
 
 }

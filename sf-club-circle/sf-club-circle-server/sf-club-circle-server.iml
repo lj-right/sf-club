@@ -127,5 +127,8 @@
     <orderEntry type="library" name="Maven: com.github.ben-manes.caffeine:caffeine:2.8.2" level="project" />
     <orderEntry type="library" name="Maven: org.checkerframework:checker-qual:3.3.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.3.4" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-websocket:2.4.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-messaging:5.3.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-websocket:5.3.3" level="project" />
   </component>
 </module>
