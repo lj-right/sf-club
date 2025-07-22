@@ -34,6 +34,18 @@ spring:
             - Path=/practice/**
           filters:
             - StripPrefix=1
+        - id: circle
+          uri: lb://sf-club-circle
+          predicates:
+            - Path=/circle/**
+          filters:
+            - StripPrefix=1
+        - id: interview
+          uri: lb://sf-club-interview
+          predicates:
+            - Path=/interview/**
+          filters:
+            - StripPrefix=1
   # redis配置
   redis:
     # Redis数据库索引（默认为0）
