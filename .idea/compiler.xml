@@ -15,6 +15,7 @@
         <module name="sf-club-common" />
         <module name="sf-club-application-mq" />
         <module name="sf-club-application-controller" />
+        <module name="sf-club-interview-api" />
         <module name="sf-club-oss" />
         <module name="sf-club-auth-domain" />
         <module name="sf-club-circle-api" />
@@ -27,6 +28,7 @@
         <module name="sf-club-auth-common" />
         <module name="sf-club-starter" />
         <module name="sf-club-application-job" />
+        <module name="sf-club-interview-server" />
         <module name="sf-club-infra" />
         <module name="sf-club-practice-server" />
       </profile>
@@ -55,6 +57,9 @@
       <module name="sf-club-gateway" target="8" />
       <module name="sf-club-gen" target="8" />
       <module name="sf-club-infra" target="8" />
+      <module name="sf-club-interview" target="8" />
+      <module name="sf-club-interview-api" target="8" />
+      <module name="sf-club-interview-server" target="8" />
       <module name="sf-club-oss" target="8" />
       <module name="sf-club-practice" target="8" />
       <module name="sf-club-practice-api" target="8" />
