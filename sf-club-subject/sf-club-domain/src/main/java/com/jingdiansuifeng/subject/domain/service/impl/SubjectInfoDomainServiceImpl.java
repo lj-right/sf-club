@@ -170,19 +170,21 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
     @Override
     public List<SubjectInfoBO> getContributeList() {
         Set<ZSetOperations.TypedTuple<String>> typedTuples = redisUtil.rankWithScore(RANK_KEY, 0, 5);
+        if (log.isInfoEnabled()) {
+            log.info("getContributeList.typedTuples:{}", JSON.toJSONString(typedTuples));
+        }
         if (CollectionUtils.isEmpty(typedTuples)) {
             return Collections.emptyList();
         }
         List<SubjectInfoBO> boList = new LinkedList<>();
-        typedTuples.forEach(rank -> {{
-                SubjectInfoBO subjectInfoBO = new SubjectInfoBO();
-                subjectInfoBO.setSubjectCount(rank.getScore().intValue());
-                UserInfo userInfo = userRpc.getUserInfo(rank.getValue());
-                subjectInfoBO.setCreateUser(userInfo.getNickName());
-                subjectInfoBO.setCreateUserAvatar(userInfo.getAvatar());
-                boList.add(subjectInfoBO);
-            }});
-
+        typedTuples.forEach((rank -> {
+            SubjectInfoBO subjectInfoBO = new SubjectInfoBO();
+            subjectInfoBO.setSubjectCount(rank.getScore().intValue());
+            UserInfo userInfo = userRpc.getUserInfo(rank.getValue());
+            subjectInfoBO.setCreateUser(userInfo.getNickName());
+            subjectInfoBO.setCreateUserAvatar(userInfo.getAvatar());
+            boList.add(subjectInfoBO);
+        }));
         return boList;
     }
 }

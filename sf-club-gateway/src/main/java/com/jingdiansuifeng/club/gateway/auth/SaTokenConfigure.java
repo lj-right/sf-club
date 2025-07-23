@@ -25,14 +25,13 @@ public class SaTokenConfigure {
                 .setAuth(obj -> {
                     System.out.println("---------- 前端访问path:" + SaHolder.getRequest().getRequestPath());
                     // 登录校验 -- 拦截所有路由，并排除/user/doLogin 用于开放登录
-                    SaRouter.match("/auth/**", "/auth/user/doLogin", r -> StpUtil.checkRole("normal_user"));
+                    SaRouter.match("/auth/**", "/auth/user/doLogin");
                     SaRouter.match("/oss/**", r -> StpUtil.checkLogin());
                     SaRouter.match("/circle/**", r -> StpUtil.checkLogin());
                     SaRouter.match("/interview/**", r -> StpUtil.checkLogin());
                     SaRouter.match("/practice/**", r -> StpUtil.checkLogin());
-                    SaRouter.match("/subject/subject/add", r -> StpUtil.checkPermission("subject:add"));
-                    SaRouter.match("/subject/subject/label/delete", r -> StpUtil.checkPermission("label:delete"));
                     SaRouter.match("/subject/**", r -> StpUtil.checkLogin());
+                    SaRouter.match("/subject/subject/add", r -> StpUtil.checkPermission("subject:add"));
 
                 })
                 // 异常处理方法：每次setAuth函数出现异常时进入
