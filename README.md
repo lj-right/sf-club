@@ -5,14 +5,14 @@
 ## 项目简介
 本项目是一个基于Spring Cloud Alibaba的微服务架构实践，采用了领域驱动设计（DDD）的分层思想，整合了当前主流的技术栈，包括Nacos、Satoken、RocketMQ等，旨在构建一个高可用、可扩展的分布式系统。
 ## 技术选型
-![输入图片说明](introduce/%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B.png)
+![image](introduce/技术选型.png)
 ## 现有架构
 在复杂基础上简化保留精髓，一步步进行演变。
-![现有架构](introduce/%E7%8E%B0%E6%9C%89%E6%9E%B6%E6%9E%84.png)
+![image](introduce/现有架构.png)
 ## 微服务架构
-![微服务架构](introduce/%E6%9E%B6%E6%9E%84.png)
+![image](introduce/架构.png)
 ## 数据库设计
-![数据库](introduce/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1.png)
+![image](introduce/数据库设计.png)
 ## 模块划分
  sf-club-auth            // 鉴权微服务 [3011]
 
