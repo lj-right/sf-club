@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: sf-club-langchain4j-server
+server:
+  port: 8088
