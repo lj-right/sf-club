@@ -1,9 +1,14 @@
 # Compiled class file
 *.class
+*.iml
+# IDEA 目录及内部所有配置
+.idea/
+*.ipr
+*.iws
+out/
 
 # Log file
 *.log
-
 # BlueJ files
 *.ctxt
 
