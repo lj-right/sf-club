@@ -1,5 +1,6 @@
 package com.suifeng.sfclublangchain4jserver.ai;
 
+import dev.langchain4j.service.Result;
 import jakarta.annotation.Priority;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,13 @@ class AiCodeHelperServiceTest {
         String useMessage = "你好，我是随风，喜欢唱跳rap篮球，请帮我制定一周编程刷题计划";
         AiCodeHelperService.Report report = aiCodeHelperService.chatForReport(1, useMessage);
         System.out.println(report);
+    }
 
+    @Test
+    void chatWithRag() {
+        String useMessage = "怎么学习Java，有哪些面试题";
+        Result<String> chat = aiCodeHelperService.chatWithRag(1, useMessage);
+        System.out.println(chat.sources());
+        System.out.println(chat.content());
     }
 }
