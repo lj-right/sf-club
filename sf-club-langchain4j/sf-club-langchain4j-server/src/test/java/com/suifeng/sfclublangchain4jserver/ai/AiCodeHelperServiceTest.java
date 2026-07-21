@@ -17,15 +17,15 @@ class AiCodeHelperServiceTest {
 
     @Test
     void chat() {
-        String resultMeassage = aiCodeHelperService.chat(1,"你好，我是随风");
+        String resultMeassage = aiCodeHelperService.chat(1, "你好，我是随风");
         System.out.println(resultMeassage);
     }
 
     @Test
     void chatWithMessage() {
-        String result = aiCodeHelperService.chat(1,"你好，我是随风");
+        String result = aiCodeHelperService.chat(1, "你好，我是随风");
         System.out.println(result);
-        result = aiCodeHelperService.chat(1,"我是谁来着？我是小明还是小美");
+        result = aiCodeHelperService.chat(1, "我是谁来着？我是小明还是小美");
         System.out.println(result);
     }
 
@@ -41,6 +41,20 @@ class AiCodeHelperServiceTest {
         String useMessage = "怎么学习Java，有哪些面试题";
         Result<String> chat = aiCodeHelperService.chatWithRag(1, useMessage);
         System.out.println(chat.sources());
+        System.out.println("--------分割线---------");
         System.out.println(chat.content());
+    }
+
+    @Test
+    void chatWithTool() {
+        String useMessage = "有哪些常见的计算机网络面试题？";
+        String chat = aiCodeHelperService.chat(1, useMessage);
+        System.out.println(chat);
+    }
+    @Test
+    void chatWithMcp() {
+        String useMessage = "蔡徐坤是谁小黑子是什么意思";
+        String chat = aiCodeHelperService.chat(1, useMessage);
+        System.out.println(chat);
     }
 }
