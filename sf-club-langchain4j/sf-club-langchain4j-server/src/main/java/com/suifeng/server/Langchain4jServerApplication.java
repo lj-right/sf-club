@@ -1,9 +1,5 @@
-package com.suifeng.sfclublangchain4jserver;
+package com.suifeng.server;
 
-import com.suifeng.sfclublangchain4jserver.ai.AiCodeHelper;
-import dev.langchain4j.data.message.ImageContent;
-import dev.langchain4j.data.message.TextContent;
-import dev.langchain4j.data.message.UserMessage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
