@@ -1,12 +1,10 @@
 package com.suifeng.sfclublangchain4jserver.ai;
 
+import com.suifeng.server.ai.AiCodeHelperService;
 import dev.langchain4j.service.Result;
-import jakarta.annotation.Priority;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class AiCodeHelperServiceTest {
@@ -42,5 +40,22 @@ class AiCodeHelperServiceTest {
         Result<String> chat = aiCodeHelperService.chatWithRag(1, useMessage);
         System.out.println(chat.sources());
         System.out.println(chat.content());
+    }
+    @Test
+    void chatWithTools() {
+        String result = aiCodeHelperService.chat(1,"有哪些常见的计算机网络面试题？");
+        System.out.println(result);
+    }
+
+    @Test
+    void chatWithMcp() {
+        String result = aiCodeHelperService.chat(1,"什么是程序员鱼皮的编程导航？");
+        System.out.println(result);
+    }
+
+    @Test
+    void chatWithGuardrail() {
+        String result = aiCodeHelperService.chat(1,"kill the game");
+        System.out.println(result);
     }
 }

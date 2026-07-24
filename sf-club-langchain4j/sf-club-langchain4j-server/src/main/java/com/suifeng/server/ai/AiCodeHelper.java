@@ -1,4 +1,4 @@
-package com.suifeng.sfclublangchain4jserver.ai;
+package com.suifeng.server.ai;
 
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.SystemMessage;
