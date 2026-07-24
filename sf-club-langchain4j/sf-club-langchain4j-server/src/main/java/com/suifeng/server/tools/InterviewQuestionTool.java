@@ -1,4 +1,4 @@
-package com.suifeng.sfclublangchain4jserver.tools;
+package com.suifeng.server.tools;
 
 
 import dev.langchain4j.agent.tool.P;
