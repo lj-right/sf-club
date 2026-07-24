@@ -9,13 +9,13 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.suifeng</groupId>
-    <artifactId>sf-club-langchain4j</artifactId>
+    <artifactId>langchain4j-spring-nexus</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>sf-club-langchain4j</name>
-    <description>sf-club-langchain4j</description>
+    <name>langchain4j-spring-nexus</name>
+    <description>langchain4j-spring-nexus</description>
     <modules>
-        <module>sf-club-langchain4j-api</module>
-        <module>sf-club-langchain4j-server</module>
+        <module>langchain4j-spring-nexus-api</module>
+        <module>langchain4j-spring-nexus-server</module>
     </modules>
     <packaging>pom</packaging>
     <properties>

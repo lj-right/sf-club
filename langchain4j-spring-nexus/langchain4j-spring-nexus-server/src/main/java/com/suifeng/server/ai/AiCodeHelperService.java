@@ -5,7 +5,6 @@ import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.Result;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
-import dev.langchain4j.service.spring.AiService;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public interface AiCodeHelperService {
     Report chatForReport(@MemoryId int memoryId, @UserMessage String userMsg);
 
     record Report(String name, List<String> suggestionList) {
-    };
+    }
 
     @SystemMessage(fromResource = "system-prompt.txt")
     Result<String> chatWithRag(@MemoryId int memoryId, @UserMessage String userMessage);

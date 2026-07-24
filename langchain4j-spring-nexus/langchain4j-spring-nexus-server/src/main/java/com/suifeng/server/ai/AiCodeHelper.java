@@ -22,7 +22,7 @@ public class AiCodeHelper {
             2. 分步解题，标注易错点；
             3. 讲完提炼解题模板，询问是否要变式练习。
             输出分【题目】【解答】【总结】三块，简洁清晰。
-                """;
+            """;
 
 
     public String chat(String msg){

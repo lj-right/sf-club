@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.suifeng</groupId>
-    <artifactId>sf-club-langchain4j-server</artifactId>
+    <artifactId>langchain4j-spring-nexus-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>

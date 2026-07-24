@@ -2,12 +2,9 @@ package com.suifeng.sfclublangchain4jserver.ai;
 
 import com.suifeng.server.ai.AiCodeHelperService;
 import dev.langchain4j.service.Result;
-import jakarta.annotation.Priority;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class AiCodeHelperServiceTest {

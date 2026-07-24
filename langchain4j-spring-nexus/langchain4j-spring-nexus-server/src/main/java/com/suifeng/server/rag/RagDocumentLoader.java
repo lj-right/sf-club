@@ -2,7 +2,6 @@ package com.suifeng.server.rag;
 
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.loader.ClassPathDocumentLoader;
-import dev.langchain4j.data.document.loader.FileSystemDocumentLoader;
 import dev.langchain4j.data.document.splitter.DocumentByParagraphSplitter;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.embedding.EmbeddingModel;
@@ -10,9 +9,7 @@ import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
-import dev.langchain4j.store.embedding.IngestionResult;
 import jakarta.annotation.Resource;
-import net.bytebuddy.dynamic.ClassFileLocator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -54,13 +51,12 @@ public class RagDocumentLoader {
         //加载文档
         ingestor.ingest(documents);
         //4.自定义内容加载器
-        EmbeddingStoreContentRetriever contentRetriever = EmbeddingStoreContentRetriever.builder()
+        return EmbeddingStoreContentRetriever.builder()
                 .embeddingModel(qwenEmbeddingModel)
                 .embeddingStore(embeddingStore)
                 .maxResults(5)
                 .minScore(0.75) //过滤掉分数小于0.75的结果
                 .build();
-        return contentRetriever;
     }
 
 }
