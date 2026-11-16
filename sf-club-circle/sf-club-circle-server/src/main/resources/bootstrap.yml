@@ -2,14 +2,14 @@ spring:
   application:
     name: sf-club-circle
   profiles:
-    active: dev
+    active: @profile.active@
   cloud:
     nacos:
       config:
-        server-addr: 127.0.0.1:8848
+        server-addr: @nacos.addr@
         prefix: ${spring.application.name}
         group: DEFAULT_GROUP
         file-extension: yaml
       discovery:
         enabled: true
-        server-addr: 127.0.0.1:8848
+        server-addr: @nacos.addr@
