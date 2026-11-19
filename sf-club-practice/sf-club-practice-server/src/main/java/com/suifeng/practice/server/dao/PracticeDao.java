@@ -8,7 +8,7 @@ import java.util.List;
 public interface PracticeDao {
 
     /**
-     * 根据练题id获取详情
+     * 根据练习id获取详情
      */
     PracticePO selectById(Long id);
 
@@ -39,5 +39,16 @@ public interface PracticeDao {
                                        @Param("limit") int limit,
                                        @Param("offset") int pageSize);
 
+    /**
+     * 查询用户所有练习记录总数（包含已完成和未完成）
+     */
+    Integer getPracticeHistoryCount(@Param("loginId") String loginId);
+
+    /**
+     * 查询用户练习记录列表（降序）
+     */
+    List<PracticePO> getPracticeHistoryList(@Param("loginId") String loginId,
+                                            @Param("limit") int limit,
+                                            @Param("offset") int pageSize);
 
 }

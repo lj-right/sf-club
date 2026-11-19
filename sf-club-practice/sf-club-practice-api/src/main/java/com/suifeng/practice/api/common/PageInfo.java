@@ -24,5 +24,11 @@ public class PageInfo {
         return pageSize;
     }
 
+    public void setPageNo(Integer pageNo) {
+        this.pageNo = pageNo;
+    }
 
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
 }

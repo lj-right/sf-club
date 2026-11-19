@@ -1,6 +1,7 @@
 package com.suifeng.practice.server.service;
 
 import com.suifeng.practice.api.common.PageResult;
+import com.suifeng.practice.api.req.GetPracticeHistoryReq;
 import com.suifeng.practice.api.req.GetPracticeSubjectsReq;
 import com.suifeng.practice.api.req.GetUnCompletePracticeReq;
 import com.suifeng.practice.api.vo.*;
@@ -13,7 +14,6 @@ public interface PracticeSetService {
 
     /**
      * 获取专项练习内容
-     * @return
      */
     List<SpecialPractiveVO> getSpecialPracticeContent();
 
@@ -33,7 +33,7 @@ public interface PracticeSetService {
     PracticeSubjectVO getPracticeSubject(PracticeSubjectDTO dto);
 
     /**
-     * 获取模拟套题内容
+     * 获取模拟套卷内容
      */
     PageResult<PracticeSetVO> getPreSetContent(PracticeSetDTO dto);
 
@@ -41,4 +41,9 @@ public interface PracticeSetService {
      * 获取未完成练习内容
      */
     PageResult<UnCompletePracticeSetVO> getUnCompletePractice(GetUnCompletePracticeReq req);
+
+    /**
+     * 获取用户练习记录/模考历史（全量，包含已交卷历史）
+     */
+    PageResult<PracticeHistoryVO> getPracticeHistory(GetPracticeHistoryReq req);
 }

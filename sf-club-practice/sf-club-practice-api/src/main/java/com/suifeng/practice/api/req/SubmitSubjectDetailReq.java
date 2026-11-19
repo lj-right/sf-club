@@ -19,9 +19,14 @@ public class SubmitSubjectDetailReq implements Serializable {
     private Long subjectId;
 
     /**
-     * 题目答案
+     * 题目答案（选项序号列表）
      */
     private List<Integer> answerContents;
+
+    /**
+     * 文本答案（用于简答题/主观题的文字作答持久化）
+     */
+    private String answerText;
 
     /**
      * 题目类型

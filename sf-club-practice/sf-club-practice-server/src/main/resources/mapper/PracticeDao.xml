@@ -2,10 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.suifeng.practice.server.dao.PracticeDao">
 
-
     <select id="selectById"
             resultType="com.suifeng.practice.server.entity.po.PracticePO">
-        select set_id as setId, time_use as timeUse, submit_time as submitTime, correct_rate as correctRate
+        select id, set_id as setId, complete_status as completeStatus, time_use as timeUse, submit_time as submitTime, correct_rate as correctRate
         from practice_info
         where id = #{id,jdbcType=BIGINT}
         and is_deleted = 0
@@ -62,13 +61,34 @@
 
     <select id="getUnCompleteList"
             resultType="com.suifeng.practice.server.entity.po.PracticePO">
-        select id, set_id as setId, time_use as timeUse, submit_time as submitTime, correct_rate as correctRate
+        select id, set_id as setId, complete_status as completeStatus, time_use as timeUse, submit_time as submitTime, correct_rate as correctRate
         from practice_info
         where created_by = #{loginId}
           and is_deleted = 0
           and complete_status = 0
         order by submit_time desc
-            limit #{limit}, #{offset}
+        limit #{limit}, #{offset}
+    </select>
+
+    <select id="getPracticeHistoryCount" resultType="java.lang.Integer">
+        select count(1)
+        from practice_info
+        where is_deleted = 0
+        <if test="loginId != null and loginId != ''">
+          and (created_by = #{loginId} or created_by = 'suifeng')
+        </if>
+    </select>
+
+    <select id="getPracticeHistoryList"
+            resultType="com.suifeng.practice.server.entity.po.PracticePO">
+        select id, set_id as setId, complete_status as completeStatus, time_use as timeUse, submit_time as submitTime, correct_rate as correctRate
+        from practice_info
+        where is_deleted = 0
+        <if test="loginId != null and loginId != ''">
+          and (created_by = #{loginId} or created_by = 'suifeng')
+        </if>
+        order by id desc
+        limit #{limit}, #{offset}
     </select>
 
 </mapper>

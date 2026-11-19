@@ -27,8 +27,9 @@
 
     <select id="selectById" resultType="com.suifeng.practice.server.entity.po.SubjectPO">
         select id,
-               subject_name  as subjectName,
-               subject_type  as subjectType
+               subject_name   as subjectName,
+               subject_type   as subjectType,
+               subject_parse  as subjectParse
         from subject_info
         where id = #{id,jdbcType=BIGINT}
     </select>

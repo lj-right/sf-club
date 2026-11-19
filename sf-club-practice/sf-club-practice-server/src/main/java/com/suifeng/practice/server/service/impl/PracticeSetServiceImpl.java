@@ -7,6 +7,7 @@ import com.suifeng.practice.api.common.PageResult;
 import com.suifeng.practice.api.enums.CompleteStatusEnum;
 import com.suifeng.practice.api.enums.IsDeletedFlagEnum;
 import com.suifeng.practice.api.enums.SubjectInfoTypeEnum;
+import com.suifeng.practice.api.req.GetPracticeHistoryReq;
 import com.suifeng.practice.api.req.GetPracticeSubjectsReq;
 import com.suifeng.practice.api.req.GetUnCompletePracticeReq;
 import com.suifeng.practice.api.vo.*;
@@ -80,50 +81,48 @@ public class PracticeSetServiceImpl implements PracticeSetService {
             return specialPractiveVOList;
         }
         poList.forEach(primaryCategoryPO -> {
+            Long primaryCatId = primaryCategoryPO.getParentId();
+            CategoryPO primaryCat = subjectCategoryDao.selectById(primaryCatId);
+            if (primaryCat == null) {
+                return;
+            }
             SpecialPractiveVO specialPractiveVO = new SpecialPractiveVO();
+            specialPractiveVO.setPrimaryCategoryId(primaryCat.getId());
+            specialPractiveVO.setPrimaryCategoryName(primaryCat.getCategoryName());
 
-            //拿到大类集合
-            List<PrimaryCategoryPO> categoryPOList = subjectCategoryDao.selectByParentId(primaryCategoryPO.getParentId());
+            CategoryDTO categoryDTOTemp = new CategoryDTO();
+            categoryDTOTemp.setCategoryType(2);
+            categoryDTOTemp.setParentId(primaryCatId);
+            List<CategoryPO> smallPoList = subjectCategoryDao.selectList(categoryDTOTemp);
+            if (CollectionUtils.isEmpty(smallPoList)) {
+                return;
+            }
 
-            categoryPOList.forEach(categoryPO -> {
-                specialPractiveVO.setPrimaryCategoryId(categoryPO.getId());
-                specialPractiveVO.setPrimaryCategoryName(categoryPO.getCategoryName());
-                CategoryDTO categoryDTOTemp = new CategoryDTO();
-                categoryDTOTemp.setCategoryType(2);
-                categoryDTOTemp.setParentId(primaryCategoryPO.getParentId()+1);
-                //拿到子分类
-                List<CategoryPO> smallPoList = subjectCategoryDao.selectList(categoryDTOTemp);
-                if (CollectionUtils.isEmpty(smallPoList)) {
+            List<SpecialPractiveCategoryVO> categoryVOList = new LinkedList<>();
+            smallPoList.forEach(smallPo -> {
+                List<SpecialPracticeLabelVO> labelVOList = getLabelVOList(smallPo.getId(), subjectTypeList);
+                if (CollectionUtils.isEmpty(labelVOList)) {
                     return;
                 }
+                SpecialPractiveCategoryVO specialPractiveCategoryVO = new SpecialPractiveCategoryVO();
+                specialPractiveCategoryVO.setCategoryId(smallPo.getId());
+                specialPractiveCategoryVO.setCategoryName(smallPo.getCategoryName());
 
-                List<SpecialPractiveCategoryVO> categoryVOList = new LinkedList<>();
-                smallPoList.forEach(smallPo -> {
-                    List<SpecialPracticeLabelVO> labelVOList = getLabelVOList(smallPo.getId(), subjectTypeList);
-                    //同理上面也只能拿到labelId
-                    if (CollectionUtils.isEmpty(labelVOList)) {
-                        return;
-                    }
-                    SpecialPractiveCategoryVO specialPractiveCategoryVO = new SpecialPractiveCategoryVO();
-                    specialPractiveCategoryVO.setCategoryId(smallPo.getId());
-                    specialPractiveCategoryVO.setCategoryName(smallPo.getCategoryName());
-
-                    List<SpecialPracticeLabelVO> labelList = new LinkedList<>();
-                    labelVOList.forEach(labelVO -> {
-                        SpecialPracticeLabelVO specialPracticeLabelVO = new SpecialPracticeLabelVO();
-                        specialPracticeLabelVO.setId(labelVO.getId());
-                        specialPracticeLabelVO.setAssembleId(labelVO.getAssembleId());
-                        specialPracticeLabelVO.setLabelName(labelVO.getLabelName());
-                        labelList.add(specialPracticeLabelVO);
-                    });
-                    specialPractiveCategoryVO.setLabelList(labelList);
-                    categoryVOList.add(specialPractiveCategoryVO);
+                List<SpecialPracticeLabelVO> labelList = new LinkedList<>();
+                labelVOList.forEach(labelVO -> {
+                    SpecialPracticeLabelVO specialPracticeLabelVO = new SpecialPracticeLabelVO();
+                    specialPracticeLabelVO.setId(labelVO.getId());
+                    specialPracticeLabelVO.setAssembleId(labelVO.getAssembleId());
+                    specialPracticeLabelVO.setLabelName(labelVO.getLabelName());
+                    labelList.add(specialPracticeLabelVO);
                 });
-                specialPractiveVO.setCategoryList(categoryVOList);
-
+                specialPractiveCategoryVO.setLabelList(labelList);
+                categoryVOList.add(specialPractiveCategoryVO);
             });
-
-            specialPractiveVOList.add(specialPractiveVO);
+            if (!CollectionUtils.isEmpty(categoryVOList)) {
+                specialPractiveVO.setCategoryList(categoryVOList);
+                specialPractiveVOList.add(specialPractiveVO);
+            }
         });
         return specialPractiveVOList;
     }
@@ -238,7 +237,7 @@ public class PracticeSetServiceImpl implements PracticeSetService {
         }
         Integer remainCount = totalSubjectCount - practiceSubjectListVOS.size();
         dto.setSubjectCount(remainCount);
-        dto.setSubjectType(1);
+        dto.setSubjectType(null);
         assembleList(dto, practiceSubjectListVOS, excludeSubjectIds);
         return practiceSubjectListVOS;
     }
@@ -262,14 +261,39 @@ public class PracticeSetServiceImpl implements PracticeSetService {
     @Override
     public PracticeSubjectListVO getSubjects(GetPracticeSubjectsReq req) {
         Long setId = req.getSetId();
+        Long practiceId = req.getPracticeId();
         PracticeSubjectListVO vo = new PracticeSubjectListVO();
         List<PracticeSubjectDetailVO> practiceSubjectListVOS = new LinkedList<>();
+        String loginId = LoginUtil.getLoginId();
+
+        if (Objects.nonNull(practiceId)) {
+            List<PracticeDetailPO> detailList = practiceDetailDao.selectByPracticeId(practiceId);
+            if (!CollectionUtils.isEmpty(detailList)) {
+                detailList.forEach(e -> {
+                    PracticeSubjectDetailVO practiceSubjectListVO = new PracticeSubjectDetailVO();
+                    practiceSubjectListVO.setSubjectId(e.getSubjectId());
+                    practiceSubjectListVO.setSubjectType(e.getSubjectType());
+                    if (StringUtils.isNotBlank(e.getAnswerContent())) {
+                        practiceSubjectListVO.setIsAnswer(1);
+                    } else {
+                        practiceSubjectListVO.setIsAnswer(0);
+                    }
+                    practiceSubjectListVOS.add(practiceSubjectListVO);
+                });
+                vo.setSubjectList(practiceSubjectListVOS);
+                PracticeSetPO practiceSetPO = setId != null ? practiceSetDao.selectById(setId) : null;
+                vo.setTitle(practiceSetPO != null ? practiceSetPO.getSetName() : "全真模拟试卷");
+                PracticePO practicePO = practiceDao.selectById(practiceId);
+                vo.setTimeUse(practicePO != null ? practicePO.getTimeUse() : "00:00:00");
+                vo.setPracticeId(practiceId);
+                return vo;
+            }
+        }
+
         List<PracticeSetDetailPO> practiceSetDetailPOS = practiceSetDetailDao.selectBySetId(setId);
         if (CollectionUtils.isEmpty(practiceSetDetailPOS)) {
             return vo;
         }
-        String loginId = LoginUtil.getLoginId();
-        Long practiceId = req.getPracticeId();
         practiceSetDetailPOS.forEach(e -> {
             PracticeSubjectDetailVO practiceSubjectListVO = new PracticeSubjectDetailVO();
             practiceSubjectListVO.setSubjectId(e.getSubjectId());
@@ -348,6 +372,18 @@ public class PracticeSetServiceImpl implements PracticeSetService {
             });
             practiceSubjectVO.setOptionList(optionList);
         }
+        if (dto.getSubjectType() == SubjectInfoTypeEnum.JUDGE.getCode()) {
+            List<PracticeSubjectOptionVO> optionList = new LinkedList<>();
+            PracticeSubjectOptionVO opt1 = new PracticeSubjectOptionVO();
+            opt1.setOptionType(1);
+            opt1.setOptionContent("正确 (True)");
+            optionList.add(opt1);
+            PracticeSubjectOptionVO opt0 = new PracticeSubjectOptionVO();
+            opt0.setOptionType(0);
+            opt0.setOptionContent("错误 (False)");
+            optionList.add(opt0);
+            practiceSubjectVO.setOptionList(optionList);
+        }
         return practiceSubjectVO;
     }
 
@@ -406,6 +442,59 @@ public class PracticeSetServiceImpl implements PracticeSetService {
             vo.setTitle(practiceSetPO.getSetName());
             list.add(vo);
         });
+        pageResult.setRecords(list);
+        pageResult.setTotal(count);
+        return pageResult;
+    }
+
+    @Override
+    public PageResult<PracticeHistoryVO> getPracticeHistory(GetPracticeHistoryReq req) {
+        PageResult<PracticeHistoryVO> pageResult = new PageResult<>();
+        PageInfo pageInfo = req != null && req.getPageInfo() != null ? req.getPageInfo() : new PageInfo();
+        if (pageInfo.getPageNo() == null || pageInfo.getPageNo() < 1) {
+            pageInfo.setPageNo(1);
+        }
+        if (pageInfo.getPageSize() == null || pageInfo.getPageSize() < 1) {
+            pageInfo.setPageSize(20);
+        }
+        pageResult.setPageNo(pageInfo.getPageNo());
+        pageResult.setPageSize(pageInfo.getPageSize());
+        int start = (pageInfo.getPageNo() - 1) * pageInfo.getPageSize();
+        String loginId = LoginUtil.getLoginId();
+        Integer count = practiceDao.getPracticeHistoryCount(loginId);
+        if (count == null || count == 0) {
+            pageResult.setRecords(Collections.emptyList());
+            pageResult.setTotal(0);
+            return pageResult;
+        }
+        List<PracticePO> poList = practiceDao.getPracticeHistoryList(loginId, start, pageInfo.getPageSize());
+        List<PracticeHistoryVO> list = new LinkedList<>();
+        if (!CollectionUtils.isEmpty(poList)) {
+            poList.forEach(e -> {
+                PracticeHistoryVO vo = new PracticeHistoryVO();
+                vo.setId(e.getId());
+                vo.setPracticeId(e.getId());
+                vo.setSetId(e.getSetId());
+                vo.setCompleteStatus(e.getCompleteStatus());
+                vo.setPracticeTime(e.getSubmitTime() != null ? DateUtils.format(e.getSubmitTime(), "yyyy-MM-dd HH:mm:ss") : "");
+                vo.setTimeSpent(StringUtils.isNotBlank(e.getTimeUse()) ? e.getTimeUse() : "00:00:00");
+                vo.setCorrectRate(e.getCorrectRate() != null ? e.getCorrectRate() : BigDecimal.ZERO);
+                vo.setScore(e.getCorrectRate() != null ? e.getCorrectRate().setScale(0, BigDecimal.ROUND_HALF_UP).intValue() : 0);
+                PracticeSetPO practiceSetPO = e.getSetId() != null ? practiceSetDao.selectById(e.getSetId()) : null;
+                vo.setTitle(practiceSetPO != null ? practiceSetPO.getSetName() : "全真模拟试卷");
+
+                List<PracticeDetailPO> detailList = practiceDetailDao.selectByPracticeId(e.getId());
+                int total = !CollectionUtils.isEmpty(detailList) ? detailList.size() : 0;
+                int correct = 0;
+                if (total > 0) {
+                    correct = (int) detailList.stream().filter(d -> Objects.equals(d.getAnswerStatus(), 1)).count();
+                }
+                vo.setTotal(total);
+                vo.setCorrectCount(correct);
+                vo.setWrongCount(total - correct);
+                list.add(vo);
+            });
+        }
         pageResult.setRecords(list);
         pageResult.setTotal(count);
         return pageResult;

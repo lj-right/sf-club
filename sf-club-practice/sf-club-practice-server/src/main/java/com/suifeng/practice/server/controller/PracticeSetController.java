@@ -176,4 +176,27 @@ public class PracticeSetController {
         }
     }
 
+    /**
+     * 获取用户练习记录/模考历史（全量历史）
+     */
+    @PostMapping(value = "/getPracticeHistory")
+    public Result<PageResult<PracticeHistoryVO>> getPracticeHistory(@RequestBody(required = false) GetPracticeHistoryReq req) {
+        try {
+            if (req == null) {
+                req = new GetPracticeHistoryReq();
+            }
+            PageResult<PracticeHistoryVO> list = practiceSetService.getPracticeHistory(req);
+            if (log.isInfoEnabled()) {
+                log.info("获取练习历史记录出参{}", JSON.toJSONString(list));
+            }
+            return Result.ok(list);
+        } catch (IllegalArgumentException e) {
+            log.error("参数异常！错误原因{}", e.getMessage(), e);
+            return Result.fail(e.getMessage());
+        } catch (Exception e) {
+            log.error("获取练习历史记录异常！错误原因{}", e.getMessage(), e);
+            return Result.fail("获取练习历史记录异常！");
+        }
+    }
+
 }

@@ -12,7 +12,12 @@
 
     <select id="selectByPracticeId"
             resultType="com.suifeng.practice.server.entity.po.PracticeDetailPO">
-        select subject_id as subjectId, subject_type as subjectType, answer_status as answerStatus
+        select id,
+               practice_id   as practiceId,
+               subject_id    as subjectId,
+               subject_type  as subjectType,
+               answer_status as answerStatus,
+               answer_content as answerContent
         from practice_detail
         where is_deleted = 0
           and practice_id = #{practiceId,jdbcType=BIGINT}

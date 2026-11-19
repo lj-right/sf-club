@@ -14,9 +14,14 @@ public class SubjectDetailVO implements Serializable {
     private List<Integer> correctAnswer;
 
     /**
-     * 答题者答案
+     * 答题者答案（数字选项）
      */
     private List<Integer> respondAnswer;
+
+    /**
+     * 答题者提交的原始内容（支持简答题文字内容及客观题原字符串）
+     */
+    private String answerContent;
 
     /**
      * 题目解析
@@ -24,7 +29,7 @@ public class SubjectDetailVO implements Serializable {
     private String subjectParse;
 
     /**
-     * 答案详情
+     * 答案详情（选项列表）
      */
     private List<PracticeSubjectOptionVO> optionList;
 
