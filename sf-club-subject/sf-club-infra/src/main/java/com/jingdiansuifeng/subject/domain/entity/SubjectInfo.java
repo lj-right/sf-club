@@ -60,5 +60,15 @@ public class SubjectInfo implements Serializable {
     private Integer isDeleted;
 
     private Integer subjectCount;
+
+    /**
+     * 研读量/阅读量
+     */
+    private Integer readCount;
+
+    /**
+     * 排序类型 1最热 2最新
+     */
+    private Integer sortType;
 }
 

@@ -105,5 +105,15 @@ public class SubjectInfoDTO extends PageInfo implements Serializable {
      */
     private Long lastSubjectId;
 
+    /**
+     * 研读量/阅读量
+     */
+    private Integer readCount;
+
+    /**
+     * 排序类型 1最热 2最新
+     */
+    private Integer sortType;
+
 }
 

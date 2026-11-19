@@ -85,8 +85,12 @@ public class SubjectController {
                         , JSON.toJSONString(subjectInfoDTO));
             }
 
-            Preconditions.checkNotNull(subjectInfoDTO.getCategoryId(), "分类id不能为空");
-            Preconditions.checkNotNull(subjectInfoDTO.getLabelId(), "标签id不能为空");
+            if (subjectInfoDTO.getPageNo() == null || subjectInfoDTO.getPageNo() < 1) {
+                subjectInfoDTO.setPageNo(1);
+            }
+            if (subjectInfoDTO.getPageSize() == null || subjectInfoDTO.getPageSize() < 1) {
+                subjectInfoDTO.setPageSize(10);
+            }
 
 
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConverter.INSTANCE

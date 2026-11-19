@@ -72,17 +72,21 @@ public class SubjectLabelDomainServiceImpl implements SubjectLabelDomainService 
     }
 
     public List<SubjectLabelBO> queryLabelByCategoryId(SubjectLabelBO subjectLabelBO) {
-        //判断分类级别 1,2
-        SubjectCategory subjectCategory = subjectCategoryService.queryById(subjectLabelBO.getCategoryId());
-        if (CategoryTypeEnum.PRIMARY.getCode() == subjectCategory.getCategoryType()){
-            SubjectLabel subjectLabel = new SubjectLabel();
-            subjectLabel.setCategoryId(subjectLabelBO.getCategoryId());
-            subjectLabel.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
-            List<SubjectLabel> labelList = subjectLabelService.queryByCondition(subjectLabel);
+        Long categoryId = subjectLabelBO.getCategoryId();
+        if (categoryId == null) {
+            return Collections.emptyList();
+        }
+
+        // 优先直接按分类ID查询配置的标签
+        SubjectLabel subjectLabel = new SubjectLabel();
+        subjectLabel.setCategoryId(categoryId);
+        subjectLabel.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        List<SubjectLabel> labelList = subjectLabelService.queryByCondition(subjectLabel);
+        if (!CollectionUtils.isEmpty(labelList)) {
             return SubjectLabelConverter.INSTANCE.convertLabelListToBoList(labelList);
         }
 
-        Long categoryId = subjectLabelBO.getCategoryId();
+        // 若直接未查到，查询通过 subject_mapping 关联的标签
         SubjectMapping subjectMapping = new SubjectMapping();
         subjectMapping.setCategoryId(categoryId);
         subjectMapping.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());

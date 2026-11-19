@@ -15,6 +15,7 @@
         <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+        <result property="readCount" column="read_count" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
@@ -127,25 +128,28 @@
     </select>
 
     <select id="countByCondition" resultType="java.lang.Integer">
-        select count(1)
-        from subject_info a,
-        subject_mapping b
-        where
-        a.id = b.subject_id
-        and b.category_id = #{categoryId}
-        and b.label_id = #{labelId}
-        and a.is_deleted = 0
-        and b.is_deleted = 0
-        <if test="subjectInfo.subjectDifficult != null">
+        select count(distinct a.id)
+        from subject_info a
+        <if test="(categoryId != null and categoryId != 0) or (labelId != null and labelId != 0)">
+        join subject_mapping b on a.id = b.subject_id and b.is_deleted = 0
+        </if>
+        where a.is_deleted = 0
+        <if test="categoryId != null and categoryId != 0">
+            and (b.category_id = #{categoryId} or b.category_id in (select id from subject_category where parent_id = #{categoryId}))
+        </if>
+        <if test="labelId != null and labelId != 0">
+            and b.label_id = #{labelId}
+        </if>
+        <if test="subjectInfo.subjectDifficult != null and subjectInfo.subjectDifficult != 0">
             and a.subject_difficult = #{subjectInfo.subjectDifficult}
         </if>
-        <if test="subjectInfo.subjectType != null">
+        <if test="subjectInfo.subjectType != null and subjectInfo.subjectType != 0">
             and a.subject_type = #{subjectInfo.subjectType}
         </if>
     </select>
 
     <select id="queryPage" resultMap="SubjectInfoMap">
-        select a.id,
+        select distinct a.id,
         a.subject_name,
         a.subject_difficult,
         a.settle_name,
@@ -156,21 +160,33 @@
         a.created_time,
         a.update_by,
         a.update_time,
-        a.is_deleted
-        from subject_info a,
-        subject_mapping b
-        where
-        a.id = b.subject_id
-        and b.category_id = #{categoryId}
-        and b.label_id = #{labelId}
-        and a.is_deleted = 0
-        and b.is_deleted = 0
-        <if test="subjectInfo.subjectDifficult != null">
+        a.is_deleted,
+        a.read_count
+        from subject_info a
+        <if test="(categoryId != null and categoryId != 0) or (labelId != null and labelId != 0)">
+        join subject_mapping b on a.id = b.subject_id and b.is_deleted = 0
+        </if>
+        where a.is_deleted = 0
+        <if test="categoryId != null and categoryId != 0">
+            and (b.category_id = #{categoryId} or b.category_id in (select id from subject_category where parent_id = #{categoryId}))
+        </if>
+        <if test="labelId != null and labelId != 0">
+            and b.label_id = #{labelId}
+        </if>
+        <if test="subjectInfo.subjectDifficult != null and subjectInfo.subjectDifficult != 0">
             and a.subject_difficult = #{subjectInfo.subjectDifficult}
         </if>
-        <if test="subjectInfo.subjectType != null">
+        <if test="subjectInfo.subjectType != null and subjectInfo.subjectType != 0">
             and a.subject_type = #{subjectInfo.subjectType}
         </if>
+        <choose>
+            <when test="subjectInfo.sortType != null and (subjectInfo.sortType == 1 or subjectInfo.sortType == '1')">
+                order by a.read_count desc, a.id desc
+            </when>
+            <otherwise>
+                order by a.created_time desc, a.id desc
+            </otherwise>
+        </choose>
         limit #{start},#{pageSize}
     </select>
 
