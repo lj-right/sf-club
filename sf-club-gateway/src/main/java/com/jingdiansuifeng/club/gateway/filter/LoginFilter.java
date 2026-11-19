@@ -29,14 +29,15 @@ public class LoginFilter implements GlobalFilter {
         if (url.equals("/user/doLogin") || url.equals("/auth/user/doLogin")){
             return chain.filter(exchange);
         }
-        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
-        String loginId = (String) tokenInfo.getLoginId();
-        if (StringUtils.isEmpty(loginId)){
-            throw  new Exception("未获取到用户信息");
+        String loginId = null;
+        try {
+            loginId = (String) StpUtil.getLoginIdDefaultNull();
+        } catch (Exception ignored) {
         }
-
-        //把loginId放到请求头中
-        mutate.header("loginId",loginId);
+        if (StringUtils.isNotEmpty(loginId)){
+            //把loginId放到请求头中
+            mutate.header("loginId", loginId);
+        }
         return chain.filter(exchange.mutate().request(mutate.build()).build());
     }
 }

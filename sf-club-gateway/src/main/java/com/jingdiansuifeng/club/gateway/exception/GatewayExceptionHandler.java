@@ -28,11 +28,12 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
         String message = "";
         if (throwable instanceof SaTokenException) {
             code = 401;
-            message = "用户无权限";
+            message = "用户无权限: " + throwable.getMessage();
         } else {
             code = 500;
-            message = "系统繁忙";
+            message = "系统繁忙: " + throwable.getMessage();
         }
+        throwable.printStackTrace();
         Result result = Result.fail(code, message);
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 

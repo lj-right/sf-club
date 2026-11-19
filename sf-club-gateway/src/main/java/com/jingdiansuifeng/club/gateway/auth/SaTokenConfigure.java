@@ -30,7 +30,20 @@ public class SaTokenConfigure {
                     SaRouter.match("/circle/**", r -> StpUtil.checkLogin());
                     SaRouter.match("/interview/**", r -> StpUtil.checkLogin());
                     SaRouter.match("/practice/**", r -> StpUtil.checkLogin());
-                    SaRouter.match("/subject/**", r -> StpUtil.checkLogin());
+                    SaRouter.match("/subject/**")
+                            .notMatch(
+                                    "/subject/category/**",
+                                    "/subject/subject/category/**",
+                                    "/subject/label/**",
+                                    "/subject/subject/label/**",
+                                    "/subject/getSubjectPage",
+                                    "/subject/subject/getSubjectPage",
+                                    "/subject/querySubjectInfo",
+                                    "/subject/subject/querySubjectInfo",
+                                    "/subject/getSubjectPageBySearch",
+                                    "/subject/subject/getSubjectPageBySearch"
+                            )
+                            .check(r -> StpUtil.checkLogin());
                     SaRouter.match("/subject/subject/add", r -> StpUtil.checkPermission("subject:add"));
 
                 })
