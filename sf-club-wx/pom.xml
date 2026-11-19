@@ -23,7 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.report.outputEncoding>UTF-8</project.report.outputEncoding>
         <spring-boot.version>2.4.2</spring-boot.version>
-        <lombok.vserion>1.18.16</lombok.vserion>
+        <lombok.vserion>1.18.34</lombok.vserion>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <spring-cloud.version>2020.0.6</spring-cloud.version>
     </properties>

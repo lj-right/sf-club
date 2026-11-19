@@ -25,7 +25,7 @@
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <spring-cloud.version>2020.0.6</spring-cloud.version>
 
-        <lombok.vserion>1.18.16</lombok.vserion>
+        <lombok.vserion>1.18.34</lombok.vserion>
         <minio.version>8.2.0</minio.version>
     </properties>
 
@@ -93,14 +93,14 @@
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-reactor-spring-boot-starter</artifactId>
-            <version>1.37.0</version>
+            <version>1.42.0</version>
         </dependency>
 
         <!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-redis-jackson</artifactId>
-            <version>1.37.0</version>
+            <version>1.42.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
