@@ -1,0 +1,61 @@
+spring:
+  datasource:
+    username: root
+    password: mH46G6qf+Z0T0uV6Yy2e/aV+33F1q31i2f9v+n5jV64t1sE=
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://27.106.112.214:3306/sf-club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      connectionProperties: config.decrypt=true
+      initial-size: 5
+      min-idle: 5
+      max-active: 100
+      max-wait: 60000
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: 123456
+      filter:
+        stat:
+          enabled: true
+          slow-sql-millis: 2000
+          log-slow-sql: true
+        wall:
+          enabled: true
+        config:
+          enabled: true
+  redis:
+    database: 1
+    host: 8.148.214.12
+    port: 6379
+    password:
+    timeout: 3s
+    lettuce:
+      pool:
+        max-active: 200
+        max-wait: -1ms
+        max-idle: 100
+        min-idle: 0
+rocketmq:
+  name-server: 8.148.214.12:9876
+  producer:
+    group: test-group
+es:
+  cluster:
+    esConfigs[0]:
+      name: 5ad1a12387b1
+      nodes: 8.148.214.12:9200
+xxl:
+  job:
+    admin:
+      addresses: http://8.148.214.12:8088/xxl-job-admin
+      accessToken: default_token
+      timeout: 3
+    executor:
+      appname: sf-club-subject
+      address:
+      ip: 127.0.0.1
+      port: 9999
+      logpath: /data/applogs/xxl-job/jobhandler
+      logretentiondays: 30

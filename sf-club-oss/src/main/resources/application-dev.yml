@@ -1,0 +1,4 @@
+minio:
+  url: http://8.148.214.12:9000
+  accessKey: minioadmin
+  secretKey: minioadmin
