@@ -172,9 +172,9 @@ public class PracticeDetailController {
     }
 
     /**
-     * 放弃练习
+     * 放弃或删除练习记录
      */
-    @PostMapping(value = "/giveUp")
+    @PostMapping(value = {"/giveUp", "/deletePractice"})
     public Result<Boolean> giveUp(@RequestParam("practiceId") Long practiceId) {
         try {
             log.info("放弃练习入参{}", practiceId);

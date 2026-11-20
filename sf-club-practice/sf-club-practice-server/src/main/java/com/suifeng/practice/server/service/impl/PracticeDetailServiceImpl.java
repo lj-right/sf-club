@@ -230,7 +230,11 @@ public class PracticeDetailServiceImpl implements PracticeDetailService {
         }
         if (dto.getSubjectType() == SubjectInfoTypeEnum.JUDGE.getCode()) {
             SubjectJudgePO judgeSubjectPO = subjectJudgeDao.selectBySubjectId(subjectPO.getId());
-            subjectDetailDTO.setIsCorrect(judgeSubjectPO.getIsCorrect());
+            if (judgeSubjectPO != null) {
+                subjectDetailDTO.setIsCorrect(judgeSubjectPO.getIsCorrect());
+            } else {
+                subjectDetailDTO.setIsCorrect(0);
+            }
         }
         subjectDetailDTO.setSubjectParse(subjectPO.getSubjectParse());
         subjectDetailDTO.setSubjectName(subjectPO.getSubjectName());
@@ -284,14 +288,14 @@ public class PracticeDetailServiceImpl implements PracticeDetailService {
             PracticeSubjectOptionVO correctOption = new PracticeSubjectOptionVO();
             correctOption.setOptionType(1);
             correctOption.setOptionContent("正确");
-            correctOption.setIsCorrect(isCorrect == 1 ? 1 : 0);
+            correctOption.setIsCorrect(isCorrect != null && isCorrect == 1 ? 1 : 0);
             PracticeSubjectOptionVO errorOptionVO = new PracticeSubjectOptionVO();
-            errorOptionVO.setOptionType(2);
+            errorOptionVO.setOptionType(0);
             errorOptionVO.setOptionContent("错误");
-            errorOptionVO.setIsCorrect(isCorrect == 0 ? 1 : 0);
+            errorOptionVO.setIsCorrect(isCorrect != null && isCorrect == 0 ? 1 : 0);
             optionVOList.add(correctOption);
             optionVOList.add(errorOptionVO);
-            correctAnswer.add(subjectDetail.getIsCorrect());
+            correctAnswer.add(isCorrect != null ? isCorrect : 0);
         }
         subjectDetailVO.setOptionList(optionVOList);
         subjectDetailVO.setSubjectParse(subjectDetail.getSubjectParse());

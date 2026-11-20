@@ -310,14 +310,14 @@ public class PracticeSetServiceImpl implements PracticeSetService {
         });
         vo.setSubjectList(practiceSubjectListVOS);
         PracticeSetPO practiceSetPO = practiceSetDao.selectById(setId);
-        vo.setTitle(practiceSetPO.getSetName());
+        vo.setTitle(practiceSetPO != null ? practiceSetPO.getSetName() : "在线专项模拟考试");
         if (Objects.isNull(practiceId)) {
             Long newPracticeId = insertUnCompletePractice(setId);
             vo.setPracticeId(newPracticeId);
         } else {
             updateUnCompletePractice(practiceId);
             PracticePO practicePO = practiceDao.selectById(practiceId);
-            vo.setTimeUse(practicePO.getTimeUse());
+            vo.setTimeUse(practicePO != null ? practicePO.getTimeUse() : "00:00:00");
             vo.setPracticeId(practiceId);
         }
         return vo;
