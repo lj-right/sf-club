@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jingdiansuifeng.auth.infra.basic.mapper.AuthDictTypeDao">
+
+    <resultMap type="com.jingdiansuifeng.auth.infra.basic.entity.AuthDictType" id="AuthDictTypeMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="dictName" column="dict_name" jdbcType="VARCHAR"/>
+        <result property="dictType" column="dict_type" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="createdBy" column="created_by" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedBy" column="updated_by" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="queryById" resultMap="AuthDictTypeMap">
+        select id, dict_name, dict_type, status, remark, created_by, created_time, updated_by, updated_time, is_deleted
+        from auth_dict_type
+        where id = #{id} and is_deleted = 0
+    </select>
+
+    <select id="queryByDictType" resultMap="AuthDictTypeMap">
+        select id, dict_name, dict_type, status, remark, created_by, created_time, updated_by, updated_time, is_deleted
+        from auth_dict_type
+        where dict_type = #{dictType} and is_deleted = 0
+        limit 1
+    </select>
+
+    <select id="queryAllByLimit" resultMap="AuthDictTypeMap">
+        select id, dict_name, dict_type, status, remark, created_by, created_time, updated_by, updated_time, is_deleted
+        from auth_dict_type
+        <where>
+            is_deleted = 0
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="dictName != null and dictName != ''">
+                and dict_name like concat('%', #{dictName}, '%')
+            </if>
+            <if test="dictType != null and dictType != ''">
+                and dict_type = #{dictType}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        order by id asc
+    </select>
+
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into auth_dict_type(dict_name, dict_type, status, remark, created_by, created_time, updated_by, updated_time, is_deleted)
+        values (#{dictName}, #{dictType}, #{status}, #{remark}, #{createdBy}, now(), #{updatedBy}, now(), 0)
+    </insert>
+
+    <update id="update">
+        update auth_dict_type
+        <set>
+            <if test="dictName != null and dictName != ''">
+                dict_name = #{dictName},
+            </if>
+            <if test="dictType != null and dictType != ''">
+                dict_type = #{dictType},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                updated_by = #{updatedBy},
+            </if>
+            updated_time = now(),
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteById">
+        update auth_dict_type
+        set is_deleted = 1, updated_time = now()
+        where id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jingdiansuifeng.auth.infra.basic.mapper.AuthUserSocialDao">
+
+    <resultMap type="com.jingdiansuifeng.auth.infra.basic.entity.AuthUserSocial" id="AuthUserSocialMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="platform" column="platform" jdbcType="VARCHAR"/>
+        <result property="openId" column="open_id" jdbcType="VARCHAR"/>
+        <result property="unionId" column="union_id" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="rawUserInfo" column="raw_user_info" jdbcType="VARCHAR"/>
+        <result property="createdBy" column="created_by" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedBy" column="updated_by" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="queryById" resultMap="AuthUserSocialMap">
+        select id, user_id, platform, open_id, union_id, nickname, avatar, raw_user_info, created_by, created_time, updated_by, updated_time, is_deleted
+        from auth_user_social
+        where id = #{id} and is_deleted = 0
+    </select>
+
+    <select id="queryByPlatformAndOpenId" resultMap="AuthUserSocialMap">
+        select id, user_id, platform, open_id, union_id, nickname, avatar, raw_user_info, created_by, created_time, updated_by, updated_time, is_deleted
+        from auth_user_social
+        where platform = #{platform} and open_id = #{openId} and is_deleted = 0
+        limit 1
+    </select>
+
+    <select id="queryByUserId" resultMap="AuthUserSocialMap">
+        select id, user_id, platform, open_id, union_id, nickname, avatar, raw_user_info, created_by, created_time, updated_by, updated_time, is_deleted
+        from auth_user_social
+        where user_id = #{userId} and is_deleted = 0
+    </select>
+
+    <select id="queryAllByLimit" resultMap="AuthUserSocialMap">
+        select id, user_id, platform, open_id, union_id, nickname, avatar, raw_user_info, created_by, created_time, updated_by, updated_time, is_deleted
+        from auth_user_social
+        <where>
+            is_deleted = 0
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="platform != null and platform != ''">
+                and platform = #{platform}
+            </if>
+            <if test="openId != null and openId != ''">
+                and open_id = #{openId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into auth_user_social(user_id, platform, open_id, union_id, nickname, avatar, raw_user_info, created_by, created_time, updated_by, updated_time, is_deleted)
+        values (#{userId}, #{platform}, #{openId}, #{unionId}, #{nickname}, #{avatar}, #{rawUserInfo}, #{createdBy}, now(), #{updatedBy}, now(), 0)
+    </insert>
+
+    <update id="update">
+        update auth_user_social
+        <set>
+            <if test="nickname != null and nickname != ''">
+                nickname = #{nickname},
+            </if>
+            <if test="avatar != null and avatar != ''">
+                avatar = #{avatar},
+            </if>
+            <if test="rawUserInfo != null">
+                raw_user_info = #{rawUserInfo},
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                updated_by = #{updatedBy},
+            </if>
+            updated_time = now(),
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteById">
+        update auth_user_social
+        set is_deleted = 1, updated_time = now()
+        where id = #{id}
+    </update>
+
+</mapper>

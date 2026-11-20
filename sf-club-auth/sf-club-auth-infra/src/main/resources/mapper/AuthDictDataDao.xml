@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jingdiansuifeng.auth.infra.basic.mapper.AuthDictDataDao">
+
+    <resultMap type="com.jingdiansuifeng.auth.infra.basic.entity.AuthDictData" id="AuthDictDataMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="dictType" column="dict_type" jdbcType="VARCHAR"/>
+        <result property="dictKey" column="dict_key" jdbcType="VARCHAR"/>
+        <result property="dictLabel" column="dict_label" jdbcType="VARCHAR"/>
+        <result property="dictValue" column="dict_value" jdbcType="VARCHAR"/>
+        <result property="dictSort" column="dict_sort" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="createdBy" column="created_by" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedBy" column="updated_by" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="queryById" resultMap="AuthDictDataMap">
+        select id, dict_type, dict_key, dict_label, dict_value, dict_sort, status, remark, created_by, created_time, updated_by, updated_time, is_deleted
+        from auth_dict_data
+        where id = #{id} and is_deleted = 0
+    </select>
+
+    <select id="queryByDictType" resultMap="AuthDictDataMap">
+        select id, dict_type, dict_key, dict_label, dict_value, dict_sort, status, remark, created_by, created_time, updated_by, updated_time, is_deleted
+        from auth_dict_data
+        where dict_type = #{dictType} and is_deleted = 0
+        order by dict_sort asc, id asc
+    </select>
+
+    <select id="queryByTypeAndKey" resultMap="AuthDictDataMap">
+        select id, dict_type, dict_key, dict_label, dict_value, dict_sort, status, remark, created_by, created_time, updated_by, updated_time, is_deleted
+        from auth_dict_data
+        where dict_type = #{dictType} and dict_key = #{dictKey} and is_deleted = 0
+        limit 1
+    </select>
+
+    <select id="queryAllByLimit" resultMap="AuthDictDataMap">
+        select id, dict_type, dict_key, dict_label, dict_value, dict_sort, status, remark, created_by, created_time, updated_by, updated_time, is_deleted
+        from auth_dict_data
+        <where>
+            is_deleted = 0
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="dictType != null and dictType != ''">
+                and dict_type = #{dictType}
+            </if>
+            <if test="dictKey != null and dictKey != ''">
+                and dict_key = #{dictKey}
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                and dict_label like concat('%', #{dictLabel}, '%')
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        order by dict_sort asc, id asc
+    </select>
+
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into auth_dict_data(dict_type, dict_key, dict_label, dict_value, dict_sort, status, remark, created_by, created_time, updated_by, updated_time, is_deleted)
+        values (#{dictType}, #{dictKey}, #{dictLabel}, #{dictValue}, #{dictSort}, #{status}, #{remark}, #{createdBy}, now(), #{updatedBy}, now(), 0)
+    </insert>
+
+    <update id="update">
+        update auth_dict_data
+        <set>
+            <if test="dictType != null and dictType != ''">
+                dict_type = #{dictType},
+            </if>
+            <if test="dictKey != null and dictKey != ''">
+                dict_key = #{dictKey},
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                dict_label = #{dictLabel},
+            </if>
+            <if test="dictValue != null">
+                dict_value = #{dictValue},
+            </if>
+            <if test="dictSort != null">
+                dict_sort = #{dictSort},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                updated_by = #{updatedBy},
+            </if>
+            updated_time = now(),
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateValueByTypeAndKey">
+        update auth_dict_data
+        set dict_value = #{dictValue}, updated_time = now()
+        where dict_type = #{dictType} and dict_key = #{dictKey} and is_deleted = 0
+    </update>
+
+    <update id="deleteById">
+        update auth_dict_data
+        set is_deleted = 1, updated_time = now()
+        where id = #{id}
+    </update>
+
+    <update id="deleteByTypeAndKey">
+        update auth_dict_data
+        set is_deleted = 1, updated_time = now()
+        where dict_type = #{dictType} and dict_key = #{dictKey}
+    </update>
+
+</mapper>
