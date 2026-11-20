@@ -20,7 +20,11 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.*;
+import org.elasticsearch.client.indices.CreateIndexRequest;
+import org.elasticsearch.client.indices.CreateIndexResponse;
+import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -324,6 +328,30 @@ public class EsRestClient {
             list.add(obj.getString("token"));
         }
         return list;
+    }
+
+    public static boolean createIndex(EsIndexInfo esIndexInfo, String mappingJson) {
+        try {
+            CreateIndexRequest request = new CreateIndexRequest(esIndexInfo.getIndexName());
+            if (StringUtils.isNotBlank(mappingJson)) {
+                request.mapping(mappingJson, XContentType.JSON);
+            }
+            CreateIndexResponse response = getClient(esIndexInfo.getClusterName()).indices().create(request, COMMON_OPTIONS);
+            return response.isAcknowledged();
+        } catch (Exception e) {
+            log.error("EsRestClient.createIndex.error:{}", e.getMessage(), e);
+        }
+        return false;
+    }
+
+    public static boolean isExistIndex(EsIndexInfo esIndexInfo) {
+        try {
+            GetIndexRequest request = new GetIndexRequest(esIndexInfo.getIndexName());
+            return getClient(esIndexInfo.getClusterName()).indices().exists(request, COMMON_OPTIONS);
+        } catch (Exception e) {
+            log.error("EsRestClient.isExistIndex.error:{}", e.getMessage(), e);
+        }
+        return false;
     }
 
 }

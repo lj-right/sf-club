@@ -23,9 +23,11 @@ public interface SubjectInfoDao {
      * 查询指定行数据
      *
      * @param subjectInfo 查询条件
+     * @param offset 偏移量
+     * @param pageSize 每页条数
      * @return 对象列表
      */
-    List<SubjectInfo> queryAllByLimit(SubjectInfo subjectInfo);
+    List<SubjectInfo> queryAllByLimit(@Param("subjectInfo") SubjectInfo subjectInfo, @Param("offset") int offset, @Param("pageSize") int pageSize);
 
     /**
      * 统计总行数

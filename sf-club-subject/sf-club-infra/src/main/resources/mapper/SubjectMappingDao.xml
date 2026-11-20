@@ -128,6 +128,12 @@
         </where>
     </select>
 
+    <select id="queryBySubjectId" resultMap="SubjectMappingMap">
+        select id, subject_id, category_id, label_id
+        from subject_mapping
+        where subject_id = #{subjectId} and is_deleted = 0
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into subject_mapping(id, subject_id, category_id, label_id, created_by, created_time, update_by, update_time, is_deleted)

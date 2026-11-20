@@ -92,7 +92,6 @@ public class SubjectController {
                 subjectInfoDTO.setPageSize(10);
             }
 
-
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConverter.INSTANCE
                     .convertDtoToInfoBo(subjectInfoDTO);
             PageResult<SubjectInfoBO> boPageResult = subjectInfoDomainService.getSubjectPage(subjectInfoBO);
@@ -185,6 +184,32 @@ public class SubjectController {
         } catch (Exception e) {
             log.error("SubjectController.pushMessage.error:{}", e.getMessage(), e);
             return Result.fail("mq推送消息失败");
+        }
+    }
+
+    /**
+     * 初始化/创建题目ES索引（配置中文IK分词器）
+     */
+    @PostMapping("/initSubjectIndex")
+    public Result<Boolean> initSubjectIndex() {
+        try {
+            return Result.ok(subjectInfoDomainService.initSubjectIndex());
+        } catch (Exception e) {
+            log.error("SubjectController.initSubjectIndex.error:{}", e.getMessage(), e);
+            return Result.fail("初始化ES索引失败");
+        }
+    }
+
+    /**
+     * 全量同步题目至ES检索索引
+     */
+    @PostMapping("/syncAllToEs")
+    public Result<Boolean> syncAllToEs() {
+        try {
+            return Result.ok(subjectInfoDomainService.syncAllToEs());
+        } catch (Exception e) {
+            log.error("SubjectController.syncAllToEs.error:{}", e.getMessage(), e);
+            return Result.fail("全量同步ES失败");
         }
     }
 

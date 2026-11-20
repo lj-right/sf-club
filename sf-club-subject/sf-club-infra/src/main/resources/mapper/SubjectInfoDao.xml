@@ -31,7 +31,8 @@
                created_time,
                update_by,
                update_time,
-               is_deleted
+               is_deleted,
+               read_count
         from subject_info
         where id = #{id}
     </select>
@@ -40,47 +41,49 @@
     <select id="queryAllByLimit" resultMap="SubjectInfoMap">
         select
         id, subject_name, subject_difficult, settle_name, subject_type, subject_score, subject_parse, created_by,
-        created_time, update_by, update_time, is_deleted
+        created_time, update_by, update_time, is_deleted, read_count
         from subject_info
         <where>
-            <if test="id != null">
-                and id = #{id}
+            <if test="subjectInfo.id != null">
+                and id = #{subjectInfo.id}
             </if>
-            <if test="subjectName != null and subjectName != ''">
-                and subject_name = #{subjectName}
+            <if test="subjectInfo.subjectName != null and subjectInfo.subjectName != ''">
+                and subject_name = #{subjectInfo.subjectName}
             </if>
-            <if test="subjectDifficult != null">
-                and subject_difficult = #{subjectDifficult}
+            <if test="subjectInfo.subjectDifficult != null">
+                and subject_difficult = #{subjectInfo.subjectDifficult}
             </if>
-            <if test="settleName != null and settleName != ''">
-                and settle_name = #{settleName}
+            <if test="subjectInfo.settleName != null and subjectInfo.settleName != ''">
+                and settle_name = #{subjectInfo.settleName}
             </if>
-            <if test="subjectType != null">
-                and subject_type = #{subjectType}
+            <if test="subjectInfo.subjectType != null">
+                and subject_type = #{subjectInfo.subjectType}
             </if>
-            <if test="subjectScore != null">
-                and subject_score = #{subjectScore}
+            <if test="subjectInfo.subjectScore != null">
+                and subject_score = #{subjectInfo.subjectScore}
             </if>
-            <if test="subjectParse != null and subjectParse != ''">
-                and subject_parse = #{subjectParse}
+            <if test="subjectInfo.subjectParse != null and subjectParse != ''">
+                and subject_parse = #{subjectInfo.subjectParse}
             </if>
-            <if test="createdBy != null and createdBy != ''">
-                and created_by = #{createdBy}
+            <if test="subjectInfo.createdBy != null and subjectInfo.createdBy != ''">
+                and created_by = #{subjectInfo.createdBy}
             </if>
-            <if test="createdTime != null">
-                and created_time = #{createdTime}
+            <if test="subjectInfo.createdTime != null">
+                and created_time = #{subjectInfo.createdTime}
             </if>
-            <if test="updateBy != null and updateBy != ''">
-                and update_by = #{updateBy}
+            <if test="subjectInfo.updateBy != null and subjectInfo.updateBy != ''">
+                and update_by = #{subjectInfo.updateBy}
             </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
+            <if test="subjectInfo.updateTime != null">
+                and update_time = #{subjectInfo.updateTime}
             </if>
-            <if test="isDeleted != null">
-                and is_deleted = #{isDeleted}
+            <if test="subjectInfo.isDeleted != null">
+                and is_deleted = #{subjectInfo.isDeleted}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
+        <if test="offset != null and pageSize != null">
+            limit #{offset}, #{pageSize}
+        </if>
     </select>
 
     <!--统计总行数-->
@@ -297,6 +300,9 @@
             </if>
             <if test="isDeleted != null">
                 is_deleted = #{isDeleted},
+            </if>
+            <if test="readCount != null">
+                read_count = #{readCount},
             </if>
         </set>
         where id = #{id}

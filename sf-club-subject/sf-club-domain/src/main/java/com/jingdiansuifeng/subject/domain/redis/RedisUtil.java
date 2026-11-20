@@ -57,6 +57,13 @@ public class RedisUtil {
     }
 
     /**
+     * set(带过期时间)
+     */
+    public void set(String key, String value, Long time, TimeUnit timeUnit) {
+        redisTemplate.opsForValue().set(key, value, time, timeUnit);
+    }
+
+    /**
      * set(带过期)
      */
     public boolean setNx(String key, String value, Long time, TimeUnit timeUnit) {

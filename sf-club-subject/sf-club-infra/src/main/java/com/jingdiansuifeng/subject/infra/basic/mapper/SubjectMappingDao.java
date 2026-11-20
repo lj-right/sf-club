@@ -76,5 +76,12 @@ public interface SubjectMappingDao {
      * @return
      */
     List<SubjectMapping> queryDistinctLabelId(SubjectMapping subjectMapping);
+
+    /**
+     * 根据题目id查询所有关联关系
+     * @param subjectId
+     * @return
+     */
+    List<SubjectMapping> queryBySubjectId(@Param("subjectId") Long subjectId);
 }
 

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class SubjectInfoEs extends PageInfo implements Serializable {
@@ -26,6 +27,13 @@ public class SubjectInfoEs extends PageInfo implements Serializable {
 
     private BigDecimal score;
 
+    private List<String> categoryNames;
 
+    private List<String> labelNames;
+
+    /**
+     * MQ操作类型: ADD / UPDATE / DELETE
+     */
+    private String operationType;
 
 }

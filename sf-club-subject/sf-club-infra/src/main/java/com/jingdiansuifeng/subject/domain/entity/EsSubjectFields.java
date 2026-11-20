@@ -16,6 +16,10 @@ public class EsSubjectFields {
 
     public static final String CREATE_TIME = "create_time";
 
+    public static final String CATEGORY_NAMES = "category_names";
+
+    public static final String LABEL_NAMES = "label_names";
+
     public static final String[] FIELD_QUERY = {
-            DOC_ID,SUBJECT_ID, SUBJECT_NAME, SUBJECT_ANSWER, SUBJECT_TYPE, CREATE_USER, CREATE_TIME};
+            DOC_ID, SUBJECT_ID, SUBJECT_NAME, SUBJECT_ANSWER, SUBJECT_TYPE, CREATE_USER, CREATE_TIME, CATEGORY_NAMES, LABEL_NAMES};
 }

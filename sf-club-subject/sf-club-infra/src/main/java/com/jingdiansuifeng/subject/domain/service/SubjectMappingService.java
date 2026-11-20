@@ -57,4 +57,11 @@ public interface SubjectMappingService {
      * @param mappingList
      */
     void batchInsert(List<SubjectMapping> mappingList);
+
+    /**
+     * 根据题目id查询所有关联映射
+     * @param subjectId
+     * @return
+     */
+    List<SubjectMapping> queryBySubjectId(Long subjectId);
 }

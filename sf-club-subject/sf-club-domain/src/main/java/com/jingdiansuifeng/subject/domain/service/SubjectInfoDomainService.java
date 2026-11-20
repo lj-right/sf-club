@@ -41,4 +41,20 @@ public interface SubjectInfoDomainService {
     PageResult<SubjectInfoEs> getSubjectPageBySearch(SubjectInfoBO subjectInfoBO);
 
     List<SubjectInfoBO> getContributeList();
+
+    /**
+     * 初始化/创建题目ES索引（配置中文IK分词器）
+     */
+    Boolean initSubjectIndex();
+
+    /**
+     * 全量同步 MySQL 题目数据至 ES 检索索引
+     */
+    Boolean syncAllToEs();
+
+    /**
+     * 通过 MQ 消息异步同步题目数据至 ES 检索索引
+     * @param subjectInfoEs
+     */
+    void syncEsByMsg(SubjectInfoEs subjectInfoEs);
 }

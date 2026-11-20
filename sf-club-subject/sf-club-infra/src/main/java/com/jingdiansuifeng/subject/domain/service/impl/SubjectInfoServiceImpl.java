@@ -81,6 +81,11 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
     }
 
     @Override
+    public List<SubjectInfo> queryAllByLimit(SubjectInfo subjectInfo, int offset, int pageSize) {
+        return this.subjectInfoDao.queryAllByLimit(subjectInfo, offset, pageSize);
+    }
+
+    @Override
     public Long querySubjectIdCursor(Long categoryId, Long labelId, Long subjectId, int cursor) {
 
         return this.subjectInfoDao.querySubjectIdCursor(categoryId, labelId, subjectId, cursor);
