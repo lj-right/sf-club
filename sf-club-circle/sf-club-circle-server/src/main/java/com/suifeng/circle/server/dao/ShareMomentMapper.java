@@ -16,4 +16,6 @@ public interface ShareMomentMapper extends BaseMapper<ShareMoment> {
 
     void incrReplyCount(@Param("id") Long id, @Param("count") int count);
 
+    void incrLikeCount(@Param("id") Long id, @Param("count") int count);
+
 }

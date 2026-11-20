@@ -26,4 +26,6 @@ public interface ShareMomentService extends IService<ShareMoment> {
 
     void incrReplyCount(Long id, int count);
 
+    void incrLikeCount(Long id, int count);
+
 }

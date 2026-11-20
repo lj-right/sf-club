@@ -20,8 +20,11 @@ import com.suifeng.circle.server.entity.dto.UserInfo;
 import com.suifeng.circle.server.entity.po.ShareCommentReply;
 import com.suifeng.circle.server.entity.po.ShareMoment;
 import com.suifeng.circle.server.rpc.UserRpc;
+import com.suifeng.circle.server.service.ShareMomentLikedService;
 import com.suifeng.circle.server.service.ShareMomentService;
 import com.suifeng.circle.server.util.LoginUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -48,6 +51,9 @@ public class ShareMomentServiceImpl extends ServiceImpl<ShareMomentMapper, Share
     private ShareCommentReplyMapper shareCommentReplyMapper;
     @Resource
     private UserRpc userRpc;
+    @Lazy
+    @Resource
+    private ShareMomentLikedService shareMomentLikedService;
 
     @Override
     public Boolean saveMoment(SaveMomentCircleReq req) {
@@ -59,6 +65,7 @@ public class ShareMomentServiceImpl extends ServiceImpl<ShareMomentMapper, Share
             moment.setPicUrls(JSON.toJSONString(req.getPicUrlList()));
         }
         moment.setReplyCount(0);
+        moment.setLikeCount(0);
         moment.setCreatedBy(LoginUtil.getLoginId());
         moment.setCreatedTime(new Date());
         moment.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
@@ -72,7 +79,7 @@ public class ShareMomentServiceImpl extends ServiceImpl<ShareMomentMapper, Share
         LambdaQueryWrapper<ShareMoment> query = Wrappers.<ShareMoment>lambdaQuery()
                 .eq(Objects.nonNull(req.getCircleId()), ShareMoment::getCircleId, req.getCircleId())
                 .eq(ShareMoment::getIsDeleted, IsDeletedFlagEnum.UN_DELETED.getCode())
-                .orderByDesc(ShareMoment::getCircleId);
+                .orderByDesc(ShareMoment::getId);
         PageInfo pageInfo = req.getPageInfo();
         Page<ShareMoment> page = new Page<>(pageInfo.getPageNo(), pageInfo.getPageSize());
         Page<ShareMoment> pageRes = super.page(page, query);
@@ -81,6 +88,9 @@ public class ShareMomentServiceImpl extends ServiceImpl<ShareMomentMapper, Share
         List<String> userNameList = records.stream().map(ShareMoment::getCreatedBy).distinct().collect(Collectors.toList());
         Map<String, UserInfo> userInfoMap = userRpc.batchGetUserInfo(userNameList);
         UserInfo defaultUser = new UserInfo();
+
+        String currentLoginId = LoginUtil.getLoginId();
+
         List<ShareMomentVO> list = records.stream().map(item -> {
             ShareMomentVO vo = new ShareMomentVO();
             vo.setId(item.getId());
@@ -90,8 +100,20 @@ public class ShareMomentServiceImpl extends ServiceImpl<ShareMomentMapper, Share
                 List<String> picList = JSONArray.parseArray(item.getPicUrls(), String.class);
                 vo.setPicUrlList(picList);
             }
-            vo.setReplyCount(item.getReplyCount());
-            vo.setCreatedTime(item.getCreatedTime().getTime());
+            vo.setReplyCount(item.getReplyCount() != null ? item.getReplyCount() : 0);
+
+            int count = item.getLikeCount() != null ? item.getLikeCount() : 0;
+            vo.setLikeCount(count);
+            vo.setLikes(count);
+
+            boolean liked = false;
+            if (StringUtils.isNotBlank(currentLoginId)) {
+                liked = Boolean.TRUE.equals(shareMomentLikedService.isLiked(item.getId(), currentLoginId));
+            }
+            vo.setHasLiked(liked);
+            vo.setLiked(liked);
+
+            vo.setCreatedTime(item.getCreatedTime() != null ? item.getCreatedTime().getTime() : System.currentTimeMillis());
             UserInfo user = userInfoMap.getOrDefault(item.getCreatedBy(), defaultUser);
             vo.setUserName(user.getNickName());
             vo.setUserAvatar(user.getAvatar());
@@ -120,6 +142,11 @@ public class ShareMomentServiceImpl extends ServiceImpl<ShareMomentMapper, Share
     @Override
     public void incrReplyCount(Long id, int count) {
         getBaseMapper().incrReplyCount(id, count);
+    }
+
+    @Override
+    public void incrLikeCount(Long id, int count) {
+        getBaseMapper().incrLikeCount(id, count);
     }
 
 }

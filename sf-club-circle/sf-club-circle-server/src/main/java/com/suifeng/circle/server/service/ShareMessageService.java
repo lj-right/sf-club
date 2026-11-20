@@ -1,6 +1,5 @@
 package com.suifeng.circle.server.service;
 
-
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.suifeng.circle.api.common.PageResult;
 import com.suifeng.circle.api.req.GetShareMessageReq;
@@ -22,6 +21,8 @@ public interface ShareMessageService extends IService<ShareMessage> {
     void comment(String fromId, String toId, Long targetId);
 
     void reply(String fromId, String toId, Long targetId);
+
+    void like(String fromId, String toId, Long targetId);
 
     Boolean unRead();
 

@@ -14,11 +14,13 @@ import com.suifeng.circle.api.enums.IsDeletedFlagEnum;
 import com.suifeng.circle.api.req.GetShareMessageReq;
 import com.suifeng.circle.api.vo.ShareMessageVO;
 import com.suifeng.circle.server.dao.ShareMessageMapper;
+import com.suifeng.circle.server.entity.dto.UserInfo;
 import com.suifeng.circle.server.entity.po.ShareMessage;
 import com.suifeng.circle.server.rpc.UserRpc;
 import com.suifeng.circle.server.service.ShareMessageService;
 import com.suifeng.circle.server.util.LoginUtil;
 import com.suifeng.circle.server.websocket.ChickenSocket;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -64,7 +66,23 @@ public class ShareMessageServiceImpl extends ServiceImpl<ShareMessageMapper, Sha
         List<ShareMessageVO> list = records.stream().map(item -> {
             ShareMessageVO vo = new ShareMessageVO();
             vo.setId(item.getId());
-            vo.setContent(JSON.parseObject(item.getContent()));
+            if (Objects.nonNull(item.getContent()) && !item.getContent().trim().isEmpty()) {
+                try {
+                    vo.setContent(JSON.parseObject(item.getContent()));
+                } catch (Exception e) {
+                    JSONObject obj = new JSONObject();
+                    obj.put("msgType", "COMMENT");
+                    obj.put("msg", item.getContent());
+                    obj.put("targetId", 1L);
+                    vo.setContent(obj);
+                }
+            } else {
+                JSONObject obj = new JSONObject();
+                obj.put("msgType", "COMMENT");
+                obj.put("msg", "有新的互动消息，快去看看吧");
+                obj.put("targetId", 1L);
+                vo.setContent(obj);
+            }
             vo.setCreatedTime(item.getCreatedTime());
             return vo;
         }).collect(Collectors.toList());
@@ -82,7 +100,7 @@ public class ShareMessageServiceImpl extends ServiceImpl<ShareMessageMapper, Sha
         JSONObject message = new JSONObject();
         // 1=评论 2=回复
         message.put("msgType", "COMMENT");
-        message.put("msg", "评论了你的内容，快来看看吧");
+        message.put("msg", "评论了你的动态内容，快来看看吧！");
         message.put("targetId", targetId);
         ShareMessage shareMessage = new ShareMessage();
         shareMessage.setFromId(fromId);
@@ -106,7 +124,34 @@ public class ShareMessageServiceImpl extends ServiceImpl<ShareMessageMapper, Sha
         JSONObject message = new JSONObject();
         // 1=评论 2=回复
         message.put("msgType", "COMMENT_REPLY");
-        message.put("msg", String.format("%s 回复了你的评论，快来看看吧！", userRpc.getUserInfo(fromId).getNickName()));
+        UserInfo fromUser = userRpc.getUserInfo(fromId);
+        String name = (fromUser != null && StringUtils.isNotBlank(fromUser.getNickName())) ? fromUser.getNickName() : fromId;
+        message.put("msg", String.format("%s 回复了你的评论，快来看看吧！", name));
+        message.put("targetId", targetId);
+        ShareMessage shareMessage = new ShareMessage();
+        shareMessage.setFromId(fromId);
+        shareMessage.setToId(toId);
+        shareMessage.setContent(message.toJSONString());
+        shareMessage.setIsRead(2);
+        shareMessage.setCreatedBy(fromId);
+        shareMessage.setCreatedTime(new Date());
+        shareMessage.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        ChickenSocket socket = chickenSocket.getChickenSocket(toId);
+        if (Objects.nonNull(socket)) {
+            chickenSocket.sendMessage(shareMessage.getContent(), socket.getSession());
+        }
+        super.save(shareMessage);
+
+    }
+
+    @Override
+    public void like(String fromId, String toId, Long targetId) {
+
+        JSONObject message = new JSONObject();
+        message.put("msgType", "LIKE");
+        UserInfo fromUser = userRpc.getUserInfo(fromId);
+        String name = (fromUser != null && StringUtils.isNotBlank(fromUser.getNickName())) ? fromUser.getNickName() : fromId;
+        message.put("msg", String.format("%s 点赞了你的动态，快来看看吧！", name));
         message.put("targetId", targetId);
         ShareMessage shareMessage = new ShareMessage();
         shareMessage.setFromId(fromId);

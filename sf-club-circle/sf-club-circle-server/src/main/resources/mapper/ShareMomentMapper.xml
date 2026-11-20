@@ -9,4 +9,11 @@
           and is_deleted = 0
     </update>
 
+    <update id="incrLikeCount">
+        update share_moment
+        set like_count = CASE WHEN (like_count + #{count}) &lt; 0 THEN 0 ELSE (like_count + #{count}) END
+        where id = #{id}
+          and is_deleted = 0
+    </update>
+
 </mapper>

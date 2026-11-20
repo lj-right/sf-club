@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 动态信息
+ * 动态信息 PO
  * </p>
  *
  * @author ChickenWing
@@ -51,6 +51,11 @@ public class ShareMoment implements Serializable {
     private Integer replyCount;
 
     /**
+     * 点赞数
+     */
+    private Integer likeCount;
+
+    /**
      * 创建人
      */
     private String createdBy;
@@ -71,7 +76,7 @@ public class ShareMoment implements Serializable {
     private Date updateTime;
 
     /**
-     * 是否被删除 0为删除 1已删除
+     * 是否被删除 0未删除 1已删除
      */
     private Integer isDeleted;
 }
