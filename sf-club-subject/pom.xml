@@ -7,7 +7,7 @@
     <artifactId>sf-club-subject</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <description>随风club-题目领域服务</description>
+    <description>烤面筋-题目领域服务</description>
     <modelVersion>4.0.0</modelVersion>
 
     <parent>

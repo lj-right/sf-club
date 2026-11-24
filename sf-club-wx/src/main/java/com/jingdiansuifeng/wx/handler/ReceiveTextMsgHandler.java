@@ -39,7 +39,7 @@ public class ReceiveTextMsgHandler implements WxChatMsgHandler {
         String codeKey = redisUtil.buildKey(LOGIN_PREFIX, String.valueOf(verificationCode));
         redisUtil.setNx(codeKey, fromUserName, 5L, TimeUnit.MINUTES);
 
-        String CodeContent = "【随风Club】您的注册验证码为：" + verificationCode + "该验证码5分钟内有效，请及时验证。";
+        String CodeContent = "【烤面筋】您的注册验证码为：" + verificationCode + "该验证码5分钟内有效，请及时验证。";
         String replyContent = "<xml>\n" +
                 " <ToUserName><![CDATA[" + fromUserName + "]]></ToUserName>\n" +
                 " <FromUserName><![CDATA[" + toUserName + "]]></FromUserName>\n" +
