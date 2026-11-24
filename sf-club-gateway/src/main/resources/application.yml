@@ -60,6 +60,10 @@ spring:
             - Path=/interview/**
           filters:
             - StripPrefix=1
+        - id: ai
+          uri: http://127.0.0.1:8012
+          predicates:
+            - Path=/ai/**
 sa-token:
   token-name: satoken
   timeout: 2592000

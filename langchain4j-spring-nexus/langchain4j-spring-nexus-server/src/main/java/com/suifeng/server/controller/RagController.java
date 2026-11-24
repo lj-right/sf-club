@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RequestMapping("/rag")
 @Slf4j
+@org.springframework.boot.autoconfigure.condition.ConditionalOnBean(dev.langchain4j.model.embedding.EmbeddingModel.class)
 public class RagController {
 
     private final   EmbeddingModel qwenEmbeddingModel;

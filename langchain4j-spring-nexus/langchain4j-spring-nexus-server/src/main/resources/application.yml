@@ -1,3 +1,41 @@
+server:
+  port: 8012
+
 spring:
+  application:
+    name: sf-club-langchain4j
   profiles:
     active: local
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+
+# AI 模型接入核心配置：支持 Gemini CLI (agy) / 第三方 CLI、API Key 官方直连与第三方 API 代理
+ai:
+  model:
+    # 模式选择：API_KEY | CLI | THIRD_PARTY
+    mode: ${AI_MODEL_MODE:CLI}
+    
+    # 1. Gemini CLI / 第三方 CLI 命令行配置 (本机原生执行 agy/gemini CLI)
+    cli-command: ${AI_CLI_COMMAND:agy}
+    cli-endpoint: ${AI_CLI_ENDPOINT:}
+    
+    # 2. 模型名称 (Gemini CLI 推荐: gemini-3.8-flash-high / 官方直连: qwen-plus)
+    model-name: ${AI_MODEL_NAME:gemini-3.8-flash-high}
+    
+    # 3. 官方 API Key 方式直连参数 (DashScope 通义千问等)
+    api-key: ${AI_API_KEY:sk-your-dashscope-api-key}
+    
+    # 4. 第三方 API 方式代理参数 (兼容 OpenAI 标准接口，可配置 DeepSeek / OneAPI / 代理站)
+    base-url: ${AI_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
+    timeout-seconds: 90
+    temperature: 0.7
+
+# 兼容旧版 DashScope starter
+langchain4j:
+  community:
+    dashscope:
+      chat-model:
+        api-key: ${ai.model.api-key}
+        model-name: ${ai.model.model-name}

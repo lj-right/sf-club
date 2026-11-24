@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@org.springframework.boot.autoconfigure.condition.ConditionalOnBean(org.springframework.jdbc.core.JdbcTemplate.class)
 public class ChatMemoryRepository {
 
     private static final short UN_DELETED = 0;
