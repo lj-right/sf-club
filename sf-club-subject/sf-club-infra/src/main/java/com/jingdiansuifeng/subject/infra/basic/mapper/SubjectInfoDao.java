@@ -90,9 +90,18 @@ public interface SubjectInfoDao {
 
     List<SubjectInfo> getContributeCount();
 
+    int countBySearch(@Param("keyWord") String keyWord, @Param("subjectType") Integer subjectType);
+
+    List<SubjectInfo> queryBySearch(@Param("keyWord") String keyWord,
+                                    @Param("subjectType") Integer subjectType,
+                                    @Param("start") int start,
+                                    @Param("pageSize") Integer pageSize);
+
     Long querySubjectIdCursor(@Param("categoryId") Long categoryId,
                               @Param("labelId") Long labelId,
                               @Param("subjectId") Long subjectId,
                               @Param("cursor") int cursor);
+
+    List<String> queryAllSubjectNames();
 }
 

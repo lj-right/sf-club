@@ -4,10 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
 import com.jingdiansuifeng.subject.application.convert.SubjectAnswerDTOConverter;
 import com.jingdiansuifeng.subject.application.convert.SubjectInfoDTOConverter;
+import com.jingdiansuifeng.subject.application.dto.SubjectAutoImportReqDTO;
+import com.jingdiansuifeng.subject.application.dto.SubjectAutoImportRespDTO;
 import com.jingdiansuifeng.subject.application.dto.SubjectInfoDTO;
 import com.jingdiansuifeng.subject.common.entity.PageResult;
 import com.jingdiansuifeng.subject.common.entity.Result;
 import com.jingdiansuifeng.subject.domain.entity.SubjectAnswerBO;
+import com.jingdiansuifeng.subject.domain.entity.SubjectAutoImportBO;
+import com.jingdiansuifeng.subject.domain.entity.SubjectAutoImportResultBO;
 import com.jingdiansuifeng.subject.domain.entity.SubjectInfoBO;
 import com.jingdiansuifeng.subject.domain.entity.SubjectInfoEs;
 import com.jingdiansuifeng.subject.domain.service.SubjectInfoDomainService;
@@ -147,8 +151,9 @@ public class SubjectController {
 
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConverter.INSTANCE
                     .convertDtoToInfoBo(subjectInfoDTO);
-            subjectInfoBO.setPageNo(subjectInfoDTO.getPageNo());
-            subjectInfoBO.setPageSize(subjectInfoDTO.getPageSize());
+            subjectInfoBO.setPageNo(subjectInfoDTO.getPageNo() != null && subjectInfoDTO.getPageNo() > 0 ? subjectInfoDTO.getPageNo() : 1);
+            subjectInfoBO.setPageSize(subjectInfoDTO.getPageSize() != null && subjectInfoDTO.getPageSize() > 0 ? subjectInfoDTO.getPageSize() : 10);
+            subjectInfoBO.setKeyWord(subjectInfoDTO.getKeyWord().trim());
             PageResult<SubjectInfoEs> boPageResult = subjectInfoDomainService.getSubjectPageBySearch(subjectInfoBO);
             return Result.ok(boPageResult);
         } catch (Exception e) {
@@ -213,6 +218,41 @@ public class SubjectController {
         }
     }
 
+    /**
+     * 自动录取题目 (仅系统管理员操作)
+     */
+    @PostMapping("/admin/autoImport")
+    public Result<SubjectAutoImportRespDTO> autoImport(@RequestBody(required = false) SubjectAutoImportReqDTO reqDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectController.autoImport.reqDTO:{}", JSON.toJSONString(reqDTO));
+            }
+            SubjectAutoImportBO importBO = new SubjectAutoImportBO();
+            if (reqDTO != null) {
+                importBO.setSource(reqDTO.getSource());
+                importBO.setLimit(reqDTO.getLimit());
+                importBO.setAutoSyncEs(reqDTO.getAutoSyncEs());
+            }
+            SubjectAutoImportResultBO resultBO = subjectInfoDomainService.autoImportSubjects(importBO);
 
+            SubjectAutoImportRespDTO respDTO = new SubjectAutoImportRespDTO();
+            respDTO.setTotalFound(resultBO.getTotalFound());
+            respDTO.setImportedCount(resultBO.getImportedCount());
+            respDTO.setDuplicateCount(resultBO.getDuplicateCount());
+            respDTO.setCategoriesCount(resultBO.getCategoriesCount());
+            respDTO.setLabelsCount(resultBO.getLabelsCount());
+            respDTO.setDurationMs(resultBO.getDurationMs());
+            respDTO.setSummaryMessage(resultBO.getSummaryMessage());
+            respDTO.setSampleTitles(resultBO.getSampleTitles());
+
+            return Result.ok(respDTO);
+        } catch (SecurityException se) {
+            log.warn("SubjectController.autoImport forbidden: {}", se.getMessage());
+            return Result.fail(se.getMessage());
+        } catch (Exception e) {
+            log.error("SubjectController.autoImport.error:{}", e.getMessage(), e);
+            return Result.fail("自动录取题目失败: " + e.getMessage());
+        }
+    }
 
 }

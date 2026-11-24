@@ -56,7 +56,13 @@ public class SubjectEsServiceImpl implements SubjectEsService {
                 "    \"create_user\": { \"type\": \"keyword\" },\n" +
                 "    \"create_time\": { \"type\": \"long\" },\n" +
                 "    \"category_names\": { \"type\": \"keyword\" },\n" +
-                "    \"label_names\": { \"type\": \"keyword\" }\n" +
+                "    \"label_names\": { \"type\": \"keyword\" },\n" +
+                "    \"primary_category_id\": { \"type\": \"long\" },\n" +
+                "    \"primary_category_name\": { \"type\": \"keyword\" },\n" +
+                "    \"category_id\": { \"type\": \"long\" },\n" +
+                "    \"category_name\": { \"type\": \"keyword\" },\n" +
+                "    \"label_id\": { \"type\": \"long\" },\n" +
+                "    \"label_name\": { \"type\": \"keyword\" }\n" +
                 "  }\n" +
                 "}";
         return EsRestClient.createIndex(getEsIndexInfo(), mappingJson);
@@ -116,36 +122,64 @@ public class SubjectEsServiceImpl implements SubjectEsService {
         if (!CollectionUtils.isEmpty(subjectInfoEs.getLabelNames())) {
             data.put(EsSubjectFields.LABEL_NAMES, subjectInfoEs.getLabelNames());
         }
+        if (subjectInfoEs.getPrimaryCategoryId() != null) {
+            data.put(EsSubjectFields.PRIMARY_CATEGORY_ID, subjectInfoEs.getPrimaryCategoryId());
+        }
+        if (subjectInfoEs.getPrimaryCategoryName() != null) {
+            data.put(EsSubjectFields.PRIMARY_CATEGORY_NAME, subjectInfoEs.getPrimaryCategoryName());
+        }
+        if (subjectInfoEs.getCategoryId() != null) {
+            data.put(EsSubjectFields.CATEGORY_ID, subjectInfoEs.getCategoryId());
+        }
+        if (subjectInfoEs.getCategoryName() != null) {
+            data.put(EsSubjectFields.CATEGORY_NAME, subjectInfoEs.getCategoryName());
+        }
+        if (subjectInfoEs.getLabelId() != null) {
+            data.put(EsSubjectFields.LABEL_ID, subjectInfoEs.getLabelId());
+        }
+        if (subjectInfoEs.getLabelName() != null) {
+            data.put(EsSubjectFields.LABEL_NAME, subjectInfoEs.getLabelName());
+        }
         return data;
     }
 
     @Override
     public PageResult<SubjectInfoEs> querySubjectList(SubjectInfoEs req) {
         PageResult<SubjectInfoEs> pageResult = new PageResult<>();
-        EsSearchRequest esSearchRequest = createSearchListQuery(req);
-        SearchResponse searchResponse = EsRestClient.searchWithTermQuery(getEsIndexInfo(), esSearchRequest);
+        int pageNo = (req.getPageNo() != null && req.getPageNo() > 0) ? req.getPageNo() : 1;
+        int pageSize = (req.getPageSize() != null && req.getPageSize() > 0) ? req.getPageSize() : 10;
+        pageResult.setPageNo(pageNo);
+        pageResult.setPageSize(pageSize);
 
         List<SubjectInfoEs> subjectInfoEsList = new LinkedList<>();
-        SearchHits searchHits = searchResponse.getHits();
-        if (searchHits == null || searchHits.getHits() == null) {
-            pageResult.setPageNo(req.getPageNo());
-            pageResult.setPageSize(req.getPageSize());
-            pageResult.setRecords(subjectInfoEsList);
-            pageResult.setTotal(0);
-            return pageResult;
-        }
-
-        SearchHit[] hits = searchHits.getHits();
-        for (SearchHit hit : hits) {
-            SubjectInfoEs subjectInfoEs = convertResult(hit);
-            if (Objects.nonNull(subjectInfoEs)) {
-                subjectInfoEsList.add(subjectInfoEs);
-            }
-        }
-        pageResult.setPageNo(req.getPageNo());
-        pageResult.setPageSize(req.getPageSize());
         pageResult.setRecords(subjectInfoEsList);
-        pageResult.setTotal(Long.valueOf(searchHits.getTotalHits().value).intValue());
+        pageResult.setTotal(0);
+
+        try {
+            EsSearchRequest esSearchRequest = createSearchListQuery(req);
+            SearchResponse searchResponse = EsRestClient.searchWithTermQuery(getEsIndexInfo(), esSearchRequest);
+            if (searchResponse == null) {
+                return pageResult;
+            }
+
+            SearchHits searchHits = searchResponse.getHits();
+            if (searchHits == null || searchHits.getHits() == null) {
+                return pageResult;
+            }
+
+            SearchHit[] hits = searchHits.getHits();
+            for (SearchHit hit : hits) {
+                SubjectInfoEs subjectInfoEs = convertResult(hit);
+                if (Objects.nonNull(subjectInfoEs)) {
+                    subjectInfoEsList.add(subjectInfoEs);
+                }
+            }
+            pageResult.setRecords(subjectInfoEsList);
+            int total = (searchHits.getTotalHits() != null) ? Long.valueOf(searchHits.getTotalHits().value).intValue() : subjectInfoEsList.size();
+            pageResult.setTotal(total);
+        } catch (Exception e) {
+            log.warn("SubjectEsServiceImpl.querySubjectList.error:{}", e.getMessage());
+        }
 
         return pageResult;
     }
@@ -194,6 +228,13 @@ public class SubjectEsServiceImpl implements SubjectEsService {
         if (labelNamesObj instanceof List) {
             result.setLabelNames((List<String>) labelNamesObj);
         }
+
+        result.setPrimaryCategoryId(MapUtils.getLong(sourceAsMap, EsSubjectFields.PRIMARY_CATEGORY_ID));
+        result.setPrimaryCategoryName(MapUtils.getString(sourceAsMap, EsSubjectFields.PRIMARY_CATEGORY_NAME));
+        result.setCategoryId(MapUtils.getLong(sourceAsMap, EsSubjectFields.CATEGORY_ID));
+        result.setCategoryName(MapUtils.getString(sourceAsMap, EsSubjectFields.CATEGORY_NAME));
+        result.setLabelId(MapUtils.getLong(sourceAsMap, EsSubjectFields.LABEL_ID));
+        result.setLabelName(MapUtils.getString(sourceAsMap, EsSubjectFields.LABEL_NAME));
 
         return result;
     }

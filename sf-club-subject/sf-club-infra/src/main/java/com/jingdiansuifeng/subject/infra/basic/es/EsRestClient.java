@@ -251,10 +251,15 @@ public class EsRestClient {
                 Scroll scroll = new Scroll(TimeValue.timeValueMinutes(minustes));
                 searchRequest.scroll(scroll);
             }
-            SearchResponse search = getClient(esIndexInfo.getClusterName()).search(searchRequest, COMMON_OPTIONS);
+            RestHighLevelClient client = getClient(esIndexInfo.getClusterName());
+            if (client == null) {
+                log.warn("EsRestClient.searchWithTermQuery client is null for clusterName:{}", esIndexInfo.getClusterName());
+                return null;
+            }
+            SearchResponse search = client.search(searchRequest, COMMON_OPTIONS);
             return search;
-        } catch (IOException e) {
-            log.error("EsRestClient.isExistDocById.error:{}", e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("EsRestClient.searchWithTermQuery.error:{}", e.getMessage(), e);
         }
         return null;
     }

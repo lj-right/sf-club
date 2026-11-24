@@ -61,5 +61,11 @@ public interface SubjectInfoService {
 
     List<SubjectInfo> getContributeCount();
 
+    int countBySearch(String keyWord, Integer subjectType);
+
+    List<SubjectInfo> queryBySearch(String keyWord, Integer subjectType, int start, Integer pageSize);
+
     Long querySubjectIdCursor(Long categoryId, Long labelId, Long subjectId, int cursor);
+
+    List<String> queryAllSubjectNames();
 }

@@ -81,6 +81,16 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
     }
 
     @Override
+    public int countBySearch(String keyWord, Integer subjectType) {
+        return this.subjectInfoDao.countBySearch(keyWord, subjectType);
+    }
+
+    @Override
+    public List<SubjectInfo> queryBySearch(String keyWord, Integer subjectType, int start, Integer pageSize) {
+        return this.subjectInfoDao.queryBySearch(keyWord, subjectType, start, pageSize);
+    }
+
+    @Override
     public List<SubjectInfo> queryAllByLimit(SubjectInfo subjectInfo, int offset, int pageSize) {
         return this.subjectInfoDao.queryAllByLimit(subjectInfo, offset, pageSize);
     }
@@ -89,5 +99,10 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
     public Long querySubjectIdCursor(Long categoryId, Long labelId, Long subjectId, int cursor) {
 
         return this.subjectInfoDao.querySubjectIdCursor(categoryId, labelId, subjectId, cursor);
+    }
+
+    @Override
+    public List<String> queryAllSubjectNames() {
+        return this.subjectInfoDao.queryAllSubjectNames();
     }
 }

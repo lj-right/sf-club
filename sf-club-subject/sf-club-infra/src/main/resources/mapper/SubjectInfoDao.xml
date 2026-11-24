@@ -200,7 +200,61 @@
             where is_deleted = 0
             and created_by is not null
             group by created_by
-            limit 0,5
+            order by subjectCount desc
+            limit 0,10
+    </select>
+
+    <select id="countBySearch" resultType="java.lang.Integer">
+        select count(distinct a.id)
+        from subject_info a
+        left join subject_brief b on a.id = b.subject_id and b.is_deleted = 0
+        where a.is_deleted = 0
+        <if test="subjectType != null and subjectType != 0">
+            and a.subject_type = #{subjectType}
+        </if>
+        <if test="keyWord != null and keyWord != ''">
+            and (
+                a.subject_name like concat('%', #{keyWord}, '%')
+                or a.subject_parse like concat('%', #{keyWord}, '%')
+                or b.subject_answer like concat('%', #{keyWord}, '%')
+            )
+        </if>
+    </select>
+
+    <select id="queryBySearch" resultMap="SubjectInfoMap">
+        select distinct a.id,
+        a.subject_name,
+        a.subject_difficult,
+        a.settle_name,
+        a.subject_type,
+        a.subject_score,
+        a.subject_parse,
+        a.created_by,
+        a.created_time,
+        a.update_by,
+        a.update_time,
+        a.is_deleted,
+        a.read_count
+        from subject_info a
+        left join subject_brief b on a.id = b.subject_id and b.is_deleted = 0
+        where a.is_deleted = 0
+        <if test="subjectType != null and subjectType != 0">
+            and a.subject_type = #{subjectType}
+        </if>
+        <if test="keyWord != null and keyWord != ''">
+            and (
+                a.subject_name like concat('%', #{keyWord}, '%')
+                or a.subject_parse like concat('%', #{keyWord}, '%')
+                or b.subject_answer like concat('%', #{keyWord}, '%')
+            )
+        </if>
+        order by
+        case
+            when a.subject_name like concat('%', #{keyWord}, '%') then 1
+            else 2
+        end,
+        a.id desc
+        limit #{start},#{pageSize}
     </select>
 
     <select id="querySubjectIdCursor" resultType="java.lang.Long">
@@ -312,6 +366,12 @@
     <delete id="deleteById">
         delete from subject_info where id = #{id}
     </delete>
+
+    <select id="queryAllSubjectNames" resultType="java.lang.String">
+        select subject_name
+        from subject_info
+        where is_deleted = 0
+    </select>
 
 </mapper>
 
