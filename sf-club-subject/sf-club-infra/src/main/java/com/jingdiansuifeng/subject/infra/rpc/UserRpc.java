@@ -14,11 +14,16 @@ import javax.annotation.Resource;
 @Slf4j
 public class UserRpc {
 
+    private static final String DEFAULT_AVATAR = "http://127.0.0.1:9005/user/avatar/default_avatar.jpg";
+
     @Resource
     private UserFeignService userFeignService;
 
     public UserInfo getUserInfo(String userName) {
         UserInfo userInfo = new UserInfo();
+        userInfo.setUserName(userName);
+        userInfo.setNickName(userName);
+        userInfo.setAvatar(DEFAULT_AVATAR);
         if (StringUtils.isBlank(userName)) {
             return userInfo;
         }
@@ -30,9 +35,15 @@ public class UserRpc {
                 return userInfo;
             }
             AuthUserDTO data = result.getData();
-            userInfo.setUserName(data.getUserName());
-            userInfo.setNickName(data.getNickName());
-            userInfo.setAvatar(data.getAvatar());
+            if (StringUtils.isNotBlank(data.getUserName())) {
+                userInfo.setUserName(data.getUserName());
+            }
+            if (StringUtils.isNotBlank(data.getNickName())) {
+                userInfo.setNickName(data.getNickName());
+            }
+            if (StringUtils.isNotBlank(data.getAvatar())) {
+                userInfo.setAvatar(data.getAvatar());
+            }
             return userInfo;
         } catch (Exception e) {
             log.error("userRpc.getUserInfo.error:{}", e.getMessage(), e);

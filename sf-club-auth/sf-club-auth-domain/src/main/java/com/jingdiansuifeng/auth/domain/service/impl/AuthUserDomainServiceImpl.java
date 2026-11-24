@@ -38,6 +38,8 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
 
     private static final String LOGIN_PREFIX = "loginCode";
 
+    private static final String DEFAULT_AVATAR = "http://127.0.0.1:9005/user/avatar/default_avatar.jpg";
+
     @Resource
     private AuthUserService authUserService;
 
@@ -74,7 +76,7 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
             authUser.setPassword(SaSecureUtil.md5BySalt(authUser.getPassword(), salt));
         }
         if (StringUtils.isBlank(authUser.getAvatar())) {
-            authUser.setAvatar("http://117.72.10.84:9000/user/icon/微信图片_20231203153718(1).png");
+            authUser.setAvatar(DEFAULT_AVATAR);
         }
         if (StringUtils.isBlank(authUser.getNickName())) {
             authUser.setNickName("随风的粉丝");
@@ -156,10 +158,18 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
         authUser.setUserName(authUserBO.getUserName());
         List<AuthUser> userList = authUserService.queryByCondition(authUser);
         if (CollectionUtils.isEmpty(userList)) {
-            return new AuthUserBO();
+            AuthUserBO defaultBO = new AuthUserBO();
+            defaultBO.setUserName(authUserBO.getUserName());
+            defaultBO.setNickName(authUserBO.getUserName());
+            defaultBO.setAvatar(DEFAULT_AVATAR);
+            return defaultBO;
         }
         AuthUser user = userList.get(0);
-        return AuthUserBOConverter.INSTANCE.convertEntityToBO(user);
+        AuthUserBO bo = AuthUserBOConverter.INSTANCE.convertEntityToBO(user);
+        if (StringUtils.isBlank(bo.getAvatar())) {
+            bo.setAvatar(DEFAULT_AVATAR);
+        }
+        return bo;
     }
 
     @Override
@@ -168,7 +178,13 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
         if (CollectionUtils.isEmpty(userList)) {
             return Collections.emptyList();
         }
-        return AuthUserBOConverter.INSTANCE.convertEntityToBO(userList);
+        List<AuthUserBO> boList = AuthUserBOConverter.INSTANCE.convertEntityToBO(userList);
+        for (AuthUserBO bo : boList) {
+            if (StringUtils.isBlank(bo.getAvatar())) {
+                bo.setAvatar(DEFAULT_AVATAR);
+            }
+        }
+        return boList;
     }
 
 }

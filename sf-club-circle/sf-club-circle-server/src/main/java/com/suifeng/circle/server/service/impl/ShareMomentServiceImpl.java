@@ -88,6 +88,7 @@ public class ShareMomentServiceImpl extends ServiceImpl<ShareMomentMapper, Share
         List<String> userNameList = records.stream().map(ShareMoment::getCreatedBy).distinct().collect(Collectors.toList());
         Map<String, UserInfo> userInfoMap = userRpc.batchGetUserInfo(userNameList);
         UserInfo defaultUser = new UserInfo();
+        defaultUser.setAvatar("http://127.0.0.1:9005/user/avatar/default_avatar.jpg");
 
         String currentLoginId = LoginUtil.getLoginId();
 

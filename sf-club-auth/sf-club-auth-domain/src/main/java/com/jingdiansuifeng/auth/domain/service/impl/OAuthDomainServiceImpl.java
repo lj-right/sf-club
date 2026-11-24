@@ -51,7 +51,7 @@ public class OAuthDomainServiceImpl implements OAuthDomainService {
     private RedisUtil redisUtil;
 
     private static final String OAUTH_STATE_PREFIX = "oauth.state";
-    private static final String DEFAULT_AVATAR = "http://127.0.0.1:9000/user/avatar/default_avatar.jpg";
+    private static final String DEFAULT_AVATAR = "http://127.0.0.1:9005/user/avatar/default_avatar.jpg";
 
     @Override
     public OAuthRenderBO renderAuthorize(String platformCode) {

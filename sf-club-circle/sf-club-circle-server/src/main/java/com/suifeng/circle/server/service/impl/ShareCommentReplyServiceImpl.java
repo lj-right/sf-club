@@ -127,6 +127,7 @@ public class ShareCommentReplyServiceImpl extends ServiceImpl<ShareCommentReplyM
         List<String> userNameList = list.stream().map(ShareCommentReply::getCreatedBy).distinct().collect(Collectors.toList());
         Map<String, UserInfo> userInfoMap = userRpc.batchGetUserInfo(userNameList);
         UserInfo defaultUser = new UserInfo();
+        defaultUser.setAvatar("http://127.0.0.1:9005/user/avatar/default_avatar.jpg");
         List<ShareCommentReplyVO> voList = list.stream().map(item -> {
             ShareCommentReplyVO vo = new ShareCommentReplyVO();
             vo.setId(item.getId());
