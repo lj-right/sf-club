@@ -121,8 +121,8 @@ public class AlBLInterviewEngine implements InterviewEngine {
         JSONObject input = new JSONObject();
         JSONObject message2 = new JSONObject();
         message2.put("role", "user");
-        String keyword = String.format("题目:%s,答案:%s", submit.getSubjectName(), submit.getUserAnswer());
-        String subject = String.format("根据题目和答案 %s ;评一个分数0-5分及参考答案并按照数据结{\"userScore\":\"用户分数\",\"subjectAnswer\":\"参考答案\"}构返json数据", keyword);
+        String subject = String.format("作为顶级互联网大厂资深技术面试官，请根据面试题目【%s】与候选人实际作答【%s】，严格依据技术专业性、原理掌握深度及完整性评定合理得分（0-5分），并给出详尽的专业参考解答。严格按照JSON格式返回：{\"userScore\":5,\"subjectAnswer\":\"参考答案详细解析\"}，切勿输出任何多余说明。", 
+                submit.getSubjectName(), submit.getUserAnswer());
         log.info("buildInterview {}", subject);
         message2.put("content", subject);
         input.put("messages", new JSONObject[]{message2});
@@ -159,7 +159,7 @@ public class AlBLInterviewEngine implements InterviewEngine {
         JSONObject input = new JSONObject();
         JSONObject message2 = new JSONObject();
         message2.put("role", "user");
-        String subject = String.format("根据以下关键字生成1道面试题和标签 %s 并按照数据结{\"labelName\":\"分类名称\",\"subjectName\":\"题目\"}构返json数据", keyword);
+        String subject = String.format("你是一位顶级大厂资深技术面试官。请针对技术关键词【%s】，紧扣生产实际开发场景与底层源码原理，精选生成1道具备含金量的高频核心技术考题及对应技能分类标签。严格按照JSON格式返回：{\"labelName\":\"分类名称\",\"subjectName\":\"题目内容\"}，切勿输出多余说明或Markdown标记。", keyword);
         log.info("buildInterview {}", subject);
         message2.put("content", subject);
         input.put("messages", new JSONObject[]{message2});

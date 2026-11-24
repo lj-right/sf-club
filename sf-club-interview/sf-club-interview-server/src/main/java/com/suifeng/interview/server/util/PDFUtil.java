@@ -15,12 +15,9 @@ public class PDFUtil {
     private static Pattern pattern = Pattern.compile("\\s*|\t|\r|\n");
 
     /**
-     * 获取pdf的text
+     * 获取pdf的text (通过远程URL)
      */
     public static String getPdfText(String pdfUrl) {
-
-        PDDocument document = null;
-        String text = "";
         try {
             URL url = new URL(pdfUrl);
             HttpURLConnection htpcon = (HttpURLConnection) url.openConnection();
@@ -30,7 +27,22 @@ public class PDFUtil {
             htpcon.setUseCaches(false);
             htpcon.setConnectTimeout(10000);
             htpcon.setReadTimeout(10000);
-            InputStream in = htpcon.getInputStream();
+            try (InputStream in = htpcon.getInputStream()) {
+                return getPdfText(in);
+            }
+        } catch (Exception e) {
+            log.error("通过URL获取pdf转为文字错误: {}", e.getMessage(), e);
+            return "";
+        }
+    }
+
+    /**
+     * 获取pdf的text (通过输入流直接解析，无需MinIO存储)
+     */
+    public static String getPdfText(InputStream in) {
+        PDDocument document = null;
+        String text = "";
+        try {
             document = PDDocument.load(in);
             PDFTextStripper stripper = new PDFTextStripper();
             stripper.setSortByPosition(true);
@@ -39,10 +51,10 @@ public class PDFUtil {
             text = stripper.getText(document);
             text = pattern.matcher(text).replaceAll("");
             if (log.isInfoEnabled()) {
-                log.info("识别到的pdf为{}", text);
+                log.info("识别到的pdf内容长度: {}", text.length());
             }
         } catch (Exception e) {
-            log.error("获取pdf转为文字错误:{}", e.getMessage(), e);
+            log.error("从输入流解析pdf文字错误: {}", e.getMessage(), e);
         } finally {
             if (document != null) {
                 try {
@@ -54,6 +66,4 @@ public class PDFUtil {
         }
         return text;
     }
-
-
 }

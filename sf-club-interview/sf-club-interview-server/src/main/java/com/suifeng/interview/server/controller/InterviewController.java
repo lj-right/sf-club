@@ -42,7 +42,7 @@ public class InterviewController {
     private InterviewQuestionHistoryService interviewQuestionHistoryService;
 
     /**
-     * 分析简历
+     * 分析简历 (URL 方式)
      */
     @PostMapping(value = "/analyse")
     public Result<InterviewVO> analyse(@RequestBody InterviewReq req) {
@@ -60,6 +60,30 @@ public class InterviewController {
         } catch (Exception e) {
             log.error("分析简历异常！错误原因{}", e.getMessage(), e);
             return Result.fail("分析简历异常！");
+        }
+    }
+
+    /**
+     * 直接上传简历文件进行关键词分析 (文件直传方式，支持拖拽上传，无需依赖 MinIO)
+     */
+    @PostMapping(value = "/analyse-file")
+    public Result<InterviewVO> analyseFile(@RequestParam("file") org.springframework.web.multipart.MultipartFile file,
+                                           @RequestParam(value = "engine", defaultValue = "JI_CHI") String engine) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("文件直传分析简历入参: 文件名={}, 大小={}, engine={}",
+                        file != null ? file.getOriginalFilename() : "null",
+                        file != null ? file.getSize() : 0,
+                        engine);
+            }
+            Preconditions.checkArgument(!Objects.isNull(file) && !file.isEmpty(), "简历文件不能为空！");
+            return Result.ok(interviewService.analyseFile(file, engine));
+        } catch (IllegalArgumentException e) {
+            log.error("参数异常！错误原因{}", e.getMessage(), e);
+            return Result.fail(e.getMessage());
+        } catch (Exception e) {
+            log.error("直接分析简历文件异常！错误原因{}", e.getMessage(), e);
+            return Result.fail("分析简历文件异常: " + e.getMessage());
         }
     }
 
